@@ -139,5 +139,8 @@ return
 ^w::Send, ^{F4}
 return
 
+^+w::Send, !i
+return
+
 ^e::Send, !u
 return
