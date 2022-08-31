@@ -129,6 +129,7 @@ MsgBox,
 (
 CapsLock - 한 줄 제거
 ^w       - 탭 끄기
+^+w      - 고정 탭 제외 끄기
 ^e       - 핀으로 고정
 )
 return
