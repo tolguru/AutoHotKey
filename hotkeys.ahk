@@ -6,13 +6,12 @@
 !/::
 MsgBox,
 (
------ 프로그램 실행 -----
+##### 프로그램 실행 #####
 
 !``  - editplus 실행 및 활성화
-!1 - bitvise 터미널 실행
 
 
------ 기타 -----
+##### 기타 #####
 
 F1       - 클립보드 문자열 byte 크기 체크(EUC-KR, 한글 = 2byte)
 CapsLock - 창 최상단 고정
@@ -24,17 +23,6 @@ if WinExist("ahk_exe editplus.exe") {
 	WinActivate
 } else {
 	Run editplus.exe
-}
-return
-
-!1::
-if WinExist("ahk_exe BvSsh.exe") {
-	WinActivate
-	SetControlDelay, -1
-	ControlClick, x61 y302, ahk_exe BvSsh.exe,,,, NA
-	WinMinimize, ahk_exe BvSsh.exe
-} else {
-	showMsg("BvSsh 활성화 요망", 1)
 }
 return
 
@@ -57,7 +45,6 @@ return
 F1::showMsg(StrLen(RegExReplace(Clipboard, "[^a-zA-Z0-9\{\}\[\]\/?.,;:|\)*~``!^\-_+<>@\#$%&\\\=\(\'\"" \r\n\b\t\0]", "  ")), 1)
 return
 
-
 ScrollLock::Reload
 return
 
@@ -69,12 +56,16 @@ setTransparent(gap) {
 	; 현재 투명도 변수에 저장
 	WinGet, currentValue, Transparent, A
 
-	currentValue := currentValue + gap
-
-	if (currentValue > 255) {
+	if (currentValue == null) {
 		currentValue := 255
-	} else if (currentValue < 0) {
-		currentValue := 0
+	} else {
+		currentValue := currentValue + gap
+
+		if (currentValue > 255) {
+			currentValue := 255
+		} else if (currentValue < 0) {
+			currentValue := 0
+		}
 	}
 
 	WinSet, Transparent, %currentValue%, A
