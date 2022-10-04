@@ -1,8 +1,5 @@
 ﻿#Include common.ahk
 
-;F3::ControlClick, x277 y90, A
-;return
-
 !/::
 MsgBox,
 (
@@ -13,7 +10,6 @@ MsgBox,
 
 ##### 기타 #####
 
-F1       - 클립보드 문자열 byte 크기 체크(EUC-KR, 한글 = 2byte)
 CapsLock - 창 최상단 고정
 )
 return
@@ -39,18 +35,13 @@ return
 ^+CapsLock::CapsLock
 return
 
-; 클립보드 문자열 byte 크기 체크(EUC-KR, 한글 = 2 byte)
-;showMsg(StrLen(RegExReplace(Clipboard, "[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]", "  ")), 1)
-;줄바꿈할 때 2 byte로 인식 ㅠㅠ
-F1::showMsg(StrLen(RegExReplace(Clipboard, "[^a-zA-Z0-9\{\}\[\]\/?.,;:|\)*~``!^\-_+<>@\#$%&\\\=\(\'\"" \r\n\b\t\0]", "  ")), 1)
-return
-
 ScrollLock::Reload
 return
 
 :*?:na.::rnjsehdgks01@naver.com
 :*?:gm.::rnjsehdgks02@gmail.com
 :*?:rn.::rnjsehdgks01
+:*?:11.::01051124560
 
 setTransparent(gap) {
 	; 현재 투명도 변수에 저장
