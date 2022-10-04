@@ -35,6 +35,29 @@ return
 ^+CapsLock::CapsLock
 return
 
+XButton1::
+Send, {XButton1}
+Sleep, 100
+return
+
+XButton2::
+Send, {XButton2}
+Sleep, 100
+return
+
++WheelUp::
+Send, {Volume_Up}
+Send, {Volume_Up}
+return
+
++WheelDown::
+Send, {Volume_Down}
+Send, {Volume_Down}
+return
+
+Pause::Send, {Volume_Mute}
+return
+
 ScrollLock::Reload
 return
 
