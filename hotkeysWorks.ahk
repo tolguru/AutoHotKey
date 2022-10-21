@@ -41,6 +41,7 @@ return
 :*?:gm.::rnjsehdgks02@gmail.com
 :*?:rn.::rnjsehdgks01
 :*?:123.::01051124560
+:*?:-> ::- > `
 
 setTransparent(gap) {
 	; 현재 투명도 변수에 저장
