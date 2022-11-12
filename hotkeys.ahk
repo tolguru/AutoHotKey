@@ -15,10 +15,10 @@ CapsLock - 창 최상단 고정
 return
 
 !`::
-if WinExist("ahk_exe editplus.exe") {
+if WinExist("ahk_exe notepad++.exe") {
 	WinActivate
 } else {
-	Run editplus.exe
+	Run notepad++.exe
 }
 return
 
@@ -46,14 +46,16 @@ Sleep, 100
 return
 
 +WheelUp::
-Send, {Volume_Up}
-Send, {Volume_Up}
+Send, {Volume_Up 3}
 return
 
 +WheelDown::
-Send, {Volume_Down}
-Send, {Volume_Down}
+Send, {Volume_Down 3}
 return
+
+; 앞으로 가기 뒤로 가기
+F1::Send, {XButton1}
+F3::Send, {XButton2}
 
 Pause::Send, {Volume_Mute}
 return
