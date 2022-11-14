@@ -41,7 +41,6 @@ return
 :*?:gm.::rnjsehdgks02@gmail.com
 :*?:rn.::rnjsehdgks01
 :*?:123.::01051124560
-:*?:-> ::- > `
 
 setTransparent(gap) {
 	; 현재 투명도 변수에 저장
@@ -90,6 +89,9 @@ return
 ^e::Send, !u
 return
 
+^r::Send, !^o
+return
+
 ;###########
 ;## Chrome
 ;###########
@@ -105,5 +107,48 @@ return
 
 ^q::Send, !d!{Enter}
 
+;###########
+;## 원노트
+;###########
+#IfWinActive ahk_exe ApplicationFrameHost.exe
+!/::
+MsgBox,
+(
+!q - 글 배경색
+!w - 서식 제거
+!e - 그리기 펜
+!d - 펜 해제
+)
+return
+
+; 원노트 - 글 배경색
+!q::Send, ^+h
+return
+
+; 원노트 - 글 서식 제거
+!w::Send, ^+n
+return
+
+; 원노트 - 그리기 메뉴 첫 번째 펜 선택
+!e::
+BlockInput, MouseMove
+
+Send, !{d}
+
+Sleep, 100
+
+MouseGetPos, nowX, nowY
+
+MouseClick, Left, 347, 110,, 0
+
+MouseMove, %nowX%, %nowY%, 0
+
+BlockInput, MouseMoveOff
+
+return
+
+:*?:-> ::- > `
+:*?:## ::👑
+:*?:$$ ::📌
 
 
