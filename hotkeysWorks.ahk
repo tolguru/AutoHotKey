@@ -1,4 +1,6 @@
 ﻿#Include common.ahk
+;showMsg(내용, 시간) -> 마우스 옆 툴팁
+;showTrayMsg(제목, 내용, 시간) -> 우하단 윈도우 메세지
 
 !/::
 MsgBox,

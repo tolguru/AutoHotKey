@@ -1,11 +1,17 @@
 ﻿showMsg(msg, seconds) {
 	ToolTip, %msg%
-	Sleep, % seconds * 1000
-	ToolTip
+	SetTimer, RemoveToolTip, % seconds * -1000
 }
 
 showTrayMsg(title, msg, seconds) {
 	TrayTip, %title%, %msg%
-	Sleep, % seconds * 1000
-	TrayTip
+	SetTimer, RemoveTrayTip, % seconds * -1000
 }
+
+RemoveToolTip:
+	ToolTip
+return
+
+RemoveTrayTip:
+	TrayTip
+return
