@@ -13,6 +13,44 @@ CapsLock - 창 최상단 고정
 )
 return
 
+F1::
+emoticon(10000, false)
+return
+
+F3::
+emoticon(10000, true)
+return
+
+emoticon(count, variation) {
+	MouseGetPos, xpos, ypos
+
+	emoticonArray := {0:26}
+	emoticonCount := 1
+
+	if (variation) {
+		emoticonArray := {0:26, 1:66, 2:100, 3:136, 4:177, 5:216}
+		emoticonCount := 6
+	}
+
+	loopCount := 0
+
+	Loop, %count% {
+		MouseClick, Left, %xpos%, %ypos%, 1, 0
+
+		Sleep, 100
+
+		MouseClick, Left, emoticonArray[mod(loopCount++, emoticonCount)], 26, 1, 0
+
+		Sleep, 100
+
+		MouseClick, Left, 10, 10, 1, 0
+	}
+
+	MouseClick, Left, %xpos%, %ypos%, 1, 0
+	return
+}
+
+
 !`::
 if WinExist("ahk_exe notepad++.exe") {
 	WinActivate
@@ -38,8 +76,8 @@ if WinExist("ahk_exe idea64.exe") {
 return
 
 ; 현재 Focus된 창 최상단 고정
-;CapsLock::WinSet, AlwaysOnTop, , A
-;return
+^+F12::WinSet, AlwaysOnTop, , A
+return
 
 !+WheelUp::setTransparent(10)
 return
@@ -151,7 +189,7 @@ MsgBox,
 return
 
 ; 원노트 - 글 배경색
-!q::Send, ^+h
+!q::paintFont()
 return
 
 ; 원노트 - 글 서식 제거
@@ -180,7 +218,7 @@ return
 selectFigure(flag) {
 	BlockInput, MouseMove
 
-	Send, !{d}
+	Send, !d
 
 	Sleep, 100
 
@@ -195,6 +233,26 @@ selectFigure(flag) {
 	}
 
 	MouseMove, %nowX%, %nowY%, 0
+
+	BlockInput, MouseMoveOff
+
+	return
+}
+
+paintFont() {
+	BlockInput, MouseMove
+
+	SendInput, !h
+
+	Sleep, 100
+
+	MouseGetPos, nowX, nowY
+
+	MouseClick, Left, 502, 90,, 0
+
+	MouseMove, %nowX%, %nowY%, 0
+
+	SendInput, ^+h
 
 	BlockInput, MouseMoveOff
 
