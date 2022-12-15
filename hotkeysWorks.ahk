@@ -15,12 +15,14 @@ CapsLock - 창 최상단 고정
 )
 return
 
-F1::
-emoticon(10000, false)
+F1::emoticon(10, false)
 return
 
-F3::
-emoticon(10000, true)
+F3::emoticon(10, true)
+return
+
+F4::
+global isStop := true
 return
 
 emoticon(count, variation) {
@@ -36,7 +38,9 @@ emoticon(count, variation) {
 
 	loopCount := 0
 
-	Loop, %count% {
+	global isStop := false
+
+	Loop {
 		MouseClick, Left, %xpos%, %ypos%, 1, 0
 
 		Sleep, 100
@@ -46,12 +50,15 @@ emoticon(count, variation) {
 		Sleep, 100
 
 		MouseClick, Left, 10, 10, 1, 0
+
+		if (isStop) {
+			break
+		}
 	}
 
 	MouseClick, Left, %xpos%, %ypos%, 1, 0
 	return
 }
-
 
 !`::
 if WinExist("ahk_exe notepad++.exe") {
