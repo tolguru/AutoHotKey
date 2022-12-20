@@ -8,9 +8,9 @@ global isStop := false
 */
 !/::MsgBox("##### 프로그램 실행 #####`n!``  - notepad 실행 및 활성화`n##### 기타 #####`n`nCapsLock - 창 최상단 고정")
 
-F1::emoticon(false)
-F3::emoticon(true)
-F4::global isStop := true
+;F1::emoticon(false)
+;F3::emoticon(true)
+;F4::global isStop := true
 
 !`::runNotePad()
 !1::runOneNote()
@@ -217,3 +217,19 @@ paintFont() {
 :*?:## ::👑
 :*?:$$ ::📌
 :*?:!! ::🔸
+
+/*
+###########
+## Command
+###########
+*/
+#HotIf WinActive("ahk_exe cmd.exe")
+!/::MsgBox("^1 - 일배치 jar 실행")
+
+^1::SendInput("java -jar c:\batch_report-1.1.jar")
+^2::openReportDirectory()
+
+openReportDirectory() {
+	run("C:\Users\kdh\Desktop\온누리 일배치")
+	run("C:\Project\운영\온누리 일배치\auto")
+}
