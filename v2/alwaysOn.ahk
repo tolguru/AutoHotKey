@@ -15,17 +15,17 @@ alwaysOnDisplay()
 ^+F2::global isStop := true
 
 alwaysOnDisplay() {
+	global isStop := false
+
 	Loop {
 		Sleep(480000)
-
-		MouseGetPos(&x, &y)
-		MouseMove(x + 1, y + 1)
-		MouseMove(x - 1, y + 1)
-		MouseMove(x + 1, y - 1)
-		MouseMove(x - 1, y - 1)
 
 		if (isStop) {
 			break
 		}
+
+		MouseGetPos(&x, &y)
+		MouseMove(x + 1, y + 1)
+		MouseMove(x - 1, y - 1)
 	}
 }
