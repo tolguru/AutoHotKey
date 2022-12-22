@@ -19,7 +19,39 @@ if (A_UserName = "kdh") {
 
 ;F1::emoticon(false)
 ;F3::emoticon(true)
-;F4::global isStop := true
+F1::emoticonAllLines()
+F4::global isStop := true
+
+emoticonAllLines() {
+	path   := ["C:\you2.png", "C:\me.png"]
+	heartX := [53, -23]
+	heartY := 23
+
+	CoordMode("Pixel", "Window")
+
+	WinGetPos(&kx, &ky, &kw, &kh, "ahk_class #32770")
+
+	global isStop := false
+
+	Loop {
+		randomY    := Random(ky, ky + kh - 150)
+		randomPick := Random(1, 2)
+
+		ImageSearch(&foundX, &foundY, kx, randomY, kx + kw, ky + kh - 150, path[randomPick])
+
+		if (foundX != "") {
+			MouseClick(, foundX + heartX[randomPick], foundY + heartY,, 0)
+			Sleep(50)
+			MouseClick(, 26, 26,, 0)
+			Sleep(50)
+			MouseClick(, 10, 10,, 0)
+		}
+
+		if (isStop) {
+			break
+		}
+	}
+}
 
 !`::runNotePad()
 !1::runOneNote()
@@ -207,13 +239,13 @@ selectFigure(flag) {
 
 	SendInput("!d")
 
-	Sleep(50)
+	Sleep(100)
 
 	MouseGetPos(&nowX, &nowY)
 
 	MouseClick(, 604, 90,, 0)
 
-	Sleep(50)
+	Sleep(100)
 
 	if (flag) {
 		MouseClick(, 615, 180,, 0)
