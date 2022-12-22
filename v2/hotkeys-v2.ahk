@@ -4,9 +4,18 @@
 global isStop := false
 
 /*
+기본 기능 설정
+*/
+if (A_UserName = "kdh") {
+	workAlarm()
+} else if (A_UserName = "rnjse") {
+	homeAlarm()
+}
+
+/*
 기본 기능 선언
 */
-!/::MsgBox("##### 프로그램 실행 #####`n!``  - notepad 실행 및 활성화`n##### 기타 #####`n`nCapsLock - 창 최상단 고정")
+!/::MsgBox("##### 프로그램 실행 #####`n!``  - notepad 실행 및 활성화`n##### 기타 #####`n`n^+F12 - 창 최상단 고정")
 
 ;F1::emoticon(false)
 ;F3::emoticon(true)
@@ -44,19 +53,13 @@ emoticon(variation) {
 		emoticonCount := 6
 	}
 
-	loopCount := 0
-
 	global isStop := false
 
 	Loop {
 		MouseClick(, xpos, ypos,, 0)
-
 		Sleep(100)
-
-		MouseClick(, emoticonArray[mod(loopCount++, emoticonCount) + 1], 26,, 0)
-
+		MouseClick(, emoticonArray[mod(A_Index + 1, emoticonCount) + 1], 26,, 0)
 		Sleep(100)
-
 		MouseClick(, 10, 10,, 0)
 
 		if (isStop) {
@@ -86,6 +89,40 @@ setTransparent(gap) {
 
 		WinSetTransparent(currentValue, "A")
 	} catch Error {
+	}
+}
+
+workAlarm() {
+	SetTimer () => workAlarm(), -1000 * 60
+
+	alarmWater()
+	alarmBatch()
+}
+
+homeAlarm() {
+	SetTimer () => homeAlarm(), -1000 * 60
+
+	alarmWater()
+}
+
+alarmWater() {
+	static waterTime := 0
+
+	if (++waterTime = 60) {
+		if (A_UserName = "rnjse") {
+			SoundBeep(, 600)
+		} else {
+			MsgBox("물")
+		}
+
+		waterTime := 0
+	}
+}
+
+alarmBatch() {
+	if (A_Hour = 10 && A_Min = 35) {
+		Run("cmd.exe /k java -jar c:\batch_report-1.1.jar",, "Max")
+		openReportDirectory()
 	}
 }
 
@@ -170,11 +207,13 @@ selectFigure(flag) {
 
 	SendInput("!d")
 
-	Sleep(100)
+	Sleep(50)
 
 	MouseGetPos(&nowX, &nowY)
 
 	MouseClick(, 604, 90,, 0)
+
+	Sleep(50)
 
 	if (flag) {
 		MouseClick(, 615, 180,, 0)
@@ -185,8 +224,6 @@ selectFigure(flag) {
 	MouseMove(nowX, nowY, 0)
 
 	BlockInput("MouseMoveOff")
-
-	SendInput("{Esc}")
 }
 
 paintFont() {
@@ -217,6 +254,8 @@ paintFont() {
 :*?:## ::👑
 :*?:$$ ::📌
 :*?:!! ::🔸
+:*?:@@ ::🔹
+
 
 /*
 ###########
@@ -226,10 +265,18 @@ paintFont() {
 #HotIf WinActive("ahk_exe cmd.exe")
 !/::MsgBox("^1 - 일배치 jar 실행")
 
-^1::SendInput("java -jar c:\batch_report-1.1.jar")
-^2::openReportDirectory()
+^1::runReport()
+
+runReport() {
+	SendInput("java -jar c:\batch_report-1.1.jar")
+
+	if (KeyWait("Enter", "D T10")) {
+		openReportDirectory()
+	}
+}
 
 openReportDirectory() {
 	run("C:\Users\kdh\Desktop\온누리 일배치")
+	Sleep(1000)
 	run("C:\Project\운영\온누리 일배치\auto")
 }
