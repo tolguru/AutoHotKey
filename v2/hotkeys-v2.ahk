@@ -19,13 +19,22 @@ if (A_UserName = "kdh") {
 
 ;F1::emoticon(false)
 ;F3::emoticon(true)
-F1::emoticonAllLines()
+F1::emoticonAllLines(false)
+F3::emoticonAllLines(true)
 F4::global isStop := true
 
-emoticonAllLines() {
+emoticonAllLines(variation) {
 	path   := ["C:\you2.png", "C:\me.png"]
 	heartX := [53, -23]
 	heartY := 23
+
+	emoticonArray    := [26]
+	emoticonIdxLimit := 1
+
+	if (variation) {
+		emoticonArray    := [26, 66, 100, 136, 177, 216]
+		emoticonIdxLimit := 6
+	}
 
 	CoordMode("Pixel", "Window")
 
@@ -34,15 +43,16 @@ emoticonAllLines() {
 	global isStop := false
 
 	Loop {
-		randomY    := Random(ky, ky + kh - 150)
-		randomPick := Random(1, 2)
+		randomY           := Random(ky, ky + kh - 150)
+		randomPick        := Random(1, 2)
+		randomEmoticonIdx := Random(1, emoticonIdxLimit)
 
 		ImageSearch(&foundX, &foundY, kx, randomY, kx + kw, ky + kh - 150, path[randomPick])
 
 		if (foundX != "") {
 			MouseClick(, foundX + heartX[randomPick], foundY + heartY,, 0)
 			Sleep(50)
-			MouseClick(, 26, 26,, 0)
+			MouseClick(, emoticonArray[randomEmoticonIdx], 26,, 0)
 			Sleep(50)
 			MouseClick(, 10, 10,, 0)
 		}
