@@ -26,7 +26,7 @@ CapsLock::Delete
 F12::Reload
 
 F1:: {
-	commandArray := inputCommands("파일 수정(vi)")
+	commandArray := inputCommands("파일")
 
 	if (commandArray.Length = 0)  {
 		return
@@ -36,7 +36,7 @@ F1:: {
 }
 
 F2:: {
-	commandArray := inputCommands("파일 조회(ll)")
+	commandArray := inputCommands("리스트")
 
 	if (commandArray.Length = 0)  {
 		return
@@ -46,9 +46,9 @@ F2:: {
 }
 
 F3:: {
-	commandArray := inputCommands("로그 조회(vi)")
+	commandArray := inputCommands("로그")
 
-	if (commandArray.Length = 0)  {
+	if (commandArray.Length = 0 || commandArray.Length > 2)  {
 		return
 	}
 
@@ -80,7 +80,7 @@ F5:: {
 }
 
 inputCommands(title) {
-	commandArray := StrSplit(InputBox("F1 : 파일 수정 / F2 : 파일 조회 / F3 : 로그 수정 / F4 : 배치 실행`n`n입력값 : 배치코드 (카드사) (날짜)`n`n001 : 거래대사 / 002 : 정산이체 / 003 : 매입취소`n004 : 정산정보 / 005 : 카드상태 / 006 : 통합자료 / 007 : 머니플랫폼`n`n예시 : 001 bc 20220301`n         001 bc`n         000", title, "w400 h250").value, A_Space)
+	commandArray := StrSplit(InputBox("F1 : 파일 / F2 : 리스트 / F3 : 로그 / F4 : 배치 실행`n`n입력값 : 배치코드 (카드사) (날짜)`n`n001 : 거래대사 / 002 : 정산이체 / 003 : 매입취소`n004 : 정산정보 / 005 : 카드상태 / 006 : 통합자료 / 007 : 머니플랫폼`n`n예시 : 001 bc 20220301`n         001 bc`n         000", title, "w400 h250").value, A_Space)
 
 	if (commandArray.Length = 2 && StrLen(commandArray[2]) = 2) {
 		commandArray.Push(FormatTime(, "yyyyMMdd"))
