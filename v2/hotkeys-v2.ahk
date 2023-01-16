@@ -17,57 +17,12 @@ if (A_UserName = "kdh") {
 */
 !/::MsgBox("##### 프로그램 실행 #####`n!``  - notepad 실행 및 활성화`n##### 기타 #####`n`n^+F12 - 창 최상단 고정")
 
-;F1::emoticon(false)
-;F3::emoticon(true)
-F1::emoticonAllLines(false)
-F3::emoticonAllLines(true)
-F4::global isStop := true
-
-emoticonAllLines(variation) {
-	path   := ["C:\you2.png", "C:\me.png"]
-	heartX := [53, -23]
-	heartY := 23
-
-	emoticonArray    := [26]
-	emoticonIdxLimit := 1
-
-	if (variation) {
-		emoticonArray    := [26, 66, 100, 136, 177, 216]
-		emoticonIdxLimit := 6
-	}
-
-	CoordMode("Pixel", "Window")
-
-	WinGetPos(&kx, &ky, &kw, &kh, "ahk_class #32770")
-
-	global isStop := false
-
-	Loop {
-		randomY           := Random(ky, ky + kh - 150)
-		randomPick        := Random(1, 2)
-		randomEmoticonIdx := Random(1, emoticonIdxLimit)
-
-		ImageSearch(&foundX, &foundY, kx, randomY, kx + kw, ky + kh - 150, path[randomPick])
-
-		if (foundX != "") {
-			MouseClick(, foundX + heartX[randomPick], foundY + heartY,, 0)
-			Sleep(50)
-			MouseClick(, emoticonArray[randomEmoticonIdx], 26,, 0)
-			Sleep(50)
-			MouseClick(, 10, 10,, 0)
-		}
-
-		if (isStop) {
-			break
-		}
-	}
-}
-
 !`::runNotePad()
 !1::runOneNote()
 !2::runIntelliJ()
 
 ^+F12::WinSetAlwaysOnTop(-1, "A")
+!+F12::Suspend
 
 !+WheelUp::setTransparent(10)
 !+WheelDown::setTransparent(-10)
@@ -80,37 +35,7 @@ ScrollLock::Reload
 :*?:gm.::rnjsehdgks02@gmail.com
 :*?:rn.::rnjsehdgks01
 :*?:123.::01051124560
-
-/*
-이모티콘 헛짓거리
-*/
-emoticon(variation) {
-	MouseGetPos(&xpos, &ypos)
-
-	emoticonArray := [26]
-	emoticonCount := 1
-
-	if (variation) {
-		emoticonArray := [26, 66, 100, 136, 177, 216]
-		emoticonCount := 6
-	}
-
-	global isStop := false
-
-	Loop {
-		MouseClick(, xpos, ypos,, 0)
-		Sleep(100)
-		MouseClick(, emoticonArray[mod(A_Index + 1, emoticonCount) + 1], 26,, 0)
-		Sleep(100)
-		MouseClick(, 10, 10,, 0)
-
-		if (isStop) {
-			break
-		}
-	}
-
-	MouseClick(, xpos, ypos,, 0)
-}
+:*?:1234.::51124560
 
 setTransparent(gap) {
 	; 현재 투명도 변수에 저장
@@ -318,7 +243,105 @@ runReport() {
 }
 
 openReportDirectory() {
-	run("C:\Users\kdh\Desktop\온누리 일배치")
-	Sleep(1000)
-	run("C:\Project\운영\온누리 일배치\auto")
+	try {
+		run("C:\Users\kdh\Desktop\온누리 일배치")
+		Sleep(1000)
+		run("C:\Project\운영\온누리 일배치\auto")
+	} catch (Error) {
+	}
 }
+
+/*
+###########
+## SSMS
+###########
+*/
+#HotIf WinActive("ahk_exe Ssms.exe")
+!/::MsgBox("^/ - 주석`n^+/ - 주석 해제")
+
+^/:: {
+	SendInput("^k")
+	SendInput("^c")
+}
+^+/:: {
+	SendInput("^k")
+	SendInput("^u")
+}
+
+
+;F1::emoticon(false)
+;F3::emoticon(true)
+;~ F1::emoticonAllLines(false)
+;~ F3::emoticonAllLines(true)
+;~ F4::global isStop := true
+
+;~ emoticonAllLines(variation) {
+	;~ path   := ["C:\you2.png", "C:\me.png"]
+	;~ heartX := [53, -23]
+	;~ heartY := 23
+
+	;~ emoticonArray    := [26]
+	;~ emoticonIdxLimit := 1
+
+	;~ if (variation) {
+		;~ emoticonArray    := [26, 66, 100, 136, 177, 216]
+		;~ emoticonIdxLimit := 6
+	;~ }
+
+	;~ CoordMode("Pixel", "Window")
+
+	;~ WinGetPos(&kx, &ky, &kw, &kh, "ahk_class #32770")
+
+	;~ global isStop := false
+
+	;~ Loop {
+		;~ randomY           := Random(ky, ky + kh - 150)
+		;~ randomPick        := Random(1, 2)
+		;~ randomEmoticonIdx := Random(1, emoticonIdxLimit)
+
+		;~ ImageSearch(&foundX, &foundY, kx, randomY, kx + kw, ky + kh - 150, path[randomPick])
+
+		;~ if (foundX != "") {
+			;~ MouseClick(, foundX + heartX[randomPick], foundY + heartY,, 0)
+			;~ Sleep(50)
+			;~ MouseClick(, emoticonArray[randomEmoticonIdx], 26,, 0)
+			;~ Sleep(50)
+			;~ MouseClick(, 10, 10,, 0)
+		;~ }
+
+		;~ if (isStop) {
+			;~ break
+		;~ }
+	;~ }
+;~ }
+
+;~ /*
+;~ 이모티콘 헛짓거리
+;~ */
+;~ emoticon(variation) {
+	;~ MouseGetPos(&xpos, &ypos)
+
+	;~ emoticonArray := [26]
+	;~ emoticonCount := 1
+
+	;~ if (variation) {
+		;~ emoticonArray := [26, 66, 100, 136, 177, 216]
+		;~ emoticonCount := 6
+	;~ }
+
+	;~ global isStop := false
+
+	;~ Loop {
+		;~ MouseClick(, xpos, ypos,, 0)
+		;~ Sleep(100)
+		;~ MouseClick(, emoticonArray[mod(A_Index + 1, emoticonCount) + 1], 26,, 0)
+		;~ Sleep(100)
+		;~ MouseClick(, 10, 10,, 0)
+
+		;~ if (isStop) {
+			;~ break
+		;~ }
+	;~ }
+
+	;~ MouseClick(, xpos, ypos,, 0)
+;~ }
