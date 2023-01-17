@@ -1,7 +1,8 @@
 ﻿/*
 전역변수 선언
 */
-global isStop := false
+global isStop  := false
+global isFirst := true
 
 /*
 기본 기능 설정
@@ -16,6 +17,9 @@ if (A_UserName = "kdh") {
 기본 기능 선언
 */
 !/::MsgBox("##### 프로그램 실행 #####`n!``  - notepad 실행 및 활성화`n##### 기타 #####`n`n^+F12 - 창 최상단 고정")
+
+
+
 
 !`::runNotePad()
 !1::runOneNote()
@@ -197,23 +201,30 @@ paintFont() {
 	BlockInput("MouseMove")
 
 	SendInput("!h")
-
 	Sleep(100)
 
 	MouseGetPos(&nowX, &nowY)
 
-	MouseClick(, 502, 90,, 0)
+	if (isFirst) {
+		MouseClick(, 528, 92,, 0)
+		Sleep(100)
+		MouseClick(, 517, 216,, 0)
+		Sleep(100)
+		MouseClick(, 477, 92,, 0)
+		Sleep(100)
+		MouseClick(, 601, 254,, 0)
+		Sleep(100)
 
-	MouseMove(nowX, nowY, 0)
-
-	Sleep(50)
-
-	SendInput("^+h")
+		global isFirst := false
+	} else {
+		MouseClick(, 502, 90,, 0)
+		MouseMove(nowX, nowY, 0)
+		Sleep(50)
+		SendInput("^+h")
+	}
 
 	BlockInput("MouseMoveOff")
-
 	Sleep(50)
-
 	SendInput("{Esc}")
 }
 
@@ -267,7 +278,6 @@ openReportDirectory() {
 	SendInput("^k")
 	SendInput("^u")
 }
-
 
 ;F1::emoticon(false)
 ;F3::emoticon(true)
@@ -344,4 +354,13 @@ openReportDirectory() {
 	;~ }
 
 	;~ MouseClick(, xpos, ypos,, 0)
+;~ }
+
+
+; 이미지 다운로드
+;~ F1:: {
+	;~ Loop 396 {
+		;~ Download("https://ebook.nebooks.co.kr/nw/h/BD04000012/assets/page-images/page-395042-0" Format("{:03}", A_Index + 1) ".jpg", "C:\down\grammarzone-" Format("{:03}", A_Index + 1) ".jpg")
+		;~ Sleep(400)
+	;~ }
 ;~ }
