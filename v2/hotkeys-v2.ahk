@@ -299,7 +299,7 @@ runClipboardQuery(query) {
 	Sleep(1)
 	A_Clipboard := query A_Clipboard "';"
 
-	SendInput("^v+{Home}^{Enter}^d")
+	SendInput("^v+{Home}^\^d")
 }
 
 ;F1::emoticon(false)
