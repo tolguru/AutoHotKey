@@ -280,14 +280,15 @@ openReportDirectory() {
 ###########
 */
 #HotIf WinActive("ahk_exe dbeaver.exe")
-!/::MsgBox("!q - SELECT, FROM`n!w - WHERE 1 = 1 ~ AND`n!e - ORDER BY`n!a - 테이블 정보 조회`n!s - 공통 코드 조회")
+!/::MsgBox("!q - SELECT, FROM`n!w - WHERE 1 = 1 ~ AND`n!e - AND`n!r - ORDER BY`n!a - 테이블 정보 조회`n!s - 공통 코드 조회")
 
 !q::SendInput("SELECT *`nFROM   ")
 !w::SendInput("WHERE  1 = 1`nAND    ")
-!e::SendInput("ORDER BY REG_DT DESC")
+!e::SendInput("AND    ")
+!r::SendInput("ORDER BY REG_DT DESC")
 
 !a:: runClipboardQuery("SELECT COLUMN_NAME, ATTRIBUTE_NAME, NOT_NULL, DATATYPE, POS FROM COLDEF WHERE TABLE_NAME = '")
-!s:: runClipboardQuery("SELECT CMMN_CD, CMMN_CD_NM, USE_YN FROM COM_CODE WHERE CD_GROUP_ENG_NM = '")
+!s:: runClipboardQuery("SELECT CMMN_CD, CMMN_CD_NM,CMMN_CD_DC_CN, USE_YN FROM COM_CODE WHERE CD_GROUP_ENG_NM = '")
 
 /*
 해당 항목으로 쿼리 실행
