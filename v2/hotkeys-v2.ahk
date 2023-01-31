@@ -87,7 +87,7 @@ alarmWater() {
 
 alarmBatch() {
 	if (A_Hour = 10 && A_Min = 35) {
-		Run("cmd.exe /k java -jar c:\batch_report-1.1.jar",, "Max")
+		Run("cmd.exe /k java -jar -Dspring.profiles.active=prod c:\batch_report-1.1.jar",, "Max")
 		openReportDirectory()
 	}
 }
@@ -201,10 +201,11 @@ paintFont() {
 	MouseGetPos(&nowX, &nowY)
 
 	if (isFirst) {
+		Sleep(300)
 		MouseClick(, 528, 92,, 0)
-		Sleep(100)
+		Sleep(300)
 		MouseClick(, 517, 216,, 0)
-		Sleep(100)
+		Sleep(300)
 		MouseClick(, 477, 92,, 0)
 		Sleep(100)
 		MouseClick(, 601, 254,, 0)
@@ -241,7 +242,7 @@ paintFont() {
 ^1::runReport()
 
 runReport() {
-	SendInput("java -jar c:\batch_report-1.1.jar")
+	SendInput("java -jar -Dspring.profiles.active=prod c:\batch_report-1.1.jar")
 
 	if (KeyWait("Enter", "D T10")) {
 		openReportDirectory()
@@ -303,6 +304,17 @@ runClipboardQuery(query) {
 
 	SendInput("^v+{Home}^\^d")
 }
+
+/*
+###########
+## VSCode
+###########
+*/
+#HotIf WinActive("ahk_exe Code.exe")
+!/::MsgBox("CapsLock - 한 줄 지우기`n!c - console.log()")
+
+CapsLock::SendInput("^+k")
+!c::SendInput("console.log(){Left}")
 
 ;F1::emoticon(false)
 ;F3::emoticon(true)
