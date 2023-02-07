@@ -296,6 +296,8 @@ CapsLock::SendInput("+{Home 2}{Backspace 2}{Down}")
 해당 항목으로 쿼리 실행
 */
 runClipboardQuery(query) {
+	beforeData := A_Clipboard
+
 	SendInput("^c")
 	Sleep(10)
 	SendInput("+{Enter}")
@@ -303,6 +305,9 @@ runClipboardQuery(query) {
 	A_Clipboard := query A_Clipboard "';"
 
 	SendInput("^v+{Home}^\^d")
+
+	Sleep(100)
+	A_Clipboard := beforeData
 }
 
 /*
