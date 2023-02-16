@@ -7,9 +7,9 @@ global isFirst := true
 /*
 기본 기능 설정
 */
-if (A_UserName = "kdh") {
+if (A_ComputerName = "DESKTOP-2SVBCIT") {
 	workAlarm()
-} else if (A_UserName = "rnjse") {
+} else if (A_UserName = "DESKTOP-DSINAHN") {
 	homeAlarm()
 }
 
