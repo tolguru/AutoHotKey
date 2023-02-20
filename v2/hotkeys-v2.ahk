@@ -287,7 +287,7 @@ openReportDirectory() {
 !w::SendInput("WHERE  1 = 1`nAND    ")
 !e::SendInput("+{Enter}AND    ")
 !r::SendInput("ORDER BY REG_DT DESC")
-CapsLock::SendInput("+{Home 2}{Backspace 2}{Down}")
+CapsLock::SendInput("{End}+{Home 2}{Backspace 2}{Down}")
 
 !a::runClipboardQuery("SELECT COLUMN_NAME, ATTRIBUTE_NAME, NOT_NULL, DATATYPE, POS FROM COLDEF WHERE TABLE_NAME = '")
 !s::runClipboardQuery("SELECT CMMN_CD, CMMN_CD_NM,CMMN_CD_DC_CN, USE_YN FROM COM_CODE WHERE CD_GROUP_ENG_NM = '")
