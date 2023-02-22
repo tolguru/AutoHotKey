@@ -32,30 +32,31 @@ if (A_ComputerName = "DESKTOP-2SVBCIT") {
 ;~ }
 
 F1:: {
-	cookie := "mxuid=0429e91d-fa14-4ff4-86c7-26539b230061; cro_uv_ymd=20230222; FA_CERTIFY_ITEM_TKLINK=SIsQ5ciI9cZO37OJrph1OQ%3D%3D; cro_order_1439909768=1677031514969; FACILITY_NAVIGATION_COOKIE=SCHEDULE; FA_VIEW_ID=mS7v8fJJYHzyYwHTL9n7TQ%3D%3D; SCOUTER=x7b8k9h1ciocev; FA_TKLINK=tt9fTl7vsJreY2qDcEKfbyissnSOR9I5ZhpPr9BcczUYlrA8o2kJpxT6PYgAxO9BCMdWz%2Bby1X0ZV0nitFpfj%2BrJrICUXDiKoLOou46tXMSnjYQxa5BAkuZv4DnkKvsWwT1QwCvS0Y4tTBv0yuenT4z6txCbONeselwMwm2ybTZaH8mBbTh9d%2FWKs6cFU9zi9E%2FhAAamFmhlR7ao4BkUDDhTpacYXmh6dTNIMPFa4%2B6ob6B6dPnKpKoZD6l2kS8Xi4Jkq962ITrwFCTaIQfvdc9khhjxYjj89RaIPrNn%2FlKEW8fEPpVCF7eqmS0PZ6O7uyk2zv7w7v%2FJOE7ONky0x9y7uG1cdH77nktsN7CB%2FUoRO2EdrGOYON%2BMO7ygoGrRQ3%2FDeB7wqsI0pVT1oKQjec8I7m4Lojmzgc6mg7rm5NwWJlRAXCsehVrC3v9OgtWJ69dCtYg2D8y5sZp%2B0TtwBr60uJm%2BHM%2Fb3T4BEd4kASDmRi9dwkIulao8PntnZUxErcwlSbTIddYwTMbos4Jvaqt7cEoR7kVigBHOVLCysNvFUm25Th0cZuQoOQwBhAJZfliq3ajv91WwCnoWfQl%2FYu6E5Krylt4h4I82xZLPgoW63qBczCN6XUNuKLO8K5k9SiDHZa2oB6BglkUvCSP5a1KtzlorGYg19oV3MrvTqNB72FUl2khSd9x1STSOOa%2Bd9sZKJxxDdEyJzYQsVtrAEX1Z5lcVnvzavx%2B6LBdf6qgs%2Fac2axf7%2Bckv91In6v9sg8Q5w2SSvmlqgQnD1Uqbd8F7t6Ow8ootqyP3v%2FWBvwzAN%2B4QcZrwrX54I2rAnRGoFWLLyIOJs%2FVZCluKJjNpXawsn%2BypNmUgUaBdnGXeheVUcOxtENJq6s2PW2gUrFU2fuKv0mcO%2BNTftr3zeDwIXOFZ%2FkSjpmDXtMyxP8qJ9bCZNnmmJF8fbyQ%2BT2hy0bH6ErwNX8JUAS7DkNAQ%2BID4KfNA1BB3%2BiBkD7aqlxiyo2Z7cTTCbjEK1bCEBR1wdRZot5MYufp1a8bHLgkqPkXKvynIdirj3xt20RqWNl7pAwalQxZt4oKOk1UPlrb1d8PCdHY3fvI%2BB3ICPewkNZoED8%2BIuG4vIXd9XvW%2F4YpKZRAYLtY%2F%2Ft8calHXbw6mzK7ObR1uxZwV5znUMBWi5Bic6DZivhFQA%2FXizt8%2F1POZIrSYnSN%2BJWzvFRvkfKf40R%2FIipziucGgWcN76t%2BpN2utGrmNEMUhg6pcvoTFVd%2BhSZZ%2Fm3VZfFQLFmrte8dSnTB059Cls2blRw7Q8nLYVdiT%2Fr3CPOh6tXbiylC1TuxsCVNCfgHuX8XufA78Fstfw4%2BVpMl5PgmAxYBqKUAMTSthNZPI43SlUioIxCHVnhsnrGTxrmTlVJ1c7J2YrDNTIEfbUdPZCe1Tjsrur9iO4QoYI3fagmKjSygVIUb165OWre4dJ3uB4T%2Fp2jxBtbQjhmx06AQrx3vYzYwqIJcR2%2BL3PL92a007pgvCGX2nTZ8o45MBK%2FXnA2JmPU%2FpH5ltBIU6; JSESSIONID=08C1932F8B3F02EEF7A3401DE8CF7852.WAS2; gateKey_ID=5003%3A201%3Akey%3DC381D8B2B262B2127847C27A007D6A9BFE6DCE93AE7CF84304016B6B6293F76C0631B06CD3599B4867BBD33B62EC0B903E6FE7F8C9FA9D25857550C61AE553A423883F3C4BEFCD752FBACD22E1DA0C11978C01C3277CF14C9E3B0FE7C869DF363A4CC99FE943DE453078799C64111020302C312C302C30%26nwait%3D0%26nnext%3D0%26tps%3D0.000000%26ttl%3D10%26ip%3Dwait.ticketlink.co.kr%26port%3D80"
+	cookie := "mxuid=0429e91d-fa14-4ff4-86c7-26539b230061; cro_uv_ymd=20230222; FA_CERTIFY_ITEM_TKLINK=SIsQ5ciI9cZO37OJrph1OQ%3D%3D; cro_order_1439909768=1677031514969; FACILITY_NAVIGATION_COOKIE=SCHEDULE; FA_VIEW_ID=mS7v8fJJYHzyYwHTL9n7TQ%3D%3D; SCOUTER=x34tu7tcmh7l9i; FA_TKLINK=tt9fTl7vsJreY2qDcEKfbyissnSOR9I5ZhpPr9BcczUYlrA8o2kJpxT6PYgAxO9BCMdWz%2Bby1X0ZV0nitFpfj%2BrJrICUXDiKoLOou46tXMSnjYQxa5BAkuZv4DnkKvsWwT1QwCvS0Y4tTBv0yuenT4z6txCbONeselwMwm2ybTZaH8mBbTh9d%2FWKs6cFU9zi9E%2FhAAamFmhlR7ao4BkUDDhTpacYXmh6dTNIMPFa4%2B6ob6B6dPnKpKoZD6l2kS8Xi4Jkq962ITrwFCTaIQfvdc9khhjxYjj89RaIPrNn%2FlKEW8fEPpVCF7eqmS0PZ6O7uyk2zv7w7v%2FJOE7ONky0x9y7uG1cdH77nktsN7CB%2FUoRO2EdrGOYON%2BMO7ygoGrRQ3%2FDeB7wqsI0pVT1oKQjec8I7m4Lojmzgc6mg7rm5NwWJlRAXCsehVrC3v9OgtWJ69dCtYg2D8y5sZp%2B0TtwBr60uJm%2BHM%2Fb3T4BEd4kASDmRi9dwkIulao8PntnZUxErcwlSbTIddYwTMbos4Jvaqt7cEoR7kVigBHOVLCysNvFUm25Th0cZuQoOQwBhAJZfliq3ajv91WwCnoWfQl%2FYu6E5Krylt4h4I82xZLPgoW63qBczCN6XUNuKLO8K5k9SiDHZa2oB6BglkUvCSP5a1KtzlorGYg19oV3MrvTqNB72FUl2khSd9x1STSOOa%2Bd9sZKJxxDdEyJzYQsVtrAEX1Z5lcVnvzavx%2B6LBdf6qgs%2Fac2axf7%2Bckv91In6v9sg8Q5w2SSvmlqgQnD1Uqbd8F7t6Ow8ootqyP3v%2FWBvwzAN%2B4QcZrwrX54I2rAnRGoFWLLyIOJs%2FVZCluKJjNpXawsn%2BypNmUgUaBdnGXeheVUcOxtENJq6s2PW2gUrFU2fuKv0mcO%2BNTftr3zeDwIXOFZ%2FkSjpmDXtMyxP8qJ9bCZNnmmJF8fbyQ%2BT2hy0bH6ErwNX8JUAS7DkNAQ%2BID4KfNA1BB3%2BiBkD7aqlxiyo2YBys1oAGT3ZMby4l%2FnkCjR9Z9h7TquFNTf0IIx6hLq59nToLRQk7Mooob%2F5%2BqYfrFm2%2BhCv6JYzp0tls%2Fdg0ACruceJ9hbE044h5dBMddMCQPw9S3yozGfSn0tjFcvIwgDsZhr48tRcyx7z6mv0SylmSl1nQzdnVTEz2nc7w56JTjmrt%2F5dADkJgO8JFzifA8a5q9jgCkH%2BXYff%2FW0vA7zggPPHjn50r3M%2Fs1y8UWcRGvMUJrnGILvJ9bVzIzUhXKoy122rJxE4D1dLUBz6i5Rw7VxfOp59WnJJgM%2FCq4BJztF%2BGA2pK5DxM2jsg8qsV4OGyftkKK%2Bc4Vz%2BhFsqbSSbAvIgA1J3CORpbDnd9qOgUJMqzFUwKZK7EzKalagOXRUvCrjuk6sNxlBcwW8IN4A4nglGqoV262s%2F%2FzGAFltUqDup6uaMsjmb7Rp2JIUhs%2F%2BHiI9pyPceTnMbZ8Kk9PDX5Xicw9UM7b0dI8KB5nKVnLtIX6Lq%2Fim9fKuO%2FPeVsiZccJQ60dTEDNXuvhDId3w; JSESSIONID=14B3AF61EA2FE3C0997BADCE2D4AFB5C.WAS1; ACEFCID=UID-63F5C8318D50172062D24C9C; ASBS2A39876863068=1677051953961357740%7C1677051953961357740%7C1677051953961357740%7C0%7Chttpsfacilityticketlinkcokrreserveproduct42607checkpartnerNoPBKYLp4np95aBAYCjxkxPA3D3DteamId0isCharlottetrueisCoupangfalse; AUBS2A39876863068=1677051953961357740%7C2%7C1677051953961357740%7C1%7C1677051953826UAEXUB%7C0; ACEUACS=undefined; gateKey_ID=5002%3A200%3Akey%3D7B771ACAED38B6BD933878C0C2648B18B880B8375467B7370F9F3000358D24BF6427C2383BFD27508A51CC976D67F78BC185EF4FB83B54BE6D5945AAD81DA7BE93F844D85AE654B63E492285B67B1C726C02144460AC6A850A1CDC241D28FE5C3A4CC99FE943DE453078799C64111020342C312C302C30%26nwait%3D0%26nnext%3D0%26tps%3D0.000000%26ttl%3D0%26ip%3Dwait.ticketlink.co.kr%26port%3D80"
 
 	reqUrl          := "https://facility.ticketlink.co.kr/api/V2/plan/schedules/@/grades"
-	indexArray      := ["322237016", "1557972116", "848645101", "1160297891", "1974243180", "130120097", "50461688", "1231453308", "2076089326", "75613394"]
+	indexArray      := ["322237016", "1557972116", "848645101", "1974243180", "130120097", "1231453308", "2076089326"]
 	urlArray        := []
 	urlArray.Length := indexArray.Length
+	reAccessCount   := 0
+
+	SetControlDelay -1
 
 	Loop indexArray.Length {
 		urlArray[A_Index] := StrReplace(reqUrl, "@", indexArray[A_Index])
 	}
 
-	Loop {
-		httpObj := ComObject("WinHTTP.WinHTTPRequest.5.1")
+	httpObj := ComObject("WinHTTP.WinHTTPRequest.5.1")
 
+	Loop {
 		httpObj.Open("GET", urlArray[mod(A_Index - 1, urlArray.Length) + 1])
 		httpObj.SetRequestHeader("cookie", cookie)
 		httpObj.SetRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 		httpObj.SetRequestHeader("Accept", "*/*")
 		httpObj.SetRequestHeader("Connection", "keep-alive")
-
 		httpObj.Send()
 
 		httpObj.WaitForResponse
-		; httpObj.ResponseText()
 
 		cntArray  := StrSplit(httpObj.ResponseText(), "remainCnt")
 
@@ -74,12 +75,27 @@ F1:: {
 
 		if (isSuccess) {
 			Run("https://facility.ticketlink.co.kr/reserve/plan/schedule/" indexArray[mod(A_Index - 1, urlArray.Length) + 1])
+			A_Clipboard := "https://facility.ticketlink.co.kr/reserve/plan/schedule/" indexArray[mod(A_Index - 1, urlArray.Length) + 1]
 			break
 		}
 
-		msg("체크 중")
+		msg("try")
 
-		Sleep(1000)
+		Sleep(500)
+
+		if (mod(reAccessCount++, 60) == 0) {
+			ControlClick("x138 y752", "(데스노트)특별상품 - 예정 공연 | 대한민국 최고의 뮤지컬 전용 공연장 샤롯데씨어터 - Chrome",,,, "NA")
+			Sleep(100)
+			ControlSend("{Enter}",, "(데스노트)특별상품 - 예정 공연 | 대한민국 최고의 뮤지컬 전용 공연장 샤롯데씨어터 - Chrome")
+			ControlClick("x86 y60", "티켓링크 예매 - Chrome",,,, "NA")
+			;~ ControlSend("{^r}",, "티켓링크 예매 - Chrome")
+			;~ httpObj.Open("GET", "https://facility.ticketlink.co.kr/reserve/product/42607/check?partnerNo=PBKYLp4np95aBAYCjxkxPA%3D%3D&teamId=0&isCharlotte=true&isCoupang=false")
+			;~ httpObj.SetRequestHeader("cookie", cookie)
+			;~ httpObj.SetRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
+			;~ httpObj.SetRequestHeader("Accept", "*/*")
+			;~ httpObj.SetRequestHeader("Connection", "keep-alive")
+			;~ httpObj.Send()
+		}
 	}
 }
 
