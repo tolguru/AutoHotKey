@@ -3,10 +3,14 @@
 */
 global isStop  := false
 global isFirst := true
+global gX      := ""
+global gY      := ""
 
 /*
 기본 기능 설정
 */
+SetControlDelay -1
+
 if (A_ComputerName = "DESKTOP-2SVBCIT") {
 	workAlarm()
 } else if (A_UserName = "DESKTOP-DSINAHN") {
@@ -37,6 +41,7 @@ ScrollLock::Reload
 :*?:1234.::51124560
 
 F1::SendInput("^{Delete}")
+^+x::SendInput("{Enter}{BackSpace}]{Home}[{Right}^{Delete 2} ^a^c{Enter}{Delete}")
 
 setTransparent(gap) {
 	; 현재 투명도 변수에 저장
@@ -328,3 +333,36 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 
 CapsLock::SendInput("^+k")
 !c::SendInput("console.log(){Left}")
+
+/*
+###########
+## ETC
+###########
+*/
+#HotIf WinActive("Clicker Heroes")
+!/::MsgBox("F12 - 좌표 저장`nF3 - 실행`nF4 - 중지")
+
+F12:: {
+	MouseGetPos &x, &y
+
+	global gX := "x" x " "
+	global gY := "y" y
+}
+
+F3:: {
+	global isStop := false
+
+	pos := gX gY
+
+	Loop {
+		if (isStop) {
+			break
+		}
+
+		ControlClick(pos, "Clicker Heroes",,,, "NA")
+
+		Sleep(100)
+	}
+}
+
+F4::global isStop := true
