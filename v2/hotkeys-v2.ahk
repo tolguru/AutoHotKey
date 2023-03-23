@@ -110,10 +110,10 @@ msg(message, time := 2) {
 }
 
 runNotepad() {
-	if WinExist("ahk_exe notepad++.exe") {
+	if WinExist("ahk_exe Notepad2.exe") {
 		WinActivate
 	} else {
-		Run("notepad++.exe")
+		Run("C:\Program Files (x86)\NotePadMod\Notepad2.exe")
 	}
 }
 
@@ -139,15 +139,17 @@ runIntelliJ() {
 #############
 */
 #HotIf WinActive("ahk_exe idea64.exe")
-!/::MsgBox("## IntelliJ ##`nCapsLock - 한 줄 제거`n^w - 탭 끄기`n^+w - 고정 탭 제외 끄기`n^e - 핀으로 고정`n!z - 안 쓰는 import 제거`n!x -`n!q - 파일 검색")
+!/::MsgBox("## IntelliJ ##`nCapsLock - 한 줄 제거`n^w - 탭 끄기`n^+w - 고정 탭 제외 끄기`n^e - 핀으로 고정`n!z - 안 쓰는 import 제거`n!x - 메서드 return값으로 변수 생성`n!q - 최근 사용 파일 검색`n!w - 파일 검색")
 
 CapsLock::SendInput("^y")
 ^w::SendInput("^{F4}")
 ^+w::SendInput("!i") ; IntelluJ 기본 키설정을 해당 키로 변경
 ^e::SendInput("!u") ; IntelluJ 기본 키설정을 해당 키로 변경
 !z::SendInput("!^o")
-!x::SendInput("/**{Enter 2}{Up}")
-!q::SendInput("^+n")
+;~ !x::SendInput("/**{Enter 2}{Up}")
+!x::SendInput("^!v")
+!w::SendInput("^+n")
+!q::SendInput("^e")
 
 /*
 ###########
@@ -231,7 +233,7 @@ paintFont() {
 	SendInput("{Esc}")
 }
 
-:*?:->.::- > `
+:*?:>> ::- > `
 :*?:## ::👑
 :*?:$$ ::📌
 :*?:!! ::🔸
@@ -333,36 +335,5 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 
 CapsLock::SendInput("^+k")
 !c::SendInput("console.log(){Left}")
-
-/*
-###########
-## ETC
-###########
-*/
-#HotIf WinActive("Clicker Heroes")
-!/::MsgBox("F12 - 좌표 저장`nF3 - 실행`nF4 - 중지")
-
-F12:: {
-	MouseGetPos &x, &y
-
-	global gX := "x" x " "
-	global gY := "y" y
-}
-
-F3:: {
-	global isStop := false
-
-	pos := gX gY
-
-	Loop {
-		if (isStop) {
-			break
-		}
-
-		ControlClick(pos, "Clicker Heroes",,,, "NA")
-
-		Sleep(100)
-	}
-}
-
-F4::global isStop := true
++Enter::SendInput("^{Enter}")
+^Enter::SendInput("{End};")
