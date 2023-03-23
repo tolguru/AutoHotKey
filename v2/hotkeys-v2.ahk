@@ -22,9 +22,8 @@ if (A_ComputerName = "DESKTOP-2SVBCIT") {
 */
 !/::MsgBox("##### 프로그램 실행 #####`n!``  - notepad 실행 및 활성화`n##### 기타 #####`n`n^+F12 - 창 최상단 고정")
 
-!`::runNotePad()
-!1::runOneNote()
-!2::runIntelliJ()
+!`::runNotepadPP()
+!1::runNotePad()
 
 ^+F12::WinSetAlwaysOnTop(-1, "A")
 !+F12::Suspend
@@ -114,6 +113,14 @@ runNotepad() {
 		WinActivate
 	} else {
 		Run("C:\Program Files (x86)\NotePadMod\Notepad2.exe")
+	}
+}
+
+runNotepadPP() {
+	if WinExist("ahk_exe notepad++.exe") {
+		WinActivate
+	} else {
+		Run("notepad++.exe")
 	}
 }
 
