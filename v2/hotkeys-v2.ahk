@@ -38,14 +38,14 @@ ScrollLock::Reload
 :*?:123.::01051124560
 :*?:1234.::51124560
 
-F1::runParamUrl("https://ko.dict.naver.com/#/search?query=")
-F3::runParamUrl("https://en.dict.naver.com/#/search?query=")
+F1::runParamUrl("https://ko.dict.naver.com/#/search?query=", "국어사전")
+F3::runParamUrl("https://en.dict.naver.com/#/search?query=", "영어사전")
 
 /*
 URL에 param 더해서 실행하는 함수
 */
-runParamUrl(url) {
-	input := InputBox(, "Run URL", "w100 h70")
+runParamUrl(url, title := "Run URL") {
+	input := InputBox(, title, "w100 h70")
 	if input.Result = "OK" {
 		Run(url input.value)
 	}
