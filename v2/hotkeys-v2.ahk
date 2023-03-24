@@ -23,7 +23,6 @@ if (A_ComputerName = "DESKTOP-2SVBCIT") {
 !/::MsgBox("##### 프로그램 실행 #####`n!``  - notepad 실행 및 활성화`n##### 기타 #####`n`n^+F12 - 창 최상단 고정")
 
 !`::runNotepadPP()
-!1::runNotePad()
 
 ^+F12::WinSetAlwaysOnTop(-1, "A")
 !+F12::Suspend
@@ -39,8 +38,18 @@ ScrollLock::Reload
 :*?:123.::01051124560
 :*?:1234.::51124560
 
-F1::SendInput("^{Delete}")
-^+x::SendInput("{Enter}{BackSpace}]{Home}[{Right}^{Delete 2} ^a^c{Enter}{Delete}")
+F1::runParamUrl("https://ko.dict.naver.com/#/search?query=")
+F3::runParamUrl("https://en.dict.naver.com/#/search?query=")
+
+/*
+URL에 param 더해서 실행하는 함수
+*/
+runParamUrl(url) {
+	input := InputBox(, "Run URL", "w100 h70")
+	if input.Result = "OK" {
+		Run(url input.value)
+	}
+}
 
 setTransparent(gap) {
 	; 현재 투명도 변수에 저장
@@ -106,14 +115,6 @@ alarmBatch() {
 msg(message, time := 2) {
 	ToolTip message
 	SetTimer () => ToolTip(), -1000 * time
-}
-
-runNotepad() {
-	if WinExist("ahk_exe Notepad2.exe") {
-		WinActivate
-	} else {
-		Run("C:\Program Files (x86)\NotePadMod\Notepad2.exe")
-	}
 }
 
 runNotepadPP() {
