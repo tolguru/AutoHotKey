@@ -77,7 +77,6 @@ workAlarm() {
 	SetTimer () => workAlarm(), -1000 * 60
 
 	alarmWater()
-	alarmBatch()
 }
 
 homeAlarm() {
@@ -97,13 +96,6 @@ alarmWater() {
 		}
 
 		waterTime := 0
-	}
-}
-
-alarmBatch() {
-	if (A_Hour = 10 && A_Min = 35) {
-		Run("cmd.exe /k java -jar -Dspring.profiles.active=prod c:\batch_report-1.1.jar",, "Max")
-		openReportDirectory()
 	}
 }
 
@@ -247,34 +239,6 @@ paintFont() {
 :*?:!! ::🔸
 :*?:@@ ::🔹
 
-
-/*
-###########
-## Command
-###########
-*/
-#HotIf WinActive("ahk_exe cmd.exe")
-!/::MsgBox("^1 - 일배치 jar 실행")
-
-^1::runReport()
-
-runReport() {
-	SendInput("java -jar -Dspring.profiles.active=prod c:\batch_report-1.1.jar")
-
-	if (KeyWait("Enter", "D T10")) {
-		openReportDirectory()
-	}
-}
-
-openReportDirectory() {
-	try {
-		run("C:\Users\kdh\Desktop\온누리 일배치")
-		Sleep(1000)
-		run("C:\Project\운영\온누리 일배치\auto")
-	} catch (Error) {
-	}
-}
-
 /*
 ###########
 ## SSMS
@@ -305,10 +269,6 @@ openReportDirectory() {
 !e::SendInput("+{Enter}AND    ")
 !r::SendInput("ORDER BY REG_DT DESC")
 CapsLock::SendInput("{End}+{Home 2}{Backspace 2}{Down}")
-
-!a::runClipboardQuery("SELECT COLUMN_NAME, ATTRIBUTE_NAME, NOT_NULL, DATATYPE, POS FROM COLDEF WHERE TABLE_NAME = '")
-!s::runClipboardQuery("SELECT CMMN_CD, CMMN_CD_NM,CMMN_CD_DC_CN, USE_YN FROM COM_CODE WHERE CD_GROUP_ENG_NM = '")
-!d::runClipboardQuery("SELECT TOP 10 * FROM ", false, " ORDER BY REG_DT DESC;")
 
 /*
 해당 항목으로 쿼리 실행
