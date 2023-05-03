@@ -21,70 +21,6 @@ if (A_ComputerName = "DESKTOP-2SVBCIT") {
 임시 기능 선언
 */
 
-
-;~ F8:: {
-	;~ url := "https://vacation.benepia.co.kr/frnt/partner/roomlist.do"
-
-	;~ httpObj := ComObject("WinHTTP.WinHTTPRequest.5.1")
-
-	;~ preStr := "{`"prdId`": `""
-	;~ postStr := "`",`"checkIn`": `"2023.04.30`",`"sleepingDay`": `"1`",`"checkOut`": `"2023.05.01`"}"
-	;~ roomNumArray := [["6618395", ""], ["6620766", "오션뷰"]]
-
-	;~ resultRooms := ""
-
-	;~ Loop roomNumArray.Length {
-		;~ httpObj.Open("POST", url)
-
-		;~ httpObj.SetRequestHeader("content-type", "application/json")
-		;~ httpObj.SetRequestHeader("cookie", "SCOUTER=z3p4pe5epb55r9; eventBannerOpen=Y; popup1323=done; popup1319=done; popup1322=done; JSESSIONID=YzRmYzMxZjgtZmFkZS00ZmUwLTkxMjAtMzc5M2VhOThkMDY2")
-
-		;~ httpObj.Send(preStr roomNumArray[A_Index][1] postStr)
-		;~ httpObj.WaitForResponse
-
-		;~ if (StrLen(httpObj.ResponseText) != 87) {
-			;~ if (roomNumArray[A_Index][2] = "" || InStr(httpObj.ResponseText, roomNumArray[A_Index][2]) != 0) {
-				;~ resultRooms := resultRooms " / " roomNumArray[A_Index][1]
-			;~ }
-		;~ }
-	;~ }
-
-	;~ StrLen(resultRooms) != 0 ? MsgBox(resultRooms) : msg("없음")
-;~ }
-
-; 태안 숙소 찾기
-findRoom() {
-	url := "https://vacation.benepia.co.kr/frnt/partner/roomlist.do"
-
-	httpObj := ComObject("WinHTTP.WinHTTPRequest.5.1")
-
-	preStr := "{`"prdId`": `""
-	postStr := "`",`"checkIn`": `"2023.04.30`",`"sleepingDay`": `"1`",`"checkOut`": `"2023.05.01`"}"
-	roomNumArray := [["6618395", ""], ["6620766", "오션뷰"]]
-
-	resultRooms := ""
-
-	Loop roomNumArray.Length {
-		httpObj.Open("POST", url)
-
-		httpObj.SetRequestHeader("content-type", "application/json")
-		httpObj.SetRequestHeader("cookie", "SCOUTER=z3p4pe5epb55r9; eventBannerOpen=Y; popup1323=done; popup1319=done; popup1322=done; JSESSIONID=YzRmYzMxZjgtZmFkZS00ZmUwLTkxMjAtMzc5M2VhOThkMDY2")
-
-		httpObj.Send(preStr roomNumArray[A_Index][1] postStr)
-		httpObj.WaitForResponse
-
-		if (StrLen(httpObj.ResponseText) != 87) {
-			if (roomNumArray[A_Index][2] = "" || InStr(httpObj.ResponseText, roomNumArray[A_Index][2]) != 0) {
-				resultRooms := resultRooms " / " roomNumArray[A_Index][1]
-			}
-		}
-	}
-
-	if StrLen(resultRooms) != 0 {
-		MsgBox(resultRooms)
-	}
-}
-
 /*
 기본 기능 선언
 */
@@ -145,7 +81,6 @@ workAlarm() {
 	SetTimer () => workAlarm(), -1000 * 60
 
 	alarmWater()
-	findRoom()
 }
 
 homeAlarm() {
