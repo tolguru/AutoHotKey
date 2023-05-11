@@ -143,17 +143,21 @@ runIntelliJ() {
 #############
 */
 #HotIf WinActive("ahk_exe idea64.exe")
-!/::MsgBox("## IntelliJ ##`nCapsLock - 한 줄 제거`n^w - 탭 끄기`n^+w - 고정 탭 제외 끄기`n^e - 핀으로 고정`n!z - 안 쓰는 import 제거`n!x - 메서드 return값으로 변수 생성`n!q - 최근 사용 파일 검색`n!w - 파일 검색")
+!/::MsgBox("## IntelliJ ##`nCapsLock - 한 줄 제거`n^w - 탭 끄기`n^+w - 고정 탭 제외 끄기`n^e - 핀으로 고정`n!z - 안 쓰는 import 제거`n!x - 메서드 return값으로 변수 생성`n!q - 최근 사용 파일 검색`n!w - 파일 검색`n^. - 문장 주석 달기`n!a - 현재 커서 위치 모듈 Run`n!s - 마지막 모듈 Run`n!d - 마지막 모듈 Debug")
 
 CapsLock::SendInput("^y")
 ^w::SendInput("^{F4}")
 ^+w::SendInput("!i") ; IntelluJ 기본 키설정을 해당 키로 변경
 ^e::SendInput("!u") ; IntelluJ 기본 키설정을 해당 키로 변경
+^.::SendInput("{Home 2}^{Enter 2}/*{Enter}")
 !z::SendInput("!^o")
 ;~ !x::SendInput("/**{Enter 2}{Up}")
 !x::SendInput("^!v")
 !w::SendInput("^+n")
 !q::SendInput("^e")
+!a::SendInput("^+{F10}")
+!s::SendInput("+{F10}")
+!d::SendInput("+{F9}")
 
 /*
 ###########
@@ -161,9 +165,10 @@ CapsLock::SendInput("^y")
 ###########
 */
 #HotIf WinActive("ahk_exe chrome.exe")
-!/::MsgBox("## Chrome ##`n^q - 창 복사")
+!/::MsgBox("## Chrome ##`n^q - 창 복사`n^s - 시크릿 모드 창 열기")
 
 ^q::SendInput("!d!{Enter}")
+!s::SendInput("^+n")
 
 /*
 ###########
