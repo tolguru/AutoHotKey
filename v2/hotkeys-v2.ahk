@@ -172,6 +172,17 @@ CapsLock::SendInput("^y")
 
 /*
 ###########
+## Whale
+###########
+*/
+#HotIf WinActive("ahk_exe whale.exe")
+!/::MsgBox("## Whale ##`n^q - 창 복사`n^s - 시크릿 모드 창 열기")
+
+^q::SendInput("^k")
+!s::SendInput("^+n")
+
+/*
+###########
 ## 원노트
 ###########
 */
