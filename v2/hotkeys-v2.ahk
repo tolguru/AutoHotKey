@@ -144,7 +144,7 @@ directMessageToMe() {
 
 		ControlClick("x71 y366", "ahk_exe slack.exe")
 	} else {
-		Run("C:\Users\dhkwon\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Slack Technologies Inc\Slack")
+		Run("C:\Users\" A_UserName "\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Slack Technologies Inc\Slack")
 	}
 }
 
