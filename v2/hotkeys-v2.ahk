@@ -24,9 +24,10 @@ if (A_ComputerName = "DESKTOP-2SVBCIT") {
 /*
 기본 기능 선언
 */
-!/::MsgBox("##### 프로그램 실행 #####`n!``  - notepad 실행 및 활성화`n##### 기타 #####`n`n^+F12 - 창 최상단 고정")
+!/::MsgBox("##### 프로그램 실행 #####`n!`` - notepad 실행 및 활성화`n!1 - 나한테 다이렉트 메세지 보내기`n##### 기타 #####`n`n^+F12 - 창 최상단 고정")
 
 !`::runNotepadPP()
+!1::directMessageToMe()
 
 ^+F12::WinSetAlwaysOnTop(-1, "A")
 !+F12::Suspend
@@ -137,6 +138,16 @@ runIntelliJ() {
 	}
 }
 
+directMessageToMe() {
+	if WinExist("ahk_exe slack.exe") {
+		WinActivate
+
+		ControlClick("x71 y366", "ahk_exe slack.exe")
+	} else {
+		Run("C:\Users\dhkwon\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Slack Technologies Inc\Slack")
+	}
+}
+
 /*
 #############
 ## IntelliJ
@@ -165,7 +176,7 @@ CapsLock::SendInput("^y")
 ###########
 */
 #HotIf WinActive("ahk_exe chrome.exe")
-!/::MsgBox("## Chrome ##`n^q - 창 복사`n^s - 시크릿 모드 창 열기")
+!/::MsgBox("## Chrome ##`n^q - 창 복사`n!s - 시크릿 모드 창 열기")
 
 ^q::SendInput("!d!{Enter}")
 !s::SendInput("^+n")
@@ -176,9 +187,10 @@ CapsLock::SendInput("^y")
 ###########
 */
 #HotIf WinActive("ahk_exe whale.exe")
-!/::MsgBox("## Whale ##`n^q - 창 복사`n^s - 시크릿 모드 창 열기")
+!/::MsgBox("## Whale ##`n^q - 창 복사`n!a - 새 탭 열기`n!s - 시크릿 모드 창 열기")
 
 ^q::SendInput("^k")
+!a::SendInput("^t")
 !s::SendInput("^+n")
 
 /*
