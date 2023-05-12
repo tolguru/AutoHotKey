@@ -144,7 +144,7 @@ directMessageToMe() {
 
 		ControlClick("x71 y366", "ahk_exe slack.exe")
 	} else {
-		Run("C:\Users\dhkwon\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Slack Technologies Inc\Slack")
+		Run("C:\Users\" A_UserName "\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Slack Technologies Inc\Slack")
 	}
 }
 
@@ -218,14 +218,14 @@ selectFigure(flag) {
 
 	MouseGetPos(&nowX, &nowY)
 
-	MouseClick(, 604, 90,, 0)
+	MouseClick(, 765, 116,, 0) ; 100% : 604, 90 /
 
 	Sleep(100)
 
 	if (flag) {
-		MouseClick(, 615, 180,, 0)
+		MouseClick(, 769, 238,, 0) ; 100% : 615, 180
 	} else {
-		MouseClick(, 675, 180,, 0)
+		MouseClick(, 845, 233,, 0) ; 100% : 675, 180
 	}
 
 	MouseMove(nowX, nowY, 0)
@@ -243,19 +243,19 @@ paintFont() {
 
 	if (isFirst) {
 		Sleep(300)
-		MouseClick(, 528, 92,, 0)
+		MouseClick(, 665, 114,, 0) ; 100% : 528, 92
 		Sleep(300)
-		MouseClick(, 517, 216,, 0)
+		MouseClick(, 650, 269,, 0) ; 100% : 517, 216
 		Sleep(300)
-		MouseClick(, 477, 92,, 0)
+		MouseClick(, 598, 114,, 0) ; 100% : 477, 92
 		Sleep(300)
-		MouseClick(, 601, 254,, 0)
+		MouseClick(, 754, 316,, 0) ; 100% : 601, 254
 		Sleep(300)
 
 		global isFirst := false
 	} else {
 		Sleep(50)
-		MouseClick(, 502, 90,, 0)
+		MouseClick(, 633, 113,, 0) ; 100% : 502, 90
 		MouseMove(nowX, nowY, 0)
 		Sleep(100)
 		SendInput("^+h")
