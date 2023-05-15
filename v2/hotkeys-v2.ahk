@@ -38,7 +38,7 @@ initGlobalVariable() {
 	if (findValue(desktopList, A_ComputerName)) {
 		global slackXY := "x71 y366"
 	} else {
-		global slackXY := "x94 y332"
+		global slackXY := "x94 y393"
 	}
 }
 
