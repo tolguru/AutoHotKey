@@ -6,20 +6,55 @@ global isFirst := true
 global gX      := ""
 global gY      := ""
 
+; PC 목록
+pcList         := ["DESKTOP-2SVBCIT", "PAY-331"]
+
+; 좌표 변동용 값
+laptopList     := [pcList[1]]
+desktopList    := [pcList[2]]
+
+; Slack 좌표
+global slackXY := ""
+
+; 물 알람
+waterAlarmList := [pcList[1]]
+global waterAlarm := false
+
 /*
 기본 기능 설정
 */
 SetControlDelay -1
 
-if (A_ComputerName = "DESKTOP-2SVBCIT") {
-	workAlarm()
-} else if (A_UserName = "DESKTOP-DSINAHN") {
-	homeAlarm()
+initGlobalVariable()
+alarm()
+
+initGlobalVariable() {
+	; 랩탑만 울리게 설정
+	if (findValue(waterAlarmList, A_ComputerName)) {
+		global waterAlarm := true
+	}
+
+	; 데스크탑이면 위 랩탑이면 밑
+	if (findValue(desktopList, A_ComputerName)) {
+		global slackXY := "x71 y366"
+	} else {
+		global slackXY := "x94 y332"
+	}
+}
+
+alarm() {
+	SetTimer () => alarm(), -1000 * 60
+
+	if (waterAlarm) {
+		alarmWater()
+	}
 }
 
 /*
 임시 기능 선언
 */
+
+F5::msg(A_ComputerName)
 
 /*
 기본 기능 선언
@@ -78,27 +113,11 @@ setTransparent(gap) {
 	}
 }
 
-workAlarm() {
-	SetTimer () => workAlarm(), -1000 * 60
-
-	alarmWater()
-}
-
-homeAlarm() {
-	SetTimer () => homeAlarm(), -1000 * 60
-
-	alarmWater()
-}
-
 alarmWater() {
 	static waterTime := 0
 
 	if (++waterTime = 60) {
-		if (A_UserName = "rnjse") {
-			SoundBeep(, 600)
-		} else {
-			MsgBox("물")
-		}
+		MsgBox("물")
 
 		waterTime := 0
 	}
@@ -112,6 +131,20 @@ alarmWater() {
 msg(message, time := 2) {
 	ToolTip message
 	SetTimer () => ToolTip(), -1000 * time
+}
+
+/*
+배열에서 값 찾기(에러처리 X)
+#param arr    : 배열
+#param target : 찾을 값
+*/
+findValue(arr, target) {
+	for value in arr {
+		if (value = target) {
+			return true
+		}
+	}
+	return false
 }
 
 runNotepadPP() {
@@ -142,7 +175,7 @@ directMessageToMe() {
 	if WinExist("ahk_exe slack.exe") {
 		WinActivate
 
-		ControlClick("x71 y366", "ahk_exe slack.exe")
+		ControlClick(slackXY, "ahk_exe slack.exe")
 	} else {
 		Run("C:\Users\" A_UserName "\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Slack Technologies Inc\Slack")
 	}
