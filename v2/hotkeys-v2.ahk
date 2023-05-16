@@ -188,7 +188,7 @@ directMessageToMe() {
 #HotIf WinActive("ahk_exe idea64.exe")
 !/::MsgBox("## IntelliJ ##`nCapsLock - 한 줄 제거`n^w - 탭 끄기`n^+w - 고정 탭 제외 끄기`n^e - 핀으로 고정`n!z - 안 쓰는 import 제거`n!x - 메서드 return값으로 변수 생성`n!q - 최근 사용 파일 검색`n!w - 파일 검색`n^. - 문장 주석 달기`n!a - 현재 커서 위치 모듈 Run`n!s - 마지막 모듈 Run`n!d - 마지막 모듈 Debug")
 
-CapsLock::SendInput("^y")
+;~ CapsLock::SendInput("^y")
 ^w::SendInput("^{F4}")
 ^+w::SendInput("!i") ; IntelluJ 기본 키설정을 해당 키로 변경
 ^e::SendInput("!u") ; IntelluJ 기본 키설정을 해당 키로 변경
@@ -333,7 +333,7 @@ paintFont() {
 !w::SendInput("WHERE  1 = 1`nAND    ")
 !e::SendInput("+{Enter}AND    ")
 !r::SendInput("ORDER BY REG_DT DESC")
-CapsLock::SendInput("{End}+{Home 2}{Backspace 2}{Down}")
+;~ CapsLock::SendInput("{End}+{Home 2}{Backspace 2}{Down}")
 
 /*
 해당 항목으로 쿼리 실행
@@ -366,7 +366,7 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 #HotIf WinActive("ahk_exe Code.exe")
 !/::MsgBox("CapsLock - 한 줄 지우기`n!c - console.log()")
 
-CapsLock::SendInput("^+k")
+;~ CapsLock::SendInput("^+k")
 !c::SendInput("console.log(){Left}")
 +Enter::SendInput("^{Enter}")
 ^Enter::SendInput("{End};")
