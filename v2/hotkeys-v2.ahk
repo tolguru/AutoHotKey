@@ -54,8 +54,6 @@ alarm() {
 임시 기능 선언
 */
 
-F5::msg(A_ComputerName)
-
 /*
 기본 기능 선언
 */
@@ -70,7 +68,7 @@ F5::msg(A_ComputerName)
 !+WheelUp::setTransparent(10)
 !+WheelDown::setTransparent(-10)
 
-ScrollLock::Reload
+Pause::Reload
 
 :*?:na.::rnjsehdgks01@naver.com
 :*?:gm.::rnjsehdgks02@gmail.com
