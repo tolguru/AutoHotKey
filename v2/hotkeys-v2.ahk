@@ -57,13 +57,14 @@ alarm() {
 /*
 기본 기능 선언
 */
-!/::MsgBox("##### 프로그램 실행 #####`n!`` - notepad 실행 및 활성화`n!1 - 나한테 다이렉트 메세지 보내기`n##### 기타 #####`n`n^+F12 - 창 최상단 고정")
+!/::MsgBox("##### 프로그램 실행 #####`n!`` - notepad 실행 및 활성화`n!1 - 나한테 다이렉트 메세지 보내기`n##### 기타 #####`n`n^+F12 - 창 최상단 고정`n^\ - caps lock 토글")
 
 !`::runNotepadPP()
 !1::directMessageToMe()
 
 ^+F12::WinSetAlwaysOnTop(-1, "A")
 !+F12::Suspend
+^\::SetCapsLockState !GetKeyState("CapsLock", "T")
 
 !+WheelUp::setTransparent(10)
 !+WheelDown::setTransparent(-10)
