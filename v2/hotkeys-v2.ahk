@@ -7,17 +7,18 @@ global gX      := ""
 global gY      := ""
 
 ; PC 목록
-pcList         := ["DESKTOP-2SVBCIT", "PAY-331"]
+mainPC         := "PAY-331"
+subPC          := "DESKTOP-2SVBCIT"
 
 ; 좌표 변동용 값
-laptopList     := [pcList[1]]
-desktopList    := [pcList[2]]
+laptopList     := [subPC]
+desktopList    := [mainPC]
 
 ; Slack 좌표
 global slackXY := ""
 
 ; 물 알람
-waterAlarmList := [pcList[1]]
+waterAlarmList := [subPC]
 global waterAlarm := false
 
 /*
@@ -38,7 +39,7 @@ initGlobalVariable() {
 	if (findValue(desktopList, A_ComputerName)) {
 		global slackXY := "x71 y366"
 	} else {
-		global slackXY := "x94 y393"
+		global slackXY := "x94 y458"
 	}
 }
 
