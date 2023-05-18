@@ -45,7 +45,7 @@ initGlobalVariable() {
 
 	; Whale 번역 좌표 초기화
 	if (findValue(laptopList, A_ComputerName)) {
-		global wTranslateXY := [1897, 59, 1559, 486]
+		global wTranslateXY := [1897, 59, 1586, 519]
 	}
 }
 
