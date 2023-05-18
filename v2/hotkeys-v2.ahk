@@ -1,25 +1,28 @@
 ﻿/*
 전역변수 선언
 */
-global isStop  := false
-global isFirst := true
-global gX      := ""
-global gY      := ""
+global isStop       := false
+global isFirst      := true
+global gX           := ""
+global gY           := ""
 
 ; PC 목록
-mainPC         := "PAY-331"
-subPC          := "DESKTOP-2SVBCIT"
+mainPC              := "PAY-331"
+subPC               := "DESKTOP-2SVBCIT"
 
 ; 좌표 변동용 값
-laptopList     := [subPC]
-desktopList    := [mainPC]
+laptopList          := [subPC]
+desktopList         := [mainPC]
 
 ; Slack 좌표
-global slackXY := ""
+global slackXY      := "x71 y366"
+
+; Whale 번역 좌표
+global wTranslateXY := [1901, 50, 1654, 415]
 
 ; 물 알람
-waterAlarmList := [subPC]
-global waterAlarm := false
+waterAlarmList      := [subPC]
+global waterAlarm   := false
 
 /*
 기본 기능 설정
@@ -35,11 +38,14 @@ initGlobalVariable() {
 		global waterAlarm := true
 	}
 
-	; 데스크탑이면 위 랩탑이면 밑
-	if (findValue(desktopList, A_ComputerName)) {
-		global slackXY := "x71 y366"
-	} else {
+	; 슬랙 나 클릭 좌표 초기화
+	if (findValue(laptopList, A_ComputerName)) {
 		global slackXY := "x94 y458"
+	}
+
+	; Whale 번역 좌표 초기화
+	if (findValue(laptopList, A_ComputerName)) {
+		global wTranslateXY := [1897, 59, 1559, 486]
 	}
 }
 
@@ -225,6 +231,26 @@ directMessageToMe() {
 ^q::SendInput("^k")
 !a::SendInput("^t")
 !s::SendInput("^+n")
+!z::wTranslate()
+
+wTranslate() {
+	BlockInput("MouseMove")
+	MouseGetPos(&nowX, &nowY)
+
+	MouseClick(, wTranslateXY[1], wTranslateXY[2],, 0) ; 메뉴 버튼 클릭
+	Sleep(100)
+	MouseClick(, wTranslateXY[3], wTranslateXY[4],, 0) ; 번역 버튼 클릭
+	SendInput("{Enter}") ; 번역 확인 팝업 처리
+	SendInput("{Esc}") ; 번역 후 팝업 제거
+
+	MouseMove(nowX, nowY, 0)
+	BlockInput("MouseMoveOff")
+}
+	;~ ControlClick("x1901 y50 ", "ahk_exe whale.exe")
+	;~ Sleep(200)
+	;~ ControlClick(wTranslateXY, "ahk_exe whale.exe")
+	;~ Sleep(200)
+	;~ ControlClick(wSubmitXY, "ahk_exe whale.exe")
 
 /*
 ###########
