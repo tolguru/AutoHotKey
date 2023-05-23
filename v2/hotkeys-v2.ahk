@@ -339,8 +339,9 @@ pasteURL() {
 		if (SubStr(A_Clipboard, StrLen(A_Clipboard) - 1) = "`r`n") { ; 끝에 개행 문자가 있으면 제거(원노트 내에 있는 URL복사 시 개행 포함됨)
 			SendInput(SubStr(A_Clipboard, 1, StrLen(A_Clipboard) - 2))
 		} else {
-			SendInput(A_Clipboard)
+			SendInput("^v")
 		}
+		Sleep(50)
 		SendInput("{Enter}")
 	} else {
 		SendInput("^v")
