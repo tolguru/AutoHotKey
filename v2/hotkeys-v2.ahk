@@ -258,12 +258,13 @@ wTranslate() {
 ###########
 */
 #HotIf WinActive("ahk_exe ApplicationFrameHost.exe")
-!/::MsgBox("!q - 글 배경색`n!w - 서식 제거`n!e - 그리기 직선`n!r - 그리기 화살표`n!d - 펜 해제")
+!/::MsgBox("!q - 글 배경색`n!w - 서식 제거`n!e - 그리기 직선`n!r - 그리기 화살표`n!d - 펜 해제`n^v - HTTP URL일 경우 링크 이름 편집")
 
 !q::paintFont() ; 글 배경색
 !w::SendInput("^+n") ; 글 서식 제거
 !e::selectFigure(true) ; 그리기 직선
 !r::selectFigure(false) ; 그리기 화살표
+^v::pasteURL() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입
 +Insert::SendInput("^b") ;
 +PgUp::SendInput("^+`>") ; 폰트 크기 키우기
 +PgDn::SendInput("^+`<") ; 폰트 크기 줄이기
@@ -323,6 +324,27 @@ paintFont() {
 	BlockInput("MouseMoveOff")
 	Sleep(50)
 	SendInput("{Esc}")
+}
+
+pasteURL() {
+	if (SubStr(A_Clipboard, 1, 4) = "http") {
+		SendInput("^k")
+		Sleep(200)
+		SendInput("{Tab}")
+		Sleep(50)
+		SendInput("Link")
+		Sleep(50)
+		SendInput("{Tab}")
+		Sleep(50)
+		if (SubStr(A_Clipboard, StrLen(A_Clipboard) - 1) = "`r`n") { ; 끝에 개행 문자가 있으면 제거(원노트 내에 있는 URL복사 시 개행 포함됨)
+			SendInput(SubStr(A_Clipboard, 1, StrLen(A_Clipboard) - 2))
+		} else {
+			SendInput(A_Clipboard)
+		}
+		SendInput("{Enter}")
+	} else {
+		SendInput("^v")
+	}
 }
 
 :*?:>> ::- > `
