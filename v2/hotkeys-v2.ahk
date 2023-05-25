@@ -1,8 +1,4 @@
 ﻿/*
-임시 기능 선언
-*/
-
-/*
 전역변수 선언
 */
 global isStop       := false
@@ -49,7 +45,7 @@ initGlobalVariable() {
 
 	; Whale 번역 좌표 초기화
 	if (findValue(laptopList, A_ComputerName)) {
-		global wTranslateXY := [1897, 59, 1559, 486]
+		global wTranslateXY := [1897, 59, 1586, 519]
 	}
 }
 
@@ -60,6 +56,10 @@ alarm() {
 		alarmWater()
 	}
 }
+
+/*
+임시 기능 선언
+*/
 
 /*
 기본 기능 선언
