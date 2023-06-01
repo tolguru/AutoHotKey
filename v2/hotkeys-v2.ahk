@@ -273,15 +273,17 @@ wTranslate() {
 ###########
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("^q - 글자색 + 배경색`n^d - 글자색`n^w - 서식 제거`n^e - 그리기 직선`n^r - 그리기 화살표`n^v - HTTP URL일 경우 링크 이름 편집`n^+v - 일반 붙여넣기")
+!/::MsgBox("^q - 글자색 + 배경색`n^d - 글자색`n^w - 서식 제거`n^e - 그리기 직선`n^r - 그리기 화살표`n^f - 전자 필기장 전체 검색`n^g - 전자 필기장 일부 검색`n^v - HTTP URL일 경우 링크 이름 편집`n^+v - 서식 유지해서 붙여넣기")
 
 ^q::paintFont() ; 글자색 + 배경색
 ^d::paintFont(FONT_COLOR_CUSTOM_XY, false) ; 글자색
 ^w::SendInput("^+n") ; 글 서식 제거
 ^e::selectFigure(FIGURE_LINE_XY) ; 그리기 직선
 ^r::selectFigure(FIGURE_ARROW_XY) ; 그리기 화살표
+^f::SendInput("^e") ; 전자 필기장 전체 검색
+^g::SendInput("^f") ; 전자 필기장 일부 검색
 ^v::pasteURL() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입
-^+v::SendInput("^v") ; 일반 붙여넣기
+^+v::SendInput("!3") ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
 
 +PgUp::SendInput("^+`>") ; 폰트 크기 키우기
 +PgDn::SendInput("^+`<") ; 폰트 크기 줄이기
