@@ -1,4 +1,8 @@
 ﻿/*
+임시 기능 선언
+*/
+
+/*
 전역변수 선언
 */
 global isStop       := false
@@ -20,6 +24,16 @@ global slackXY      := "x71 y366"
 ; Whale 번역 좌표
 global wTranslateXY := [1901, 50, 1654, 415]
 
+; 원노트 좌표
+global RIBBON_TOOL1_XY := "x0 y0"
+global RIBBON_TOOL2_XY := "x0 y0"
+
+global FONT_COLOR_BLACK_XY := "x0 y0"
+global FONT_COLOR_CUSTOM_XY := "x0 y0"
+
+global FIGURE_LINE_XY := "x0 y0"
+global FIGURE_ARROW_XY := "x0 y0"
+
 ; 물 알람
 waterAlarmList      := [subPC]
 global waterAlarm   := false
@@ -31,6 +45,7 @@ SetControlDelay -1
 
 initGlobalVariable()
 alarm()
+
 
 initGlobalVariable() {
 	; 랩탑만 울리게 설정
@@ -47,6 +62,16 @@ initGlobalVariable() {
 	if (findValue(laptopList, A_ComputerName)) {
 		global wTranslateXY := [1897, 59, 1586, 519]
 	}
+
+	; 원노트 좌표 초기화
+	if (findValue(laptopList, A_ComputerName)) {
+		global FONT_COLOR_BLACK_XY := "x9 y116"
+		global FONT_COLOR_CUSTOM_XY := "x12 y255"
+		global RIBBON_TOOL1_XY := "x49 y119"
+		global RIBBON_TOOL2_XY := "x78 y119"
+		global FIGURE_LINE_XY := "x12 y49"
+		global FIGURE_ARROW_XY := "x36 y47"
+	}
 }
 
 alarm() {
@@ -56,10 +81,6 @@ alarm() {
 		alarmWater()
 	}
 }
-
-/*
-임시 기능 선언
-*/
 
 /*
 기본 기능 선언
@@ -246,101 +267,70 @@ wTranslate() {
 	MouseMove(nowX, nowY, 0)
 	BlockInput("MouseMoveOff")
 }
-	;~ ControlClick("x1901 y50 ", "ahk_exe whale.exe")
-	;~ Sleep(200)
-	;~ ControlClick(wTranslateXY, "ahk_exe whale.exe")
-	;~ Sleep(200)
-	;~ ControlClick(wSubmitXY, "ahk_exe whale.exe")
 
 /*
 ###########
 ## 원노트
 ###########
 */
-#HotIf WinActive("ahk_exe ApplicationFrameHost.exe")
-!/::MsgBox("!q - 글 배경색`n!w - 서식 제거`n!e - 그리기 직선`n!r - 그리기 화살표`n!d - 펜 해제`n^v - HTTP URL일 경우 링크 이름 편집")
+#HotIf WinActive("ahk_exe ONENOTE.EXE")
+!/::MsgBox("^q - 글자색 + 배경색`n^d - 글자색`n^w - 서식 제거`n^e - 그리기 직선`n^r - 그리기 화살표`n^v - HTTP URL일 경우 링크 이름 편집`n^+v - 일반 붙여넣기")
 
-!q::paintFont() ; 글 배경색
-!w::SendInput("^+n") ; 글 서식 제거
-!e::selectFigure(true) ; 그리기 직선
-!r::selectFigure(false) ; 그리기 화살표
+^q::paintFont() ; 글자색 + 배경색
+^d::paintFont(FONT_COLOR_CUSTOM_XY, false) ; 글자색
+^w::SendInput("^+n") ; 글 서식 제거
+^e::selectFigure(FIGURE_LINE_XY) ; 그리기 직선
+^r::selectFigure(FIGURE_ARROW_XY) ; 그리기 화살표
 ^v::pasteURL() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입
-+Insert::SendInput("^b") ;
+^+v::SendInput("^v") ; 일반 붙여넣기
+
 +PgUp::SendInput("^+`>") ; 폰트 크기 키우기
 +PgDn::SendInput("^+`<") ; 폰트 크기 줄이기
++WheelUp::SendInput("^+`>") ; 폰트 크기 키우기
++WheelDown::SendInput("^+`<") ; 폰트 크기 줄이기
 
-selectFigure(flag) {
-	BlockInput("MouseMove")
+; 도형 선택 - 빠른 실행 도구 2번째에 지정
+selectFigure(figureXY) {
 
-	SendInput("!d")
+	; STEP 01. 도형 클릭
+	ControlClick(RIBBON_TOOL2_XY, "ahk_exe ONENOTE.EXE",,,, "NA")
+	Sleep(70)
 
-	Sleep(100)
+	; STEP 02. 도형 선택
+	ControlClick(figureXY, "ahk_exe ONENOTE.EXE",,,, "NA")
 
-	MouseGetPos(&nowX, &nowY)
-
-	MouseClick(, 765, 116,, 0) ; 100% : 604, 90 /
-
-	Sleep(100)
-
-	if (flag) {
-		MouseClick(, 769, 238,, 0) ; 100% : 615, 180
-	} else {
-		MouseClick(, 845, 233,, 0) ; 100% : 675, 180
-	}
-
-	MouseMove(nowX, nowY, 0)
-
-	BlockInput("MouseMoveOff")
+	; STEP 03. 즉시 도구가 사용되지 않는 버그 해결용으로 단순 클릭 입력
+	SendInput("{Click}")
 }
 
-paintFont() {
-	BlockInput("MouseMove")
+; Font Color 선택 - 빠른 실행 도구 1번째에 지정
+paintFont(colorXY := FONT_COLOR_BLACK_XY, backColor := true) {
 
-	SendInput("!h")
-	Sleep(100)
+	; STEP 01. Font Color 클릭
+	ControlClick(RIBBON_TOOL1_XY, "ahk_exe ONENOTE.EXE",,,, "NA")
+	Sleep(80)
 
-	MouseGetPos(&nowX, &nowY)
+	; STEP 02. Font Color 선택
+	ControlClick(colorXY, "ahk_exe ONENOTE.EXE",,,, "NA")
 
-	if (isFirst) {
-		Sleep(300)
-		MouseClick(, 665, 114,, 0) ; 100% : 528, 92
-		Sleep(300)
-		MouseClick(, 650, 269,, 0) ; 100% : 517, 216
-		Sleep(300)
-		MouseClick(, 598, 114,, 0) ; 100% : 477, 92
-		Sleep(300)
-		MouseClick(, 754, 316,, 0) ; 100% : 601, 254
-		Sleep(300)
-
-		global isFirst := false
-	} else {
-		Sleep(50)
-		MouseClick(, 633, 113,, 0) ; 100% : 502, 90
-		MouseMove(nowX, nowY, 0)
-		Sleep(100)
+	; STEP 03. Font Background Color 추가
+	if (backColor) {
+		Sleep(40)
 		SendInput("^+h")
 	}
 
-	BlockInput("MouseMoveOff")
-	Sleep(50)
+	; STEP 04. 마우스에 가위표 생기는 버그 해결용
+	Sleep(20)
 	SendInput("{Esc}")
 }
 
 pasteURL() {
 	if (SubStr(A_Clipboard, 1, 4) = "http") {
 		SendInput("^k")
-		Sleep(200)
-		SendInput("{Tab}")
-		Sleep(50)
-		SendInput("Link")
-		Sleep(50)
-		SendInput("{Tab}")
-		Sleep(50)
-		if (SubStr(A_Clipboard, StrLen(A_Clipboard) - 1) = "`r`n") { ; 끝에 개행 문자가 있으면 제거(원노트 내에 있는 URL복사 시 개행 포함됨)
-			SendInput(SubStr(A_Clipboard, 1, StrLen(A_Clipboard) - 2))
-		} else {
-			SendInput(A_Clipboard)
-		}
+		Sleep(150)
+		ControlSetText("Link", "RICHEDIT60W3", "ahk_exe ONENOTE.EXE")
+		ControlSetText(A_Clipboard, "RICHEDIT60W2", "ahk_exe ONENOTE.EXE")
+		ControlFocus("RICHEDIT60W3", "ahk_exe ONENOTE.EXE")
 		SendInput("{Enter}")
 	} else {
 		SendInput("^v")
@@ -348,10 +338,6 @@ pasteURL() {
 }
 
 :*?:>> ::- > `
-:*?:## ::👑
-:*?:$$ ::📌
-:*?:!! ::🔸
-:*?:@@ ::🔹
 
 /*
 ###########
@@ -419,3 +405,14 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 !c::SendInput("console.log(){Left}")
 +Enter::SendInput("^{Enter}")
 ^Enter::SendInput("{End};")
+
+/*
+###########
+## SciTE4AutoHotkey
+###########
+*/
+#HotIf WinActive("ahk_exe SciTE.exe")
+!/::MsgBox("!q - 책갈피 설정/제거`n!w - 책갈피로 이동")
+
+!q::SendInput("^{F2}")
+!w::SendInput("{F2}")
