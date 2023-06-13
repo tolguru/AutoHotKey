@@ -273,7 +273,7 @@ wTranslate() {
 ###########
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - 글자색 + 배경색`n!d - 글자색`n!w - 서식 제거`n!e - 그리기 직선`n!r - 그리기 화살표`n^v - HTTP URL일 경우 링크 이름 편집`n^+v - 서식 유지해서 붙여넣기")
+!/::MsgBox("!q - 글자색 + 배경색`n!d - 글자색`n!w - 서식 제거`n!e - 그리기 직선`n!r - 그리기 화살표`n^v - HTTP URL일 경우 링크 이름 편집`n^+v - 서식 유지해서 붙여넣기`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지")
 
 !q::paintFont() ; 글자색 + 배경색
 !d::paintFont(FONT_COLOR_CUSTOM_XY, false) ; 글자색
@@ -282,6 +282,8 @@ wTranslate() {
 !r::selectFigure(FIGURE_ARROW_XY) ; 그리기 화살표
 ^v::pasteURL() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입
 ^+v::SendInput("!3") ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
+XButton1::SendInput("!{Left}")
+XButton2::SendInput("!{Right}")
 
 +PgUp::SendInput("^+`>") ; 폰트 크기 키우기
 +PgDn::SendInput("^+`<") ; 폰트 크기 줄이기
@@ -293,7 +295,7 @@ selectFigure(figureXY) {
 
 	; STEP 01. 도형 클릭
 	ControlClick(RIBBON_TOOL2_XY, "ahk_exe ONENOTE.EXE",,,, "NA")
-	Sleep(70)
+	Sleep(100)
 
 	; STEP 02. 도형 선택
 	ControlClick(figureXY, "ahk_exe ONENOTE.EXE",,,, "NA")
@@ -316,14 +318,14 @@ paintFont(colorXY := FONT_COLOR_BLACK_XY, backColor := true) {
 
 	; STEP 01. Font Color 클릭
 	ControlClick(RIBBON_TOOL1_XY, "ahk_exe ONENOTE.EXE",,,, "NA")
-	Sleep(80)
+	Sleep(100)
 
 	; STEP 02. Font Color 선택
 	ControlClick(colorXY, "ahk_exe ONENOTE.EXE",,,, "NA")
 
 	; STEP 03. Font Background Color 추가
 	if (backColor) {
-		Sleep(40)
+		Sleep(60)
 		SendInput("^+h")
 	}
 
