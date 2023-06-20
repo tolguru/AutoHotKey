@@ -111,7 +111,8 @@ F3::runParamUrl("https://en.dict.naver.com/#/search?query=", "영어사전")
 */
 ringTimer(count := 1) {
 	msg(count "초 타이머 시작")
-	SetTimer () => SoundBeep(650, 1000), -1000 * count
+	SoundBeep(550, 500)
+	SetTimer () => SoundBeep(550, 500), -1000 * count
 }
 
 /*
