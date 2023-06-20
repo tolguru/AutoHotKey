@@ -86,7 +86,8 @@ alarm() {
 !1::directMessageToMe()
 
 ; 1분 타이머, Beep 사운드 알람
-^+F12::SetTimer () => SoundBeep(650, 1000), -1000 * 60
+F12::ringTimer(60)
+
 !+F12::Suspend
 ^\::SetCapsLockState !GetKeyState("CapsLock", "T")
 
@@ -103,6 +104,15 @@ Pause::Reload
 
 F1::runParamUrl("https://ko.dict.naver.com/#/search?query=", "국어사전")
 F3::runParamUrl("https://en.dict.naver.com/#/search?query=", "영어사전")
+
+/*
+타이머 실행 후 사운드 알람, Tool tip 표기됨
+#param count : 타이머 시간(초) (default = 1초)
+*/
+ringTimer(count := 1) {
+	msg(count "초 타이머 시작")
+	SetTimer () => SoundBeep(650, 1000), -1000 * count
+}
 
 /*
 URL에 param 더해서 실행하는 함수
