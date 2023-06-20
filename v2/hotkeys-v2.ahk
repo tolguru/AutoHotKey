@@ -35,7 +35,7 @@ global FIGURE_LINE_XY := "x0 y0"
 global FIGURE_ARROW_XY := "x0 y0"
 
 ; 물 알람
-waterAlarmList      := [subPC]
+waterAlarmList      := []
 global waterAlarm   := false
 
 /*
@@ -47,23 +47,19 @@ initGlobalVariable()
 alarm()
 
 initGlobalVariable() {
-	; 랩탑만 울리게 설정
+	; 특정 PC만 울리게 설정
 	if (findValue(waterAlarmList, A_ComputerName)) {
 		global waterAlarm := true
 	}
 
-	; 슬랙 나 클릭 좌표 초기화
 	if (findValue(laptopList, A_ComputerName)) {
+		; 슬랙 나 클릭 좌표 초기화
 		global slackXY := "x94 y458"
-	}
 
-	; Whale 번역 좌표 초기화
-	if (findValue(laptopList, A_ComputerName)) {
+		; Whale 번역 좌표 초기화
 		global wTranslateXY := [1897, 59, 1586, 519]
-	}
 
-	; 원노트 좌표 초기화
-	if (findValue(laptopList, A_ComputerName)) {
+		; 원노트 좌표 초기화
 		global FONT_COLOR_BLACK_XY := "x9 y116"
 		global FONT_COLOR_CUSTOM_XY := "x12 y255"
 		global RIBBON_TOOL1_XY := "x49 y119"
@@ -84,12 +80,13 @@ alarm() {
 /*
 기본 기능 선언
 */
-!/::MsgBox("##### 프로그램 실행 #####`n!`` - notepad 실행 및 활성화`n!1 - 나한테 다이렉트 메세지 보내기`n##### 기타 #####`n`n^+F12 - 창 최상단 고정`n^\ - caps lock 토글")
+!/::MsgBox("##### 프로그램 실행 #####`n!`` - notepad 실행 및 활성화`n!1 - 나한테 다이렉트 메세지 보내기`n##### 기타 #####`n`n^+F12 - 1분 타이머 후 사운드`n^\ - caps lock 토글")
 
 !`::runNotepadPP()
 !1::directMessageToMe()
 
-^+F12::WinSetAlwaysOnTop(-1, "A")
+; 1분 타이머, Beep 사운드 알람
+^+F12::SetTimer () => SoundBeep(650, 1000), -1000 * 60
 !+F12::Suspend
 ^\::SetCapsLockState !GetKeyState("CapsLock", "T")
 
@@ -237,7 +234,7 @@ directMessageToMe() {
 #HotIf WinActive("ahk_exe chrome.exe")
 !/::MsgBox("## Chrome ##`n^q - 창 복사`n!s - 시크릿 모드 창 열기")
 
-^q::SendInput("!d!{Enter}")
+^q::SendInput("{F6}!{Enter}")
 !s::SendInput("^+n")
 
 /*
@@ -273,7 +270,7 @@ wTranslate() {
 ###########
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - 글자색 + 배경색`n!d - 글자색`n!w - 서식 제거`n!e - 그리기 직선`n!r - 그리기 화살표`n^v - HTTP URL일 경우 링크 이름 편집`n^+v - 서식 유지해서 붙여넣기`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지")
+!/::MsgBox("!q - 글자색 + 배경색`n!d - 글자색`n!w - 서식 제거`n!e - 그리기 직선`n!r - 그리기 화살표`n^v - HTTP URL일 경우 링크 이름 편집`n^+v - 서식 유지해서 붙여넣기`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지`n!a - 새로운 페이지`n!s - 맨 밑에 페이지 추가")
 
 !q::paintFont() ; 글자색 + 배경색
 !d::paintFont(FONT_COLOR_CUSTOM_XY, false) ; 글자색
@@ -284,6 +281,8 @@ wTranslate() {
 ^+v::SendInput("!3") ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
 XButton1::SendInput("!{Left}")
 XButton2::SendInput("!{Right}")
+!a::SendInput("!5") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 5번째에 지정)
+!s::SendInput("^n") ; 맨 밑에 페이지 추가
 
 +PgUp::SendInput("^+`>") ; 폰트 크기 키우기
 +PgDn::SendInput("^+`<") ; 폰트 크기 줄이기
