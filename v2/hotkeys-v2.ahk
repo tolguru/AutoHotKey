@@ -90,6 +90,7 @@ F12::ringTimer(60)
 
 !+F12::Suspend
 ^\::SetCapsLockState !GetKeyState("CapsLock", "T")
+*ScrollLock::blockAllInput(0.02)
 
 !+WheelUp::setTransparent(10)
 !+WheelDown::setTransparent(-10)
@@ -213,6 +214,18 @@ directMessageToMe() {
 	} else {
 		Run("C:\Users\" A_UserName "\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Slack Technologies Inc\Slack")
 	}
+}
+
+/*
+키보드 마우스 입력 중지
+#param time    : 노출 시간 (default = 0.1초)
+*/
+blockAllInput(time := 0.1) {
+	BlockInput True
+
+	Sleep(1000 * time)
+
+	BlockInput False
 }
 
 /*
