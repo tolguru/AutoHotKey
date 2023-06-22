@@ -296,7 +296,7 @@ wTranslate() {
 ###########
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - 글자색 + 배경색`n!d - 글자색`n!w - 서식 제거`n!e - 그리기 직선`n!r - 그리기 화살표`n^v - HTTP URL일 경우 링크 이름 편집`n^+v - 서식 유지해서 붙여넣기`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지`n!a - 새로운 페이지`n!s - 맨 밑에 페이지 추가")
+!/::MsgBox("!q - 글자색 + 배경색`n!d - 글자색`n!w - 서식 제거`n!e - 그리기 직선`n!r - 그리기 화살표`n^v - HTTP URL일 경우 링크 이름 편집`n^+v - 서식 유지해서 붙여넣기`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지`n!a - 맨 밑에 페이지 추가`n!s - 커서 밑에 페이지 추가")
 
 !q::paintFont() ; 글자색 + 배경색
 !d::paintFont(FONT_COLOR_CUSTOM_XY, false) ; 글자색
@@ -307,8 +307,8 @@ wTranslate() {
 ^+v::SendInput("!3") ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
 XButton1::SendInput("!{Left}")
 XButton2::SendInput("!{Right}")
-!a::SendInput("!5") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 5번째에 지정)
-!s::SendInput("^n") ; 맨 밑에 페이지 추가
+!a::SendInput("^n") ; 맨 밑에 페이지 추가
+!s::SendInput("!5") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 5번째에 지정)
 
 +PgUp::SendInput("^+`>") ; 폰트 크기 키우기
 +PgDn::SendInput("^+`<") ; 폰트 크기 줄이기
