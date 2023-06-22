@@ -90,7 +90,7 @@ F12::ringTimer(60)
 
 !+F12::Suspend
 ^\::SetCapsLockState !GetKeyState("CapsLock", "T")
-*ScrollLock::blockAllInput(0.02)
+;~ *ScrollLock::blockAllInput(0.1)
 
 !+WheelUp::setTransparent(10)
 !+WheelDown::setTransparent(-10)
