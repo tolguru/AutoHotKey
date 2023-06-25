@@ -86,7 +86,7 @@ alarm() {
 !1::directMessageToMe()
 
 ; 1분 타이머, Beep 사운드 알람
-F12::ringTimer(60)
++F12::ringTimer(60)
 
 !+F12::Suspend
 ^\::SetCapsLockState !GetKeyState("CapsLock", "T")
