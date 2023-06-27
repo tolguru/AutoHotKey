@@ -90,7 +90,7 @@ alarm() {
 
 !+F12::Suspend
 ^\::SetCapsLockState !GetKeyState("CapsLock", "T")
-;~ *ScrollLock::blockAllInput(0.1)
+*ScrollLock::blockAllInput() ; 관리자 권한으로 실행 필요
 
 !+WheelUp::setTransparent(10)
 !+WheelDown::setTransparent(-10)
