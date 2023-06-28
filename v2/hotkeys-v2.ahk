@@ -350,15 +350,6 @@ selectFigure(figureXY) {
 
 	; STEP 03. 즉시 도구가 사용되지 않는 버그 해결용으로 단순 클릭 입력
 	SendInput("{Click}")
-
-	; STEP 04. Alt 키 자동 입력으로 도형 위치를 자유롭게 배치, 10초 제한
-	Sleep(300)
-	SendInput("{Alt down}")
-	if (KeyWait("LButton", "D T10")) {
-	}
-
-	Sleep(500)
-	SendInput("{Alt up}")
 }
 
 ; Font Color 선택 - 빠른 실행 도구 1번째에 지정
