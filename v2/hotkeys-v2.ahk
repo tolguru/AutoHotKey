@@ -474,3 +474,20 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 
 !q::SendInput("^{F2}")
 !w::SendInput("{F2}")
+
+/*
+#############
+## Slack
+#############
+*/
+#HotIf WinActive("ahk_exe slack.exe")
+!/::MsgBox("!q - 이미지 복사")
+
+!q::copyImage()
+
+copyImage() {
+	WinGetPos(,, &x, &y, "A")
+	ControlClick("x" (x / 2) " y" (y / 2), "A",, "Right")
+	Sleep(50)
+	SendInput("{Down}{Enter}")
+}
