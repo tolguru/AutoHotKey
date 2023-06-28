@@ -319,14 +319,14 @@ wTranslate() {
 ###########
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - 글자색 + 배경색`n!d - 글자색`n!w - 서식 제거`n!e - 그리기 직선`n!r - 그리기 화살표`n^v - HTTP URL일 경우 링크 이름 편집`n^+v - 서식 유지해서 붙여넣기`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지`n!a - 맨 밑에 페이지 추가`n!s - 커서 밑에 페이지 추가")
+!/::MsgBox("!q - 글자색 + 배경색`n!d - 글자색`n!w - 서식 제거`n!e - 그리기 직선`n!r - 그리기 화살표`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지`n!a - 맨 밑에 페이지 추가`n!s - 커서 밑에 페이지 추가")
 
 !q::paintFont() ; 글자색 + 배경색
 !d::paintFont(FONT_COLOR_CUSTOM_XY, false) ; 글자색
 !w::SendInput("^+n") ; 글 서식 제거
 !e::selectFigure(FIGURE_LINE_XY) ; 그리기 직선
 !r::selectFigure(FIGURE_ARROW_XY) ; 그리기 화살표
-^v::pasteURL() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입
+^v::paste() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입 / 이미지는 그림으로 붙여넣기(빠른 실행 도구 6번째에 지정)
 ^+v::SendInput("!3") ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
 XButton1::SendInput("!{Left}")
 XButton2::SendInput("!{Right}")
@@ -382,7 +382,7 @@ paintFont(colorXY := FONT_COLOR_BLACK_XY, backColor := true) {
 	SendInput("{Esc}")
 }
 
-pasteURL() {
+paste() {
 	if (SubStr(A_Clipboard, 1, 4) = "http") {
 		SendInput("^k")
 		Sleep(150)
@@ -390,6 +390,8 @@ pasteURL() {
 		ControlSetText(A_Clipboard, "RICHEDIT60W2", "ahk_exe ONENOTE.EXE")
 		ControlFocus("RICHEDIT60W3", "ahk_exe ONENOTE.EXE")
 		SendInput("{Enter}")
+	} else if(DllCall("IsClipboardFormatAvailable", "UInt", CF_BITMAP := 2)) {
+		SendInput("!6")
 	} else {
 		SendInput("^v")
 	}
