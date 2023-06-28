@@ -392,6 +392,7 @@ paste() {
 		SendInput("{Enter}")
 	} else if(DllCall("IsClipboardFormatAvailable", "UInt", CF_BITMAP := 2)) {
 		SendInput("!6")
+		SendInput("{Esc}")
 	} else {
 		SendInput("^v")
 	}
