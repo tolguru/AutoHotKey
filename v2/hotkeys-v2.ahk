@@ -44,10 +44,10 @@ global waterAlarm   := false
 */
 SetControlDelay -1
 
-initGlobalVariable()
+config()
 alarm()
 
-initGlobalVariable() {
+config() {
 	; 특정 PC만 울리게 설정
 	if (findValue(waterAlarmList, A_ComputerName)) {
 		global waterAlarm := true
