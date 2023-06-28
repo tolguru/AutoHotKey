@@ -13,6 +13,7 @@ global gY           := ""
 ; PC 목록
 mainPC              := "PAY-331"
 subPC               := "DESKTOP-2SVBCIT"
+homePC              := ""
 
 ; 좌표 변동용 값
 laptopList          := [subPC]
@@ -97,23 +98,33 @@ alarm() {
 
 Pause::Reload
 
-:*?:na.::rnjsehdgks01@naver.com
-:*?:gm.::rnjsehdgks02@gmail.com
-:*?:rn.::rnjsehdgks01
-:*?:123.::01051124560
-:*?:1234.::51124560
-
 F1::runParamUrl("https://ko.dict.naver.com/#/search?query=", "국어사전")
 F3::runParamUrl("https://en.dict.naver.com/#/search?query=", "영어사전")
 
 /*
-타이머 실행 후 사운드 알람, Tool tip 표기됨
-#param count : 타이머 시간(초) (default = 1초)
+타이머 실행 후 사운드 알람, ToolTip 표기
+#param time : 타이머 시간(초) (default = 1초)
 */
-ringTimer(count := 1) {
-	msg(count "초 타이머 시작")
+ringTimer(time := 1) {
+	msg(time "초 타이머 시작")
 	SoundBeep(550, 500)
-	SetTimer () => SoundBeep(550, 500), -1000 * count
+	SetTimer () => SoundBeep(550, 500), -1000 * time
+
+	displayCounter(time)
+}
+
+/*
+설정한 시간에 따라 매 초 ToolTip 표기
+1부터 N까지 진행
+#param time : 타이머 시간(초) (default = 1초)
+*/
+displayCounter(count := 3) {
+	CoordMode("ToolTip", "Screen")
+
+	Loop count {
+		locatedMsg(A_Index)
+		Sleep(1000)
+	}
 }
 
 /*
@@ -164,7 +175,19 @@ alarmWater() {
 #param time    : 노출 시간 (default = 2초)
 */
 msg(message, time := 2) {
-	ToolTip message
+	ToolTip(message)
+	SetTimer () => ToolTip(), -1000 * time
+}
+
+/*
+고정 위치에 메세지 출력
+#param message : 메세지
+#param x       : x좌표
+#param y       : y좌표
+#param time    : 노출 시간 (default = 2초)
+*/
+locatedMsg(message, x := 100, y := 100, time := 2) {
+	ToolTip(message, x, y)
 	SetTimer () => ToolTip(), -1000 * time
 }
 
