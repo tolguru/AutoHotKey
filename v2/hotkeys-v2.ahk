@@ -381,7 +381,9 @@ paste() {
 		ControlSetText(A_Clipboard, "RICHEDIT60W2", "ahk_exe ONENOTE.EXE")
 		ControlFocus("RICHEDIT60W3", "ahk_exe ONENOTE.EXE")
 		SendInput("{Enter}")
-	} else if(DllCall("IsClipboardFormatAvailable", "UInt", CF_BITMAP := 2)) {
+	} else if(DllCall("IsClipboardFormatAvailable", "UInt", 1)) {
+		SendInput("^v")
+	} else if(DllCall("IsClipboardFormatAvailable", "UInt", 2)) {
 		SendInput("!6")
 		SendInput("{Esc}")
 	} else {
