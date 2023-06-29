@@ -84,7 +84,7 @@ alarm() {
 !/::MsgBox("##### 프로그램 실행 #####`n!`` - notepad 실행 및 활성화`n!1 - 나한테 다이렉트 메세지 보내기`n##### 기타 #####`n`n^+F12 - 1분 타이머 후 사운드`n^\ - caps lock 토글")
 
 !`::runNotepadPP()
-!1::directMessageToMe()
+!1::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE")
 
 ; 1분 타이머, Beep 사운드 알람
 +F12::ringTimer(60)
@@ -229,15 +229,16 @@ runIntelliJ() {
 	}
 }
 
-directMessageToMe() {
-	if WinExist("ahk_exe slack.exe") {
-		WinActivate
+; Slack API URI 활용하는 방법으로 변경해서 일단 폐기
+;~ directMessageToMe() {
+	;~ if WinExist("ahk_exe slack.exe") {
+		;~ WinActivate
 
-		ControlClick(slackXY, "ahk_exe slack.exe")
-	} else {
-		Run("C:\Users\" A_UserName "\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Slack Technologies Inc\Slack")
-	}
-}
+		;~ ControlClick(slackXY, "ahk_exe slack.exe")
+	;~ } else {
+		;~ Run("C:\Users\" A_UserName "\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Slack Technologies Inc\Slack")
+	;~ }
+;~ }
 
 /*
 키보드 마우스 입력 중지
