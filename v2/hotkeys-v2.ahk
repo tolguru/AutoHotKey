@@ -1,9 +1,13 @@
 ﻿/*
-임시 기능 선언
+++++++++++++++++++++++++++++++++++++++++
+++ 임시 기능 선언
+++++++++++++++++++++++++++++++++++++++++
 */
 
 /*
-전역변수 선언
+++++++++++++++++++++++++++++++++++++++++
+++ 전역변수 선언
+++++++++++++++++++++++++++++++++++++++++
 */
 global isStop       := false
 global isFirst      := true
@@ -18,12 +22,6 @@ homePC              := ""
 ; 좌표 변동용 값
 laptopList          := [subPC]
 desktopList         := [mainPC]
-
-; Slack 좌표
-global slackXY      := "x71 y366"
-
-; Whale 번역 좌표
-global wTranslateXY := [1901, 50, 1654, 415]
 
 ; 원노트 좌표
 global RIBBON_TOOL1_XY := "x0 y0"
@@ -40,13 +38,18 @@ waterAlarmList      := []
 global waterAlarm   := false
 
 /*
-기본 기능 설정
+++++++++++++++++++++++++++++++++++++++++
+++ 기본 기능 설정
+++++++++++++++++++++++++++++++++++++++++
 */
 SetControlDelay -1
 
 config()
 alarm()
 
+/*
+최초 실행 시 초기 설정 함수
+*/
 config() {
 	; 특정 PC만 울리게 설정
 	if (findValue(waterAlarmList, A_ComputerName)) {
@@ -54,12 +57,6 @@ config() {
 	}
 
 	if (findValue(laptopList, A_ComputerName)) {
-		; 슬랙 나 클릭 좌표 초기화
-		global slackXY := "x94 y458"
-
-		; Whale 번역 좌표 초기화
-		global wTranslateXY := [1897, 59, 1586, 519]
-
 		; 원노트 좌표 초기화
 		global FONT_COLOR_BLACK_XY := "x9 y116"
 		global FONT_COLOR_CUSTOM_XY := "x12 y255"
@@ -70,6 +67,10 @@ config() {
 	}
 }
 
+/*
+1분마다 반복되는 재귀함수
+타이머 용도로 사용하고 있음
+*/
 alarm() {
 	SetTimer () => alarm(), -1000 * 60
 
@@ -79,7 +80,9 @@ alarm() {
 }
 
 /*
-기본 기능 선언
+++++++++++++++++++++++++++++++++++++++++
+++ 기본 기능 선언
+++++++++++++++++++++++++++++++++++++++++
 */
 !/::MsgBox("##### 프로그램 실행 #####`n!`` - notepad 실행 및 활성화`n!1 - 나한테 다이렉트 메세지 보내기`n##### 기타 #####`n`n^+F12 - 1분 타이머 후 사운드`n^\ - caps lock 토글")
 
@@ -103,7 +106,7 @@ F3::runParamUrl("https://en.dict.naver.com/#/search?query=", "영어사전")
 
 /*
 타이머 실행 후 사운드 알람, ToolTip 표기
-#param time : 타이머 시간(초) (default = 1초)
+#param Number time : 타이머 시간(초) (default = 1초)
 */
 ringTimer(time := 1) {
 	msg(time "초 타이머 시작")
@@ -116,7 +119,7 @@ ringTimer(time := 1) {
 /*
 설정한 시간에 따라 매 초 ToolTip 표기
 1부터 N까지 진행
-#param time : 타이머 시간(초) (default = 1초)
+#param Number time : 타이머 시간(초) (default = 3초)
 */
 displayCounter(count := 3) {
 	CoordMode("ToolTip", "Screen")
@@ -129,6 +132,8 @@ displayCounter(count := 3) {
 
 /*
 URL에 param 더해서 실행하는 함수
+#param String url   : URL
+#param String title : 입력 창 제목 (default = "Run URL")
 */
 runParamUrl(url, title := "Run URL") {
 	input := InputBox(, title, "w100 h70")
@@ -137,6 +142,10 @@ runParamUrl(url, title := "Run URL") {
 	}
 }
 
+/*
+현재 포커스된 창 투명도 조절
+#param Number gap : 변동시킬 투명도 수치
+*/
 setTransparent(gap) {
 	; 현재 투명도 변수에 저장
 	currentValue := WinGetTransparent("A")
@@ -159,6 +168,9 @@ setTransparent(gap) {
 	}
 }
 
+/*
+60분마다 "물" 메세지 박스 출력
+*/
 alarmWater() {
 	static waterTime := 0
 
@@ -171,8 +183,8 @@ alarmWater() {
 
 /*
 메세지 출력
-#param message : 메세지
-#param time    : 노출 시간 (default = 2초)
+#param String message : 메세지
+#param Number time    : 노출 시간 (default = 2초)
 */
 msg(message, time := 2) {
 	ToolTip(message)
@@ -181,10 +193,10 @@ msg(message, time := 2) {
 
 /*
 고정 위치에 메세지 출력
-#param message : 메세지
-#param x       : x좌표
-#param y       : y좌표
-#param time    : 노출 시간 (default = 2초)
+#param String message : 메세지
+#param Number x       : x좌표
+#param Number y       : y좌표
+#param Number time    : 노출 시간 (default = 2초)
 */
 locatedMsg(message, x := 100, y := 100, time := 2) {
 	ToolTip(message, x, y)
@@ -193,8 +205,8 @@ locatedMsg(message, x := 100, y := 100, time := 2) {
 
 /*
 배열에서 값 찾기(예외처리 X)
-#param arr    : 배열
-#param target : 찾을 값
+#param String[] arr  : 배열
+#param String target : 찾을 값
 */
 findValue(arr, target) {
 	for value in arr {
@@ -205,6 +217,9 @@ findValue(arr, target) {
 	return false
 }
 
+/*
+Notepad++ 실행
+*/
 runNotepadPP() {
 	if WinExist("ahk_exe notepad++.exe") {
 		WinActivate
@@ -213,6 +228,9 @@ runNotepadPP() {
 	}
 }
 
+/*
+OneNote 실행
+*/
 runOneNote() {
 	if WinExist("ahk_exe ApplicationFrameHost.exe") {
 		WinActivate
@@ -221,6 +239,9 @@ runOneNote() {
 	}
 }
 
+/*
+IntelliJ 실행
+*/
 runIntelliJ() {
 	if WinExist("ahk_exe idea64.exe") {
 		WinActivate
@@ -229,20 +250,9 @@ runIntelliJ() {
 	}
 }
 
-; Slack API URI 활용하는 방법으로 변경해서 일단 폐기
-;~ directMessageToMe() {
-	;~ if WinExist("ahk_exe slack.exe") {
-		;~ WinActivate
-
-		;~ ControlClick(slackXY, "ahk_exe slack.exe")
-	;~ } else {
-		;~ Run("C:\Users\" A_UserName "\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Slack Technologies Inc\Slack")
-	;~ }
-;~ }
-
 /*
 키보드 마우스 입력 중지
-#param time    : 노출 시간 (default = 0.1초)
+#param Number time : 노출 시간 (default = 0.1초)
 */
 blockAllInput(time := 0.1) {
 	BlockInput True
@@ -258,7 +268,7 @@ blockAllInput(time := 0.1) {
 #############
 */
 #HotIf WinActive("ahk_exe idea64.exe")
-!/::MsgBox("## IntelliJ ##`nCapsLock - 한 줄 제거`n^w - 탭 끄기`n^+w - 고정 탭 제외 끄기`n^e - 핀으로 고정`n!z - 안 쓰는 import 제거`n!x - 메서드 return값으로 변수 생성`n!c - 메서드화`n!q - 최근 사용 파일 검색`n!w - 파일 검색`n!e - 클래스 구조(Structure) 보기`n^. - 메서드 Document 주석 달기`n!a - 현재 커서 위치 모듈 Run`n!s - 마지막 모듈 Run`n!d - 마지막 모듈 Debug")
+!/::MsgBox("## IntelliJ ##`n(X)CapsLock - 한 줄 제거`n^w - 탭 끄기`n^+w - 고정 탭 제외 끄기`n^e - 핀으로 고정`n!z - 안 쓰는 import 제거`n!x - 메서드 return값으로 변수 생성`n!c - 메서드화`n!q - 최근 사용 파일 검색`n!w - 파일 검색`n!e - 클래스 구조(Structure) 보기`n^. - 메서드 Document 주석 달기`n!a - 현재 커서 위치 모듈 Run`n!s - 마지막 모듈 Run`n!d - 마지막 모듈 Debug")
 
 ;~ CapsLock::SendInput("^y")
 ^w::SendInput("^{F4}")
@@ -266,7 +276,6 @@ blockAllInput(time := 0.1) {
 ^e::SendInput("!u") ; IntelluJ 기본 키설정을 해당 키로 변경
 ^.::SendInput("!+h") ; 메서드 Document 주석 달기(IntelliJ JavaDoc plugin 키설정을 해당 키로 변경)
 !z::SendInput("!^o")
-;~ !x::SendInput("/**{Enter 2}{Up}")
 !x::SendInput("^!v")
 !c::SendInput("^!m") ; 메서드화
 !q::SendInput("^e")
@@ -293,26 +302,11 @@ blockAllInput(time := 0.1) {
 ###########
 */
 #HotIf WinActive("ahk_exe whale.exe")
-!/::MsgBox("## Whale ##`n^q - 창 복사`n!a - 새 탭 열기`n!s - 시크릿 모드 창 열기")
+!/::MsgBox("^q - 창 복사`n!a - 새 탭 열기`n!s - 시크릿 모드 창 열기")
 
 ^q::SendInput("^k")
 !a::SendInput("^t")
 !s::SendInput("^+n")
-!z::wTranslate()
-
-wTranslate() {
-	BlockInput("MouseMove")
-	MouseGetPos(&nowX, &nowY)
-
-	MouseClick(, wTranslateXY[1], wTranslateXY[2],, 0) ; 메뉴 버튼 클릭
-	Sleep(100)
-	MouseClick(, wTranslateXY[3], wTranslateXY[4],, 0) ; 번역 버튼 클릭
-	SendInput("{Enter}") ; 번역 확인 팝업 처리
-	SendInput("{Esc}") ; 번역 후 팝업 제거
-
-	MouseMove(nowX, nowY, 0)
-	BlockInput("MouseMoveOff")
-}
 
 /*
 ###########
@@ -339,7 +333,10 @@ XButton2::SendInput("!{Right}")
 +WheelUp::SendInput("^+`>") ; 폰트 크기 키우기
 +WheelDown::SendInput("^+`<") ; 폰트 크기 줄이기
 
-; 도형 선택 - 빠른 실행 도구 2번째에 지정
+/*
+도형 선택 - 빠른 실행 도구 2번째에 지정
+#param String figureXY : 리본 내 선택할 도형 x, y좌표 (format = "x좌표 y좌표")
+*/
 selectFigure(figureXY) {
 
 	; STEP 01. 도형 클릭
@@ -353,7 +350,11 @@ selectFigure(figureXY) {
 	SendInput("{Click}")
 }
 
-; Font Color 선택 - 빠른 실행 도구 1번째에 지정
+/*
+Font Color 선택 - 빠른 실행 도구 1번째에 지정
+#param String colorXY    : 리본 내 선택할 글씨색 x, y좌표 (format = "x좌표 y좌표")
+#param Boolean backColor : 현재 지정되어 있는 배경색 적용 (default = true)
+*/
 paintFont(colorXY := FONT_COLOR_BLACK_XY, backColor := true) {
 
 	; STEP 01. Font Color 클릭
@@ -374,6 +375,13 @@ paintFont(colorXY := FONT_COLOR_BLACK_XY, backColor := true) {
 	SendInput("{Esc}")
 }
 
+/*
+붙여넣기 시 클립보드 내용에 따라 분류해서 처리
+
+1. 텍스트가 http로 시작할 경우 지정된 형식의 링크로 삽입
+2. 텍스트에 속할 경우 일반 붙여넣기
+3. Bitmap에 속할 경우 그림으로 붙여넣기
+*/
 paste() {
 	if (SubStr(A_Clipboard, 1, 4) = "http") {
 		SendInput("^k")
@@ -417,7 +425,7 @@ paste() {
 ###########
 */
 #HotIf WinActive("ahk_exe dbeaver.exe")
-!/::MsgBox("!q - SELECT, FROM`n!w - WHERE 1 = 1 ~ AND`n!e - AND`n!r - ORDER BY`n!a - 테이블 정보 조회`n!s - 공통 코드 조회`n!d - 최근 10개 항목 조회`nCapsLock - 한 줄 지우기")
+!/::MsgBox("!q - SELECT, FROM`n!w - WHERE 1 = 1 ~ AND`n!e - AND`n!r - ORDER BY`n!a - 테이블 정보 조회`n!s - 공통 코드 조회`n!d - 최근 10개 항목 조회`n(X)CapsLock - 한 줄 지우기")
 
 !q::SendInput("SELECT *`nFROM   ")
 !w::SendInput("WHERE  1 = 1`nAND    ")
@@ -427,6 +435,9 @@ paste() {
 
 /*
 해당 항목으로 쿼리 실행
+#param String query   : 실행시킬 쿼리
+#param Boolean quote  : 뭐더라 (default = true)
+#param String endWord : 뭐더라 (endWord = ";")
 */
 runClipboardQuery(query, quote := true, endWord := ";") {
 	beforeData := A_Clipboard
@@ -467,10 +478,11 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 ###########
 */
 #HotIf WinActive("ahk_exe SciTE.exe")
-!/::MsgBox("!q - 책갈피 설정/제거`n!w - 책갈피로 이동")
+!/::MsgBox("!q - 책갈피 설정/제거`n!w - 책갈피로 이동`n^/ - 구역 주석")
 
 !q::SendInput("^{F2}")
 !w::SendInput("{F2}")
+^/::SendInput("/*`n`n*/{Up}")
 
 /*
 #############
@@ -482,6 +494,9 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 
 !q::copyImage()
 
+/*
+이미지 클릭된 상태일 때 이미지 복사
+*/
 copyImage() {
 	WinGetPos(,, &x, &y, "A")
 	ControlClick("x" (x / 2) " y" (y / 2), "A",, "Right")
