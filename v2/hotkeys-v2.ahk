@@ -9,33 +9,33 @@
 ++ 전역변수 선언
 ++++++++++++++++++++++++++++++++++++++++
 */
-global isStop       := false
-global isFirst      := true
-global gX           := ""
-global gY           := ""
+global isStop        := false
+global isFirst       := true
+global gX            := ""
+global gY            := ""
 
 ; PC 목록
-mainPC              := "PAY-331"
-subPC               := "DESKTOP-2SVBCIT"
-homePC              := ""
+mainPC := "PAY-331"
+subPC  := "DESKTOP-2SVBCIT"
+homePC := ""
 
 ; 좌표 변동용 값
-laptopList          := [subPC]
-desktopList         := [mainPC]
+laptopList  := [subPC]
+desktopList := [mainPC]
 
 ; 원노트 좌표
-global RIBBON_TOOL1_XY := "x0 y0"
-global RIBBON_TOOL2_XY := "x0 y0"
+global RIBBON_TOOL1_XY      := "x0 y0"
+global RIBBON_TOOL2_XY      := "x0 y0"
 
-global FONT_COLOR_BLACK_XY := "x0 y0"
+global FONT_COLOR_BLACK_XY  := "x0 y0"
 global FONT_COLOR_CUSTOM_XY := "x0 y0"
 
-global FIGURE_LINE_XY := "x0 y0"
-global FIGURE_ARROW_XY := "x0 y0"
+global FIGURE_LINE_XY       := "x0 y0"
+global FIGURE_ARROW_XY      := "x0 y0"
 
 ; 물 알람
-waterAlarmList      := []
-global waterAlarm   := false
+waterAlarmList    := []
+global waterAlarm := false
 
 /*
 ++++++++++++++++++++++++++++++++++++++++
@@ -56,12 +56,13 @@ config() {
 		global waterAlarm := true
 	}
 
+	; 노트북 화면 비율(125%)일 때 좌표 값 초기화
 	if (findValue(laptopList, A_ComputerName)) {
 		; 원노트 좌표 초기화
 		global FONT_COLOR_BLACK_XY := "x9 y116"
 		global FONT_COLOR_CUSTOM_XY := "x12 y255"
-		global RIBBON_TOOL1_XY := "x49 y119"
-		global RIBBON_TOOL2_XY := "x78 y119"
+		global RIBBON_TOOL1_XY := "x49 y181"
+		global RIBBON_TOOL2_XY := "x78 y181"
 		global FIGURE_LINE_XY := "x12 y49"
 		global FIGURE_ARROW_XY := "x36 y47"
 	}
@@ -263,9 +264,10 @@ blockAllInput(time := 0.1) {
 }
 
 /*
-#############
+++++++++++++++++++++++++++++++++++++++++
+########################################
 ## IntelliJ
-#############
+########################################
 */
 #HotIf WinActive("ahk_exe idea64.exe")
 !/::MsgBox("## IntelliJ ##`n(X)CapsLock - 한 줄 제거`n^w - 탭 끄기`n^+w - 고정 탭 제외 끄기`n^e - 핀으로 고정`n!z - 안 쓰는 import 제거`n!x - 메서드 return값으로 변수 생성`n!c - 메서드화`n!q - 최근 사용 파일 검색`n!w - 파일 검색`n!e - 클래스 구조(Structure) 보기`n^. - 메서드 Document 주석 달기`n!a - 현재 커서 위치 모듈 Run`n!s - 마지막 모듈 Run`n!d - 마지막 모듈 Debug")
@@ -286,9 +288,9 @@ blockAllInput(time := 0.1) {
 !d::SendInput("+{F9}")
 
 /*
-###########
+########################################
 ## Chrome
-###########
+########################################
 */
 #HotIf WinActive("ahk_exe chrome.exe")
 !/::MsgBox("## Chrome ##`n^q - 창 복사`n!s - 시크릿 모드 창 열기")
@@ -297,9 +299,9 @@ blockAllInput(time := 0.1) {
 !s::SendInput("^+n")
 
 /*
-###########
+########################################
 ## Whale
-###########
+########################################
 */
 #HotIf WinActive("ahk_exe whale.exe")
 !/::MsgBox("^q - 창 복사`n!a - 새 탭 열기`n!s - 시크릿 모드 창 열기")
@@ -309,24 +311,32 @@ blockAllInput(time := 0.1) {
 !s::SendInput("^+n")
 
 /*
-###########
+########################################
 ## 원노트
-###########
+########################################
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - 글자색 + 배경색`n!d - 글자색`n!w - 서식 제거`n!e - 그리기 직선`n!r - 그리기 화살표`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지`n!a - 맨 밑에 페이지 추가`n!s - 커서 밑에 페이지 추가")
+!/::MsgBox("!q - Highlight`n!w - Red emphasis`n!z - 서식 제거`n!a - 그리기 직선`n!s - 그리기 화살표`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지`n!+z - 맨 밑에 페이지 추가`n!x - 커서 밑에 페이지 추가")
 
-!q::paintFont() ; 글자색 + 배경색
-!d::paintFont(FONT_COLOR_CUSTOM_XY, false) ; 글자색
-!w::SendInput("^+n") ; 글 서식 제거
-!e::selectFigure(FIGURE_LINE_XY) ; 그리기 직선
-!r::selectFigure(FIGURE_ARROW_XY) ; 그리기 화살표
-^v::paste() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입 / 이미지는 그림으로 붙여넣기(빠른 실행 도구 6번째에 지정)
 ^+v::SendInput("!3") ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
+^v::paste() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입 / 이미지는 그림으로 붙여넣기(빠른 실행 도구 4번째에 지정)
+^+x::SendInput("!5") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 5번째에 지정)
+!x::SendInput("!7") ; 밑줄 넣기(빠른 실행 도구 7번째에 지정)
+!q::SendInput("!8") ; Highlight(빠른 실행 도구 8번째에 지정)
+!w::SendInput("!9") ; Red emphasis(빠른 실행 도구 9번째에 지정)
+^+q::SendInput("!09") ; 1레벨 목차 설정(빠른 실행 도구 10번째에 지정)
+^+w::SendInput("!08") ; 2레벨 목차 설정(빠른 실행 도구 11번째에 지정)
+^+a::SendInput("!07") ; 목차 생성(빠른 실행 도구 12번째에 지정)
+!z::SendInput("^+n") ; 글 서식 제거
+!a::selectFigure(FIGURE_LINE_XY) ; 그리기 직선
+!s::selectFigure(FIGURE_ARROW_XY) ; 그리기 화살표
+^+z::SendInput("^n") ; 맨 밑에 페이지 추가
 XButton1::SendInput("!{Left}")
 XButton2::SendInput("!{Right}")
-!a::SendInput("^n") ; 맨 밑에 페이지 추가
-!s::SendInput("!5") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 5번째에 지정)
+^XButton1::SendInput("^{End}")
+^XButton2::SendInput("^{Home}")
+
+
 
 +PgUp::SendInput("^+`>") ; 폰트 크기 키우기
 +PgDn::SendInput("^+`<") ; 폰트 크기 줄이기
@@ -393,7 +403,7 @@ paste() {
 	} else if(DllCall("IsClipboardFormatAvailable", "UInt", 1)) {
 		SendInput("^v")
 	} else if(DllCall("IsClipboardFormatAvailable", "UInt", 2)) {
-		SendInput("!6")
+		SendInput("!4")
 		SendInput("{Esc}")
 	} else {
 		SendInput("^v")
@@ -403,9 +413,9 @@ paste() {
 :*?:>> ::- > `
 
 /*
-###########
+########################################
 ## SSMS
-###########
+########################################
 */
 #HotIf WinActive("ahk_exe Ssms.exe")
 !/::MsgBox("^/ - 주석`n^+/ - 주석 해제")
@@ -420,9 +430,9 @@ paste() {
 }
 
 /*
-###########
+########################################
 ## DBeaver
-###########
+########################################
 */
 #HotIf WinActive("ahk_exe dbeaver.exe")
 !/::MsgBox("!q - SELECT, FROM`n!w - WHERE 1 = 1 ~ AND`n!e - AND`n!r - ORDER BY`n!a - 테이블 정보 조회`n!s - 공통 코드 조회`n!d - 최근 10개 항목 조회`n(X)CapsLock - 한 줄 지우기")
@@ -460,9 +470,9 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 }
 
 /*
-###########
+########################################
 ## VSCode
-###########
+########################################
 */
 #HotIf WinActive("ahk_exe Code.exe")
 !/::MsgBox("CapsLock - 한 줄 지우기`n!c - console.log()")
@@ -473,9 +483,9 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 ^Enter::SendInput("{End};")
 
 /*
-###########
+########################################
 ## SciTE4AutoHotkey
-###########
+########################################
 */
 #HotIf WinActive("ahk_exe SciTE.exe")
 !/::MsgBox("!q - 책갈피 설정/제거`n!w - 책갈피로 이동`n^/ - 구역 주석")
@@ -485,9 +495,9 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 ^/::SendInput("/*`n`n*/{Up}")
 
 /*
-#############
+########################################
 ## Slack
-#############
+########################################
 */
 #HotIf WinActive("ahk_exe slack.exe")
 !/::MsgBox("!q - 이미지 복사")
