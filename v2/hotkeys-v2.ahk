@@ -316,7 +316,7 @@ blockAllInput(time := 0.1) {
 ########################################
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - Highlight`n!w - Red emphasis`n!e - Bold 12pt`n!z - 서식 제거`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지`n^사이드 앞 - 페이지 맨 위로 이동`n^사이드 뒤 - 페이지 맨 뒤로 이동`n!+z - 맨 밑에 페이지 추가`n!+x - 현재 페이지 밑에 페이지 추가`n^+c - 현재 페이지 목차 생성`nF5 - 즐겨찾기")
+!/::MsgBox("!q - Highlight`n!w - Red emphasis`n!e - Bold 12pt`n!z - 서식 제거`n!x - 선 긋기`n!c - 줄머리 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지`n^사이드 앞 - 페이지 맨 위로 이동`n^사이드 뒤 - 페이지 맨 뒤로 이동`n!+z - 맨 밑에 페이지 추가`n!+x - 현재 페이지 밑에 페이지 추가`n^+c - 현재 페이지 목차 생성`nF5 - 즐겨찾기")
 
 ^+v::SendInput("!3") ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
 ^v::paste() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입 / 이미지는 그림으로 붙여넣기(빠른 실행 도구 4번째에 지정)
@@ -329,6 +329,7 @@ blockAllInput(time := 0.1) {
 ^+c::SendInput("!07") ; 목차 생성(빠른 실행 도구 12번째에 지정)
 F5::SendInput("!06") ; 즐겨찾기(빠른 실행 도구 13번째에 지정)
 !e::SendInput("!05") ; Bold 12pt(빠른 실행 도구 14번째에 지정)
+!c::SendInput("!04") ; 줄머리 넣기(빠른 실행 도구 15번째에 지정)
 !z::SendInput("^+n") ; 글 서식 제거
 !a::selectFigure(FIGURE_LINE_XY) ; 그리기 직선
 !s::selectFigure(FIGURE_ARROW_XY) ; 그리기 화살표
