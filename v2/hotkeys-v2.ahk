@@ -324,10 +324,10 @@ blockAllInput(time := 0.1) {
 !e::setFontStyle("7") ; Bold 12pt(빠른 실행 도구 7번째에 지정)
 F5::SendInput("!8") ; 즐겨찾기(빠른 실행 도구 8번째에 지정)
 ^+x::SendInput("!09") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 10번째에 지정)
+!c::SendInput("!08") ; 줄머리 넣기(빠른 실행 도구 11번째에 지정)
 ^+c::SendInput("!07") ; 목차 생성(빠른 실행 도구 12번째에 지정)
 !d::SendInput("!06") ; 1레벨 목차 설정(빠른 실행 도구 13번째에 지정)
 !f::SendInput("!05") ; 2레벨 목차 설정(빠른 실행 도구 14번째에 지정)
-!c::SendInput("!04") ; 줄머리 넣기(빠른 실행 도구 15번째에 지정)
 
 !z::SendInput("^+n") ; 글 서식 제거
 !a::selectFigure(FIGURE_LINE_XY) ; 그리기 직선
