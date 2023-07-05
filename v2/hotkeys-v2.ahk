@@ -62,7 +62,6 @@ config() {
 		global FONT_COLOR_BLACK_XY := "x9 y116"
 		global FONT_COLOR_CUSTOM_XY := "x12 y255"
 		global RIBBON_TOOL1_XY := "x49 y181"
-		global RIBBON_TOOL2_XY := "x78 y181"
 		global FIGURE_LINE_XY := "x12 y49"
 		global FIGURE_ARROW_XY := "x36 y47"
 	}
@@ -316,20 +315,20 @@ blockAllInput(time := 0.1) {
 ########################################
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - Highlight`n!w - Red emphasis`n!e - Bold 12pt`n!z - 서식 제거`n!x - 선 긋기`n!c - 줄머리 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지`n^사이드 앞 - 페이지 맨 위로 이동`n^사이드 뒤 - 페이지 맨 뒤로 이동`n!+z - 맨 밑에 페이지 추가`n!+x - 현재 페이지 밑에 페이지 추가`n^+c - 현재 페이지 목차 생성`nF5 - 즐겨찾기")
+!/::MsgBox("!q - Highlight`n!w - Red emphasis`n!e - Bold 12pt`n!z - 서식 제거`n!x - 가로줄 넣기`n!c - 줄머리 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지`n^사이드 앞 - 페이지 맨 위로 이동`n^사이드 뒤 - 페이지 맨 뒤로 이동`n!+z - 맨 밑에 페이지 추가`n!+x - 현재 페이지 밑에 페이지 추가`n^+c - 현재 페이지 목차 생성`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기")
 
 ^+v::SendInput("!3") ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
 ^v::paste() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입 / 이미지는 그림으로 붙여넣기(빠른 실행 도구 4번째에 지정)
-^+x::SendInput("!5") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 5번째에 지정)
-!x::SendInput("!7") ; 밑줄 넣기(빠른 실행 도구 7번째에 지정)
-!q::SendInput("!8") ; Highlight(빠른 실행 도구 8번째에 지정)
-!w::SendInput("!9") ; Red emphasis(빠른 실행 도구 9번째에 지정)
-!d::SendInput("!09") ; 1레벨 목차 설정(빠른 실행 도구 10번째에 지정)
-!f::SendInput("!08") ; 2레벨 목차 설정(빠른 실행 도구 11번째에 지정)
+!q::setFontStyle("5") ; Highlight(빠른 실행 도구 5번째에 지정)
+!w::setFontStyle("6") ; Red emphasis(빠른 실행 도구 6번째에 지정)
+!e::setFontStyle("7") ; Bold 12pt(빠른 실행 도구 7번째에 지정)
+F5::SendInput("!8") ; 즐겨찾기(빠른 실행 도구 8번째에 지정)
+^+x::SendInput("!09") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 10번째에 지정)
 ^+c::SendInput("!07") ; 목차 생성(빠른 실행 도구 12번째에 지정)
-F5::SendInput("!06") ; 즐겨찾기(빠른 실행 도구 13번째에 지정)
-!e::SendInput("!05") ; Bold 12pt(빠른 실행 도구 14번째에 지정)
+!d::SendInput("!06") ; 1레벨 목차 설정(빠른 실행 도구 13번째에 지정)
+!f::SendInput("!05") ; 2레벨 목차 설정(빠른 실행 도구 14번째에 지정)
 !c::SendInput("!04") ; 줄머리 넣기(빠른 실행 도구 15번째에 지정)
+
 !z::SendInput("^+n") ; 글 서식 제거
 !a::selectFigure(FIGURE_LINE_XY) ; 그리기 직선
 !s::selectFigure(FIGURE_ARROW_XY) ; 그리기 화살표
@@ -338,6 +337,8 @@ XButton1::SendInput("!{Left}")
 XButton2::SendInput("!{Right}")
 ^XButton1::SendInput("^{End}")
 ^XButton2::SendInput("^{Home}")
+
++Enter::SendInput("{End}{Enter}") ; 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기
 
 +PgUp::SendInput("^+`>") ; 폰트 크기 키우기
 +PgDn::SendInput("^+`<") ; 폰트 크기 줄이기
@@ -351,7 +352,7 @@ XButton2::SendInput("!{Right}")
 selectFigure(figureXY) {
 
 	; STEP 01. 도형 클릭
-	ControlClick(RIBBON_TOOL2_XY, "ahk_exe ONENOTE.EXE",,,, "NA")
+	ControlClick(RIBBON_TOOL1_XY, "ahk_exe ONENOTE.EXE",,,, "NA")
 	Sleep(100)
 
 	; STEP 02. 도형 선택
@@ -359,6 +360,16 @@ selectFigure(figureXY) {
 
 	; STEP 03. 즉시 도구가 사용되지 않는 버그 해결용으로 단순 클릭 입력
 	SendInput("{Click}")
+}
+
+/*
+Font Style 지정 후 맨 앞으로 가져오기 - 빠른 실행 도구 16번째에 "맨 앞으로 가져오기" 지정
+#param String locate : 실행할 빠른 실행 도구의 스타일 핫키
+*/
+setFontStyle(locate) {
+	SendInput("!" locate)
+	Sleep(60)
+	SendInput("!2")
 }
 
 /*
@@ -410,8 +421,6 @@ paste() {
 		SendInput("^v")
 	}
 }
-
-:*?:>> ::- > `
 
 /*
 ########################################
