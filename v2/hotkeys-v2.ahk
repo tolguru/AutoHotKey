@@ -315,13 +315,13 @@ blockAllInput(time := 0.1) {
 ########################################
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - Highlight`n!w - Red emphasis`n!e - Bold 12pt`n!z - 서식 제거`n!x - 줄머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n!+z - 맨 밑에 페이지 추가`n!+x - 현재 페이지 밑에 페이지 추가`n^+c - 현재 페이지 목차 생성`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지`n^사이드 앞 - 페이지 맨 위로 이동`n^사이드 뒤 - 페이지 맨 뒤로 이동")
+!/::MsgBox("!q - Highlight`n!w - Red emphasis`n!e - Bold 12pt`n!z - 서식 제거`n!x - 줄머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n!+z - 맨 밑에 페이지 추가`n!+x - 현재 페이지 밑에 페이지 추가`n^+c - 현재 페이지 목차 생성`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n!PgUp, !사이드 앞 - 객체 맨 앞으로`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지`n^사이드 앞 - 페이지 맨 위로 이동`n^사이드 뒤 - 페이지 맨 뒤로 이동")
 
 ^+v::SendInput("!3") ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
 ^v::paste() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입 / 이미지는 그림으로 붙여넣기(빠른 실행 도구 4번째에 지정)
-!q::setFontStyle("5") ; Highlight(빠른 실행 도구 5번째에 지정)
-!w::setFontStyle("6") ; Red emphasis(빠른 실행 도구 6번째에 지정)
-!e::setFontStyle("7") ; Bold 12pt(빠른 실행 도구 7번째에 지정)
+!q::SendInput("!5") ; Highlight(빠른 실행 도구 5번째에 지정)
+!w::SendInput("!6") ; Red emphasis(빠른 실행 도구 6번째에 지정)
+!e::SendInput("!7") ; Bold 12pt(빠른 실행 도구 7번째에 지정)
 F5::SendInput("!8") ; 즐겨찾기(빠른 실행 도구 8번째에 지정)
 ^+x::SendInput("!09") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 10번째에 지정)
 !x::SendInput("!08") ; 줄머리 넣기(빠른 실행 도구 11번째에 지정)
@@ -329,6 +329,8 @@ F5::SendInput("!8") ; 즐겨찾기(빠른 실행 도구 8번째에 지정)
 !d::SendInput("!06") ; 1레벨 목차 설정(빠른 실행 도구 13번째에 지정)
 !f::SendInput("!05") ; 2레벨 목차 설정(빠른 실행 도구 14번째에 지정)
 !c::SendInput("!04") ; 텍스트 직선 긋기(빠른 실행 도구 15번째에 지정)
+!PgUp::SendInput("!03") ; 객체 맨 앞으로(빠른 실행 도구 16번째에 지정)
+!XButton2::SendInput("!03") ; 객체 맨 앞으로(빠른 실행 도구 16번째에 지정)
 
 !z::SendInput("^+n") ; 글 서식 제거
 !a::selectFigure(FIGURE_LINE_XY) ; 그리기 직선
@@ -367,11 +369,11 @@ selectFigure(figureXY) {
 Font Style 지정 후 맨 앞으로 가져오기 - 빠른 실행 도구 16번째에 "맨 앞으로 가져오기" 지정
 #param String locate : 실행할 빠른 실행 도구의 스타일 핫키
 */
-setFontStyle(locate) {
-	SendInput("!" locate)
-	Sleep(60)
-	SendInput("!2")
-}
+;~ setFontStyle(locate) {
+	;~ SendInput("!" locate)
+	;~ Sleep(1000)
+	;~ SendInput("!2")
+;~ }
 
 /*
 Font Color 선택 - 빠른 실행 도구 1번째에 지정
