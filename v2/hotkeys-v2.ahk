@@ -84,7 +84,7 @@ alarm() {
 ++ 기본 기능 선언
 ++++++++++++++++++++++++++++++++++++++++
 */
-!/::MsgBox("##### 프로그램 실행 #####`n!`` - notepad 실행 및 활성화`n!1 - 나한테 다이렉트 메세지 보내기`n##### 기타 #####`n`n^+F12 - 1분 타이머 후 사운드`n^\ - caps lock 토글")
+!/::MsgBox("##### 프로그램 실행 #####`n!`` - notepad 실행 및 활성화`n!1 - 나한테 다이렉트 메세지 보내기`n##### 기타 #####`n`n^+F12 - 1분 타이머 후 사운드`n^\ - caps lock 토글`n^사이드 앞 - 페이지 맨 위로 이동`n^사이드 뒤 - 페이지 맨 뒤로 이동")
 
 !`::runNotepadPP()
 !1::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE")
@@ -98,6 +98,8 @@ alarm() {
 
 !+WheelUp::setTransparent(10)
 !+WheelDown::setTransparent(-10)
+^XButton1::SendInput("^{End}")
+^XButton2::SendInput("^{Home}")
 
 Pause::Reload
 
@@ -262,6 +264,28 @@ blockAllInput(time := 0.1) {
 	BlockInput False
 }
 
+
+/*
+가장 최근 클립보드 데이터의 포맷 출력
+*/
+printClipboardFormatList() {
+	formatCount := DllCall("CountClipboardFormats")
+
+	formatList := []
+
+	formatList.Push(DllCall("custom-utility.dll\checkImageFormats", "UINT", "0"))
+
+	result := formatList[1]
+
+	Loop  formatCount - 1 {
+		formatList.Push(DllCall("custom-utility.dll\checkImageFormats", "UINT", formatList[A_Index]))
+
+		result := result " " formatList[A_Index + 1]
+	}
+
+	MsgBox(result)
+}
+
 /*
 ++++++++++++++++++++++++++++++++++++++++
 ########################################
@@ -315,7 +339,7 @@ blockAllInput(time := 0.1) {
 ########################################
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - Highlight`n!w - Red emphasis`n!e - Bold 12pt`n!z - 서식 제거`n!x - 줄머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n!+z - 맨 밑에 페이지 추가`n!+x - 현재 페이지 밑에 페이지 추가`n^+c - 현재 페이지 목차 생성`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n!PgUp, !사이드 앞 - 객체 맨 앞으로`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지`n^사이드 앞 - 페이지 맨 위로 이동`n^사이드 뒤 - 페이지 맨 뒤로 이동")
+!/::MsgBox("!q - Highlight`n!w - Red emphasis`n!e - Bold 12pt`n!z - 서식 제거`n!x - 줄머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n!+z - 맨 밑에 페이지 추가`n!+x - 현재 페이지 밑에 페이지 추가`n^+c - 현재 페이지 목차 생성`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n!PgUp, !사이드 앞 - 객체 맨 앞으로`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지")
 
 ^+v::SendInput("!3") ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
 ^v::paste() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입 / 이미지는 그림으로 붙여넣기(빠른 실행 도구 4번째에 지정)
@@ -338,8 +362,6 @@ F5::SendInput("!8") ; 즐겨찾기(빠른 실행 도구 8번째에 지정)
 ^+z::SendInput("^n") ; 맨 밑에 페이지 추가
 XButton1::SendInput("!{Left}")
 XButton2::SendInput("!{Right}")
-^XButton1::SendInput("^{End}")
-^XButton2::SendInput("^{Home}")
 
 +Enter::SendInput("{End}{Enter}") ; 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기
 
@@ -405,9 +427,13 @@ paintFont(colorXY := FONT_COLOR_BLACK_XY, backColor := true) {
 
 1. 텍스트가 http로 시작할 경우 지정된 형식의 링크로 삽입
 2. 텍스트에 속할 경우 일반 붙여넣기
-3. Bitmap에 속할 경우 그림으로 붙여넣기
+3. Slack에서 복사한 이미지일 경우(UINT format -> 50121) 그림으로 붙여넣기
 */
 paste() {
+	if (DllCall("CountClipboardFormats") = 6 && DllCall("IsClipboardFormatAvailable", "UInt", 50121)) {
+		A_Clipboard := ClipboardAll()
+	}
+
 	if (SubStr(A_Clipboard, 1, 4) = "http") {
 		SendInput("^k")
 		Sleep(150)
@@ -415,9 +441,7 @@ paste() {
 		ControlSetText(A_Clipboard, "RICHEDIT60W2", "ahk_exe ONENOTE.EXE")
 		ControlFocus("RICHEDIT60W3", "ahk_exe ONENOTE.EXE")
 		SendInput("{Enter}")
-	} else if(DllCall("IsClipboardFormatAvailable", "UInt", 1)) {
-		SendInput("^v")
-	} else if(DllCall("IsClipboardFormatAvailable", "UInt", 2)) {
+	} else if(DllCall("IsClipboardFormatAvailable", "UInt", 49437)) {
 		SendInput("!4")
 		SendInput("{Esc}")
 	} else {
