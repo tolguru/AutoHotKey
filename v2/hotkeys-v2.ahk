@@ -17,11 +17,11 @@ global gY            := ""
 ; PC 목록
 mainPC := "PAY-331"
 subPC  := "DESKTOP-2SVBCIT"
-homePC := ""
+homePC := "DESKTOP-4AJLHVU"
 
 ; 좌표 변동용 값
 laptopList  := [subPC]
-desktopList := [mainPC]
+desktopList := [mainPC, homePC]
 
 ; 원노트 좌표
 global RIBBON_TOOL1_XY      := "x0 y0"
@@ -100,6 +100,9 @@ alarm() {
 !+WheelDown::setTransparent(-10)
 ^XButton1::SendInput("^{End}")
 ^XButton2::SendInput("^{Home}")
+
+^#Right::switchWithMute(true)
+^#Left::switchWithMute(false)
 
 Pause::Reload
 
@@ -284,6 +287,19 @@ printClipboardFormatList() {
 	}
 
 	MsgBox(result)
+}
+
+/*
+타이머 실행 후 사운드 알람, ToolTip 표기
+#param Number time : 타이머 시간(초) (default = 1초)
+*/
+switchWithMute(muteFlag) {
+	SoundSetMute(muteFlag)
+	if (muteFlag) {
+		SendInput("^#{Right}")
+	} else {
+		SendInput("^#{Left}")
+	}
 }
 
 /*
