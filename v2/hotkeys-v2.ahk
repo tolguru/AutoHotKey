@@ -9,10 +9,10 @@
 ++ 전역변수 선언
 ++++++++++++++++++++++++++++++++++++++++
 */
-global isStop        := false
-global isFirst       := true
-global gX            := ""
-global gY            := ""
+global isStop  := false
+global isFirst := true
+global gX      := ""
+global gY      := ""
 
 ; PC 목록
 mainPC := "PAY-331"
@@ -22,8 +22,24 @@ homePC := "DESKTOP-4AJLHVU"
 ; 좌표 변동용 값
 laptopList  := [subPC]
 desktopList := [mainPC, homePC]
+ratio25List := [subPC]
+
+; 좌표 비율
+global ratioNow := 1
+
+ratio1440 := 1.333
+ratio25   := 1.25
 
 ; 원노트 좌표
+STANDARD_RIBBON_TOOL1_X := 37
+STANDARD_RIBBON_TOOL1_Y := 145
+
+STANDARD_FIGURE_LINE_X  := 11
+STANDARD_FIGURE_LINE_Y  := 40
+
+STANDARD_FIGURE_ARROW_X := 32
+STANDARD_FIGURE_ARROW_Y := 40
+
 global RIBBON_TOOL1_XY      := "x0 y0"
 global RIBBON_TOOL2_XY      := "x0 y0"
 
@@ -34,7 +50,8 @@ global FIGURE_LINE_XY       := "x0 y0"
 global FIGURE_ARROW_XY      := "x0 y0"
 
 ; 물 알람
-waterAlarmList    := []
+waterAlarmList := []
+
 global waterAlarm := false
 
 /*
@@ -56,15 +73,18 @@ config() {
 		global waterAlarm := true
 	}
 
-	; 노트북 화면 비율(125%)일 때 좌표 값 초기화
-	if (findValue(laptopList, A_ComputerName)) {
-		; 원노트 좌표 초기화
-		global FONT_COLOR_BLACK_XY := "x9 y116"
-		global FONT_COLOR_CUSTOM_XY := "x12 y255"
-		global RIBBON_TOOL1_XY := "x49 y181"
-		global FIGURE_LINE_XY := "x12 y49"
-		global FIGURE_ARROW_XY := "x36 y47"
+	if (findValue(ratio25List, A_ComputerName)) {
+		global ratioNow := ratio25
 	}
+
+	; 원노트 좌표 초기화
+	global RIBBON_TOOL1_XY := screenRatioSet(STANDARD_RIBBON_TOOL1_X, STANDARD_RIBBON_TOOL1_Y)
+	global FIGURE_LINE_XY  := screenRatioSet(STANDARD_FIGURE_LINE_X, STANDARD_FIGURE_LINE_Y)
+	global FIGURE_ARROW_XY := screenRatioSet(STANDARD_FIGURE_ARROW_X, STANDARD_FIGURE_ARROW_Y)
+}
+
+screenRatioSet(x := 0, y := 0) {
+	return "x" Floor(x * ratioNow) " " "y" Floor(y * ratioNow)
 }
 
 /*
