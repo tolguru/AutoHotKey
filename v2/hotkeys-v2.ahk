@@ -73,6 +73,7 @@ config() {
 		global waterAlarm := true
 	}
 
+	; 화면 비율 설정(좌표 초기화용)
 	if (findValue(ratio25List, A_ComputerName)) {
 		global ratioNow := RATIO_X25
 	}
@@ -83,6 +84,9 @@ config() {
 	global FIGURE_ARROW_XY := screenRatioSet(STANDARD_FIGURE_ARROW_X, STANDARD_FIGURE_ARROW_Y)
 }
 
+/*
+화면 비율에 맞춰 좌표 문자열 생성 (format = "x좌표 y좌표")
+*/
 screenRatioSet(x := 0, y := 0) {
 	return "x" Floor(x * ratioNow) " " "y" Floor(y * ratioNow)
 }
