@@ -27,8 +27,8 @@ ratio25List := [subPC]
 ; 좌표 비율
 global ratioNow := 1
 
-ratio1440 := 1.333
-ratio25   := 1.25
+RATIO_1440 := 1.333
+RATIO_X25  := 1.25
 
 ; 원노트 좌표
 STANDARD_RIBBON_TOOL1_X := 37
@@ -74,7 +74,7 @@ config() {
 	}
 
 	if (findValue(ratio25List, A_ComputerName)) {
-		global ratioNow := ratio25
+		global ratioNow := RATIO_X25
 	}
 
 	; 원노트 좌표 초기화
@@ -375,7 +375,7 @@ switchWithMute(muteFlag) {
 ########################################
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - Highlight`n!w - Red emphasis`n!e - Bold 12pt`n!z - 서식 제거`n!x - 줄머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n!+z - 맨 밑에 페이지 추가`n!+x - 현재 페이지 밑에 페이지 추가`n^+c - 현재 페이지 목차 생성`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n!PgUp, !사이드 앞 - 객체 맨 앞으로`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지")
+!/::MsgBox("!q - Highlight`n!w - Red emphasis`n!e - Bold 12pt`n!z - 서식 제거`n!x - 줄머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n^+z - 맨 밑에 페이지 추가`n^+x - 현재 페이지 밑에 페이지 추가`n^+c - 페이지 수준 내리기`n^+q - 현재 페이지 목차 생성`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n!PgUp, !사이드 앞 - 객체 맨 앞으로`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지")
 
 ^+v::SendInput("!3") ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
 ^v::paste() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입 / 이미지는 그림으로 붙여넣기(빠른 실행 도구 4번째에 지정)
@@ -385,7 +385,7 @@ switchWithMute(muteFlag) {
 F5::SendInput("!8") ; 즐겨찾기(빠른 실행 도구 8번째에 지정)
 ^+x::SendInput("!09") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 10번째에 지정)
 !x::SendInput("!08") ; 줄머리 넣기(빠른 실행 도구 11번째에 지정)
-^+c::SendInput("!07") ; 목차 생성(빠른 실행 도구 12번째에 지정)
+^+q::SendInput("!07") ; 목차 생성(빠른 실행 도구 12번째에 지정)
 !d::SendInput("!06") ; 1레벨 목차 설정(빠른 실행 도구 13번째에 지정)
 !f::SendInput("!05") ; 2레벨 목차 설정(빠른 실행 도구 14번째에 지정)
 !c::SendInput("!04") ; 텍스트 직선 긋기(빠른 실행 도구 15번째에 지정)
@@ -396,6 +396,7 @@ F5::SendInput("!8") ; 즐겨찾기(빠른 실행 도구 8번째에 지정)
 !a::selectFigure(FIGURE_LINE_XY) ; 그리기 직선
 !s::selectFigure(FIGURE_ARROW_XY) ; 그리기 화살표
 ^+z::SendInput("^n") ; 맨 밑에 페이지 추가
+^+c::SendInput("!^]") ; 페이지 수준 내리기
 XButton1::SendInput("!{Left}")
 XButton2::SendInput("!{Right}")
 
