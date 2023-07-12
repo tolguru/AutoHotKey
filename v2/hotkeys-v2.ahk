@@ -349,6 +349,7 @@ switchWithMute(muteFlag) {
 !a::SendInput("^+{F10}")
 !s::SendInput("+{F10}")
 !d::SendInput("+{F9}")
+`::SendInput("^y")
 
 /*
 ########################################
