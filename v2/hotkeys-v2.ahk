@@ -34,20 +34,20 @@ RATIO_X25  := 1.25
 STANDARD_RIBBON_TOOL1_X := 37
 STANDARD_RIBBON_TOOL1_Y := 145
 
+STANDARD_RIBBON_TOOL2_X := 58
+STANDARD_RIBBON_TOOL2_Y := 145
+
 STANDARD_FIGURE_LINE_X  := 11
 STANDARD_FIGURE_LINE_Y  := 40
 
 STANDARD_FIGURE_ARROW_X := 32
 STANDARD_FIGURE_ARROW_Y := 40
 
-global RIBBON_TOOL1_XY      := "x0 y0"
-global RIBBON_TOOL2_XY      := "x0 y0"
+global RIBBON_TOOL1_XY := "x0 y0"
+global RIBBON_TOOL2_XY := "x0 y0"
 
-global FONT_COLOR_BLACK_XY  := "x0 y0"
-global FONT_COLOR_CUSTOM_XY := "x0 y0"
-
-global FIGURE_LINE_XY       := "x0 y0"
-global FIGURE_ARROW_XY      := "x0 y0"
+global FIGURE_LINE_XY  := "x0 y0"
+global FIGURE_ARROW_XY := "x0 y0"
 
 ; 물 알람
 waterAlarmList := []
@@ -79,9 +79,10 @@ config() {
 	}
 
 	; 원노트 좌표 초기화
-	global RIBBON_TOOL1_XY := screenRatioSet(STANDARD_RIBBON_TOOL1_X, STANDARD_RIBBON_TOOL1_Y)
-	global FIGURE_LINE_XY  := screenRatioSet(STANDARD_FIGURE_LINE_X, STANDARD_FIGURE_LINE_Y)
-	global FIGURE_ARROW_XY := screenRatioSet(STANDARD_FIGURE_ARROW_X, STANDARD_FIGURE_ARROW_Y)
+	global RIBBON_TOOL1_XY      := screenRatioSet(STANDARD_RIBBON_TOOL1_X, STANDARD_RIBBON_TOOL1_Y)
+	global RIBBON_TOOL2_XY      := screenRatioSet(STANDARD_RIBBON_TOOL2_X, STANDARD_RIBBON_TOOL2_Y)
+	global FIGURE_LINE_XY       := screenRatioSet(STANDARD_FIGURE_LINE_X, STANDARD_FIGURE_LINE_Y)
+	global FIGURE_ARROW_XY      := screenRatioSet(STANDARD_FIGURE_ARROW_X, STANDARD_FIGURE_ARROW_Y)
 }
 
 /*
@@ -327,7 +328,6 @@ switchWithMute(muteFlag) {
 }
 
 /*
-++++++++++++++++++++++++++++++++++++++++
 ########################################
 ## IntelliJ
 ########################################
@@ -379,12 +379,13 @@ switchWithMute(muteFlag) {
 ########################################
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - Highlight`n!w - Red emphasis`n!e - Bold 12pt`n!z - 서식 제거`n!x - 줄머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n^+z - 맨 밑에 페이지 추가`n^+x - 현재 페이지 밑에 페이지 추가`n^+c - 페이지 수준 내리기`n^+q - 현재 페이지 목차 생성`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n!PgUp, !사이드 앞 - 객체 맨 앞으로`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지")
+!/::MsgBox("!q - Highlight`n!w - 폰트 색 설정`n!e - Bold 12pt`n!z - 서식 제거`n!x - 줄머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n^+z - 맨 밑에 페이지 추가`n^+x - 현재 페이지 밑에 페이지 추가`n^+c - 페이지 수준 내리기`n^+q - 현재 페이지 목차 생성`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n!PgUp, !사이드 앞 - 객체 맨 앞으로`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지")
 
+!w::paintFont("7") ; 글씨색 변경 빨간색(빠른 실행 도구 2번째에 지정, 팔레트 기준 7번째 아래 위치)
 ^+v::SendInput("!3") ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
 ^v::paste() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입 / 이미지는 그림으로 붙여넣기(빠른 실행 도구 4번째에 지정)
 !q::SendInput("!5") ; Highlight(빠른 실행 도구 5번째에 지정)
-!w::SendInput("!6") ; Red emphasis(빠른 실행 도구 6번째에 지정)
+;!w::SendInput("!6") ; Red emphasis(빠른 실행 도구 6번째에 지정)
 !e::SendInput("!7") ; Bold 12pt(빠른 실행 도구 7번째에 지정)
 F5::SendInput("!8") ; 즐겨찾기(빠른 실행 도구 8번째에 지정)
 ^+x::SendInput("!09") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 10번째에 지정)
@@ -439,28 +440,26 @@ Font Style 지정 후 맨 앞으로 가져오기 - 빠른 실행 도구 16번째
 ;~ }
 
 /*
-Font Color 선택 - 빠른 실행 도구 1번째에 지정
-#param String colorXY    : 리본 내 선택할 글씨색 x, y좌표 (format = "x좌표 y좌표")
+Font Color 선택 - 빠른 실행 도구 2번째에 지정
+#param String downCount  : 팔레트에서 아래 방향으로 향할 횟수
+#param String rightCount : 팔레트에서 오른쪽 방향으로 향할 횟수
 #param Boolean backColor : 현재 지정되어 있는 배경색 적용 (default = true)
 */
-paintFont(colorXY := FONT_COLOR_BLACK_XY, backColor := true) {
+paintFont(downCount := "0", rightCount := "0", backColor := false) {
+	if (isFirst) {
+		global isFirst := false
 
-	; STEP 01. Font Color 클릭
-	ControlClick(RIBBON_TOOL1_XY, "ahk_exe ONENOTE.EXE",,,, "NA")
-	Sleep(100)
+		SendInput("!2")
+		SendInput("{Down " downCount "}{Right " rightCount "}{Enter}")
+	} else {
+		; STEP 01. Font Color 클릭
+		ControlClick(RIBBON_TOOL2_XY, "A",,,, "NA")
 
-	; STEP 02. Font Color 선택
-	ControlClick(colorXY, "ahk_exe ONENOTE.EXE",,,, "NA")
-
-	; STEP 03. Font Background Color 추가
-	if (backColor) {
-		Sleep(60)
-		SendInput("^+h")
+		; STEP 02. Font Background Color 추가
+		if (backColor) {
+			SendInput("^+h")
+		}
 	}
-
-	; STEP 04. 마우스에 가위표 생기는 버그 해결용
-	Sleep(20)
-	SendInput("{Esc}")
 }
 
 /*
