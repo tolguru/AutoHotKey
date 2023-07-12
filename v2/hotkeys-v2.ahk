@@ -50,7 +50,7 @@ global FIGURE_LINE_XY  := "x0 y0"
 global FIGURE_ARROW_XY := "x0 y0"
 
 ; 물 알람
-waterAlarmList := []
+waterAlarmList := [subPC]
 
 global waterAlarm := false
 
@@ -470,7 +470,7 @@ paintFont(downCount := "0", rightCount := "0", backColor := false) {
 3. Slack에서 복사한 이미지일 경우(UINT format -> 50121) 그림으로 붙여넣기
 */
 paste() {
-	if (DllCall("CountClipboardFormats") = 6 && DllCall("IsClipboardFormatAvailable", "UInt", 50121)) {
+	if (DllCall("CountClipboardFormats") = 6 && DllCall("IsClipboardFormatAvailable", "UInt", 2)) {
 		A_Clipboard := ClipboardAll()
 	}
 
