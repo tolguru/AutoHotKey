@@ -44,7 +44,7 @@ global RIBBON_TOOL1_XY := "x0 y0"
 global RIBBON_TOOL2_XY := "x0 y0"
 
 ; 원노트 Clipboard resources
-LARGE_STAR_EMOTICON := ClipboardAll(FileRead(".\resources\onenote\large_star_emoticon", "RAW"))
+LARGE_STAR_EMOTICON := ClipboardAll(FileRead(".\resources\onenote\large_star_emoticon2", "RAW"))
 
 ; 원노트 공통 핫키
 ORIGINAL_PASTE_KEY := "!3"
