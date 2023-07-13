@@ -14,6 +14,9 @@ global isFirst := true
 global gX      := ""
 global gY      := ""
 
+; 에러 코드
+ERROR_PATH_NOT_FOUND := 3
+
 ; PC 목록
 mainPC := "PAY-331"
 subPC  := "DESKTOP-2SVBCIT"
@@ -37,17 +40,14 @@ STANDARD_RIBBON_TOOL1_Y := 145
 STANDARD_RIBBON_TOOL2_X := 58
 STANDARD_RIBBON_TOOL2_Y := 145
 
-STANDARD_FIGURE_LINE_X  := 11
-STANDARD_FIGURE_LINE_Y  := 40
-
-STANDARD_FIGURE_ARROW_X := 32
-STANDARD_FIGURE_ARROW_Y := 40
-
 global RIBBON_TOOL1_XY := "x0 y0"
 global RIBBON_TOOL2_XY := "x0 y0"
 
-global FIGURE_LINE_XY  := "x0 y0"
-global FIGURE_ARROW_XY := "x0 y0"
+; 원노트 Clipboard resources
+LARGE_STAR_EMOTICON := ClipboardAll(FileRead(".\resources\onenote\large_star_emoticon", "RAW"))
+
+; 원노트 공통 핫키
+ORIGINAL_PASTE_KEY := "!3"
 
 ; 물 알람
 waterAlarmList := [subPC]
@@ -79,10 +79,7 @@ config() {
 	}
 
 	; 원노트 좌표 초기화
-	global RIBBON_TOOL1_XY      := screenRatioSet(STANDARD_RIBBON_TOOL1_X, STANDARD_RIBBON_TOOL1_Y)
 	global RIBBON_TOOL2_XY      := screenRatioSet(STANDARD_RIBBON_TOOL2_X, STANDARD_RIBBON_TOOL2_Y)
-	global FIGURE_LINE_XY       := screenRatioSet(STANDARD_FIGURE_LINE_X, STANDARD_FIGURE_LINE_Y)
-	global FIGURE_ARROW_XY      := screenRatioSet(STANDARD_FIGURE_ARROW_X, STANDARD_FIGURE_ARROW_Y)
 }
 
 /*
@@ -109,10 +106,10 @@ alarm() {
 ++ 기본 기능 선언
 ++++++++++++++++++++++++++++++++++++++++
 */
-!/::MsgBox("##### 프로그램 실행 #####`n!`` - notepad 실행 및 활성화`n!1 - 나한테 다이렉트 메세지 보내기`n##### 기타 #####`n`n^+F12 - 1분 타이머 후 사운드`n^\ - caps lock 토글`n^사이드 앞 - 페이지 맨 위로 이동`n^사이드 뒤 - 페이지 맨 뒤로 이동")
+!/::MsgBox("##### 프로그램 실행 #####`n#`` - notepad 실행 및 활성화`n#1 - 나한테 다이렉트 메세지 보내기`n##### 기타 #####`n`n^+F12 - 1분 타이머 후 사운드`n^\ - caps lock 토글`n^사이드 앞 - 페이지 맨 위로 이동`n^사이드 뒤 - 페이지 맨 뒤로 이동")
 
-!`::runNotepadPP()
-!1::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE")
+#`::runNotepadPP()
+#1::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE")
 
 ; 1분 타이머, Beep 사운드 알람
 +F12::ringTimer(60)
@@ -133,6 +130,26 @@ Pause::Reload
 
 F1::runParamUrl("https://ko.dict.naver.com/#/search?query=", "국어사전")
 F3::runParamUrl("https://en.dict.naver.com/#/search?query=", "영어사전")
+
+
+/*
+클립보드 데이터를 .\resources에 파일로 저장
+*/
+clipboardSave() {
+	try {
+		FileAppend(ClipboardAll(), ".\resources\" A_Now)
+	} catch OSError {
+		if (A_LastError = ERROR_PATH_NOT_FOUND) {
+			; 경로가 없을 시 경로 생성
+			DirCreate(".\resources")
+			MsgBox("경로 생성 완료.`n함수 재실행 필요")
+		} else {
+			MsgBox("알 수 없는 OSError 발생, 에러 코드 : " A_LastError)
+		}
+	} catch as e {
+		MsgBox("알 수 없는 Error 발생, 에러 코드 : " A_LastError)
+	}
+}
 
 /*
 타이머 실행 후 사운드 알람, ToolTip 표기
@@ -380,10 +397,13 @@ switchWithMute(muteFlag) {
 ########################################
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - Highlight`n!w - 폰트 색 설정`n!e - Bold 12pt`n!z - 서식 제거`n!x - 줄머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n^+z - 맨 밑에 페이지 추가`n^+x - 현재 페이지 밑에 페이지 추가`n^+c - 페이지 수준 내리기`n^+q - 현재 페이지 목차 생성`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n!PgUp, !사이드 앞 - 객체 맨 앞으로`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지")
+!/::MsgBox("!q - Highlight`n!w - 폰트 색 설정`n!e - Bold 12pt`n!z - 서식 제거`n!x - 줄머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n^+z - 맨 밑에 페이지 추가`n^+x - 현재 페이지 밑에 페이지 추가`n^+c - 페이지 수준 내리기`n^+q - 현재 페이지 목차 생성`n#q - LARGE_STAR_EMOTICON`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n!PgUp, !사이드 앞 - 객체 맨 앞으로`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지")
 
+!a::selectFigure() ; 그리기 직선(도형 도구 - 빠른 실행 도구 1번째에 지정)
+!s::selectFigure("0", "1") ; 그리기 화살표(도형 도구 - 빠른 실행 도구 1번째에 지정)
 !w::paintFont("7") ; 글씨색 변경 빨간색(빠른 실행 도구 2번째에 지정, 팔레트 기준 7번째 아래 위치)
-^+v::SendInput("!3") ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
+^+v::SendInput(ORIGINAL_PASTE_KEY) ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
+#q::printResource(LARGE_STAR_EMOTICON) ; 큰 별 넣기 (서식 유지해서 붙여넣기)
 ^v::paste() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입 / 이미지는 그림으로 붙여넣기(빠른 실행 도구 4번째에 지정)
 !q::SendInput("!5") ; Highlight(빠른 실행 도구 5번째에 지정)
 ;!w::SendInput("!6") ; Red emphasis(빠른 실행 도구 6번째에 지정)
@@ -399,10 +419,10 @@ F5::SendInput("!8") ; 즐겨찾기(빠른 실행 도구 8번째에 지정)
 !XButton2::SendInput("!03") ; 객체 맨 앞으로(빠른 실행 도구 16번째에 지정)
 
 !z::SendInput("^+n") ; 글 서식 제거
-!a::selectFigure(FIGURE_LINE_XY) ; 그리기 직선
-!s::selectFigure(FIGURE_ARROW_XY) ; 그리기 화살표
+
 ^+z::SendInput("^n") ; 맨 밑에 페이지 추가
 ^+c::SendInput("!^]") ; 페이지 수준 내리기
+
 XButton1::SendInput("!{Left}")
 XButton2::SendInput("!{Right}")
 
@@ -414,20 +434,30 @@ XButton2::SendInput("!{Right}")
 +WheelDown::SendInput("^+`<") ; 폰트 크기 줄이기
 
 /*
-도형 선택 - 빠른 실행 도구 2번째에 지정
+resource 출력, 빠른 실행 도구의 원본 서식 유지해서 붙여넣기 기능에 의존
+입력키를 따로 관리하지 않는 이유는 귀찮아서(개선 여지가 있음)
+#param Object resource : Buffer 객체, ClipboardALl(data)로 생성
+*/
+printResource(resource) {
+	try {
+		A_Clipboard := resource
+		SendInput(ORIGINAL_PASTE_KEY)
+
+	} catch as e {
+		msg("실패 : " e)
+	}
+}
+
+/*
+도형 선택 - 도형 도구 빠른 실행 도구 1번째에 지정
 #param String figureXY : 리본 내 선택할 도형 x, y좌표 (format = "x좌표 y좌표")
 */
-selectFigure(figureXY) {
-
-	; STEP 01. 도형 클릭
-	ControlClick(RIBBON_TOOL1_XY, "ahk_exe ONENOTE.EXE",,,, "NA")
-	Sleep(100)
+selectFigure(downCount := "0", rightCount := "0") {
+	; STEP 01. 도형 도구
+	SendInput("!1")
 
 	; STEP 02. 도형 선택
-	ControlClick(figureXY, "ahk_exe ONENOTE.EXE",,,, "NA")
-
-	; STEP 03. 즉시 도구가 사용되지 않는 버그 해결용으로 단순 클릭 입력
-	SendInput("{Click}")
+	SendInput("{Down " downCount "}{Right " rightCount "}{Space}")
 }
 
 /*
