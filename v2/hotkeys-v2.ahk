@@ -8,9 +8,13 @@
 ;~ SendMessage(0x0007, 0, 0,, "🐵")
 
 ;~ WinMoveBottom("카카오톡")
-WinActivateBottom("🐵")
+
+if (
+WinActivate("🐵")
 WinMoveBottom("🐵")
+WinMove(0,3000,,,"🐵")
 SendMessage(0x0007, 0, 0,, "🐵")
+
 
 
 /*
