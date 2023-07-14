@@ -43,9 +43,6 @@ STANDARD_RIBBON_TOOL2_Y := 145
 global RIBBON_TOOL1_XY := "x0 y0"
 global RIBBON_TOOL2_XY := "x0 y0"
 
-; 원노트 Clipboard resources
-LARGE_STAR_EMOTICON := ClipboardAll(FileRead(".\resources\onenote\large_star_emoticon2", "RAW"))
-
 ; 원노트 공통 핫키
 ORIGINAL_PASTE_KEY := "!3"
 
@@ -403,12 +400,11 @@ switchWithMute(muteFlag) {
 !s::selectFigure("0", "1") ; 그리기 화살표(도형 도구 - 빠른 실행 도구 1번째에 지정)
 !w::paintFont("7") ; 글씨색 변경 빨간색(빠른 실행 도구 2번째에 지정, 팔레트 기준 7번째 아래 위치)
 ^+v::SendInput(ORIGINAL_PASTE_KEY) ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
-#q::printResource(LARGE_STAR_EMOTICON) ; 큰 별 넣기 (서식 유지해서 붙여넣기)
 ^v::paste() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입 / 이미지는 그림으로 붙여넣기(빠른 실행 도구 4번째에 지정)
 !q::SendInput("!5") ; Highlight(빠른 실행 도구 5번째에 지정)
 ;!w::SendInput("!6") ; Red emphasis(빠른 실행 도구 6번째에 지정)
 !e::SendInput("!7") ; Bold 12pt(빠른 실행 도구 7번째에 지정)
-F5::SendInput("!8") ; 즐겨찾기(빠른 실행 도구 8번째에 지정)
+#q::setTextWithSize("⭐", 36) ; 큰 별 넣기 (폰트 크기 - 빠른 실행 도구 8번째에 지정)
 ^+x::SendInput("!09") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 10번째에 지정)
 !x::SendInput("!08") ; 줄머리 넣기(빠른 실행 도구 11번째에 지정)
 ^+q::SendInput("!07") ; 목차 생성(빠른 실행 도구 12번째에 지정)
@@ -417,6 +413,7 @@ F5::SendInput("!8") ; 즐겨찾기(빠른 실행 도구 8번째에 지정)
 !c::SendInput("!04") ; 텍스트 직선 긋기(빠른 실행 도구 15번째에 지정)
 !PgUp::SendInput("!03") ; 객체 맨 앞으로(빠른 실행 도구 16번째에 지정)
 !XButton2::SendInput("!03") ; 객체 맨 앞으로(빠른 실행 도구 16번째에 지정)
+F5::SendInput("!02") ; 즐겨찾기(빠른 실행 도구 17번째에 지정)
 
 !z::SendInput("^+n") ; 글 서식 제거
 
@@ -432,6 +429,20 @@ XButton2::SendInput("!{Right}")
 +PgDn::SendInput("^+`<") ; 폰트 크기 줄이기
 +WheelUp::SendInput("^+`>") ; 폰트 크기 키우기
 +WheelDown::SendInput("^+`<") ; 폰트 크기 줄이기
+
+
+/*
+지정된 사이즈로 지정된 텍스트 삽입
+#param String text : 삽입할 텍스트
+#param Number size : 텍스트 사이즈
+*/
+setTextWithSize(text := "", size := 0) {
+	if (size > 0) {
+		SendInput("!8" size "{Enter}" text)
+	} else {
+		MsgBox("사이즈는 0보다 커야 합니다.")
+	}
+}
 
 /*
 resource 출력, 빠른 실행 도구의 원본 서식 유지해서 붙여넣기 기능에 의존
