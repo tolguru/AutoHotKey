@@ -387,6 +387,10 @@ switchWithMute(muteFlag) {
 ^q::SendInput("^k")
 !a::SendInput("^t")
 !s::SendInput("^+n")
+!q:: {
+	A_Clipboard := "sentence : `"`"`n`nI want you to write back to me with your corrections in natural sentences, followed by a detailed grammatical explanation of why the sentence was unnatural."
+	SendInput("^{v}{Up 3}{Left}")
+}
 
 /*
 ########################################
