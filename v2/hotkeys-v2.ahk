@@ -346,23 +346,22 @@ switchWithMute(muteFlag) {
 ########################################
 */
 #HotIf WinActive("ahk_exe idea64.exe")
-!/::MsgBox("## IntelliJ ##`n(X)CapsLock - 한 줄 제거`n^w - 탭 끄기`n^+w - 고정 탭 제외 끄기`n^e - 핀으로 고정`n!z - 안 쓰는 import 제거`n!x - 메서드 return값으로 변수 생성`n!c - 메서드화`n!q - 최근 사용 파일 검색`n!w - 파일 검색`n!e - 클래스 구조(Structure) 보기`n^. - 메서드 Document 주석 달기`n!a - 현재 커서 위치 모듈 Run`n!s - 마지막 모듈 Run`n!d - 마지막 모듈 Debug")
+!/::MsgBox("## IntelliJ ##`n(X)CapsLock - 한 줄 제거`n^w - 탭 끄기`n^+w - 고정 탭 제외 끄기`n^e - 핀으로 고정`n!z - 안 쓰는 import 제거`n!x - 메서드 return값으로 변수 생성`n!c - 메서드화`n!q - 최근 사용 파일 검색`n!w - 파일 검색`n!e - 클래스 구조(Structure) 보기`n^. - 메서드 Document 주석 달기`n!a - 마지막 모듈 Run`n!s - 마지막 모듈 Debug")
 
 ;~ CapsLock::SendInput("^y")
 ^w::SendInput("^{F4}")
 ^+w::SendInput("!i") ; IntelluJ 기본 키설정을 해당 키로 변경
 ^e::SendInput("!u") ; IntelluJ 기본 키설정을 해당 키로 변경
 ^.::SendInput("!+h") ; 메서드 Document 주석 달기(IntelliJ JavaDoc plugin 키설정을 해당 키로 변경)
-!z::SendInput("!^o")
-!x::SendInput("^!v")
+!z::SendInput("!^o") ; 안 쓰는 Imports 제거
+!x::SendInput("^!v") ; return값으로 변수 자동 생성
 !c::SendInput("^!m") ; 메서드화
-!q::SendInput("^e")
-!w::SendInput("^+n")
+!q::SendInput("^e") ; 최근 파일 검색
+!w::SendInput("^+n") ; 파일 검색
 !e::SendInput("!7") ; Structure
-!a::SendInput("^+{F10}")
-!s::SendInput("+{F10}")
-!d::SendInput("+{F9}")
-`::SendInput("^y")
+!a::SendInput("+{F10}") ; 마지막 모듈 run
+!s::SendInput("+{F9}") ; 마지막 모듈 debug
+`::SendInput("^y") ; 라인 DELETE
 
 /*
 ########################################
