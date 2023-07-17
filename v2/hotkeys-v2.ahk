@@ -306,7 +306,6 @@ blockAllInput(time := 0.1) {
 	BlockInput False
 }
 
-
 /*
 가장 최근 클립보드 데이터의 포맷 출력
 */
@@ -382,14 +381,26 @@ switchWithMute(muteFlag) {
 ########################################
 */
 #HotIf WinActive("ahk_exe whale.exe")
-!/::MsgBox("^q - 창 복사`n!a - 새 탭 열기`n!s - 시크릿 모드 창 열기")
+!/::MsgBox("^q - 창 복사`n!a - 새 탭 열기`n!s - 시크릿 모드 창 열기`n#q - Chat GPT 프롬프트(영어 교정)`n#q - Chat GPT 프롬프트(영어 문법 분석)")
 
 ^q::SendInput("^k")
 !a::SendInput("^t")
 !s::SendInput("^+n")
-!q:: {
-	A_Clipboard := "sentence : `"`"`n`nI want you to write back to me with your corrections in natural sentences, followed by a detailed grammatical explanation of why the sentence was unnatural."
-	SendInput("^{v}{Up 3}{Left}")
+#q::gptPrompt("sentence : `"`"`n`nI want you to write back to me with your corrections in natural sentences, followed by a detailed grammatical explanation of why the sentence was unnatural.")
+#w::gptPrompt("sentence : `"`"`n`nAnalyze the grammatical elements of this sentence.")
+
+/*
+Chat GPT Prompt 영어 분석용 함수, 클립보드 사용 후 기존 데이터로 클립보드 원복
+#param String prompt : prompt 문자열
+*/
+gptPrompt(prompt := "") {
+	tmpBuffer := ClipboardAll()
+
+	A_Clipboard := prompt
+	ClipWait(2)
+	SendInput("^{v}{Up 10}{End}{Left}")
+
+	A_Clipboard := tmpBuffer
 }
 
 /*
