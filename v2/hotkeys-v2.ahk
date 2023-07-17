@@ -3,53 +3,6 @@
 ++ 임시 기능 선언
 ++++++++++++++++++++++++++++++++++++++++
 */
-;~ SendMessage(0x0007, 0, 0,, "🐵")
-;~ SendMessage(0x0007, 0, 0,, "")
-;~ SendMessage(0x0007, 0, 0,, "🐵")
-
-;~ WinMoveBottom("카카오톡")
-
-;~ OnMessage(0x0282, WM_IME_NOTIFY)
-;~ OnMessage(0x004E, WM_NOTIFY)
-;~ OnMessage(0x0055, WM_NOTIFYFORMAT)
-;~ OnMessage(0x0210, WM_PARENTNOTIFY)
-
-;~ OnMessage(0x004A, WM_COPY)
-;~ WM_COPY(wParam, lParam, msg, hwnd) {
-	;~ MsgBox("WM_COPY " msg)
-;~ }
-
-;~ WM_IME_NOTIFY(wParam, lParam, msg, hwnd) {
-	;~ MsgBox("WM_IME_NOTIFY " msg)
-;~ }
-;~ WM_NOTIFY(wParam, lParam, msg, hwnd) {
-	;~ MsgBox("WM_NOTIFY " msg)
-;~ }
-;~ WM_NOTIFYFORMAT(wParam, lParam, msg, hwnd) {
-	;~ MsgBox("WM_NOTIFYFORMAT " msg)
-;~ }
-;~ WM_PARENTNOTIFY(wParam, lParam, msg, hwnd) {
-	;~ MsgBox("WM_PARENTNOTIFY " msg)
-;~ }
-
-;~ WinActivate("🐵")
-;~ WinMove(0,3000,,,"🐵")
-;~ SendMessage(0x0007, 0, 0,, "🐵")
-
-;~ WinActivate("abcd")
-;~ WinMove(0,3000,,,"abcd")
-;~ WinMove(0,3000,,,"abcd2")
-;~ WinMove(0,3000,,,"abcd3")
-;~ WinMove(0,3000,,,"abcd4")
-;~ WinMove(0,3000,,,"실시간 날씨 정보공유방🌤")
-
-F8::SendMessage(0x0007, 0, 0,, "실시간 날씨 정보공유방🌤")
-F9::SendMessage(0x0007, 0, 0,, "abcd")
-F10::SendMessage(0x0007, 0, 0,, "abcd2")
-F11::SendMessage(0x0007, 0, 0,, "abcd3")
-F7::SendMessage(0x0007, 0, 0,, "abcd4")
-
-
 
 /*
 ++++++++++++++++++++++++++++++++++++++++
