@@ -423,7 +423,7 @@ gptPrompt(prompt := "") {
 !e::SendInput("!7") ; Bold 12pt(빠른 실행 도구 7번째에 지정)
 #q::setTextWithSize("⭐", 36) ; 큰 별 넣기 (폰트 크기 - 빠른 실행 도구 8번째에 지정)
 ^+x::SendInput("!09") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 10번째에 지정)
-!x::SendInput(BULLET_POINT_KEY) ; 말머리 넣기(빠른 실행 도구 11번째에 지정)
+!x::SendInput(BULLET_POINT_KEY) ; 글머리 넣기(빠른 실행 도구 11번째에 지정)
 ^+q::SendInput("!07") ; 목차 생성(빠른 실행 도구 12번째에 지정)
 !d::SendInput("!06") ; 1레벨 목차 설정(빠른 실행 도구 13번째에 지정)
 !f::SendInput("!05") ; 2레벨 목차 설정(빠른 실행 도구 14번째에 지정)
@@ -447,7 +447,7 @@ XButton2::SendInput("!{Right}")
 +WheelUp::SendInput("^+`>") ; 폰트 크기 키우기
 +WheelDown::SendInput("^+`<") ; 폰트 크기 줄이기
 
-; 줄머리 기호
+; 글머리 기호
 :*:> :: {
 	toolKeyboardSelect(BULLET_POINT_KEY, "3", "2")
 }
@@ -523,23 +523,20 @@ paintFont(downCount := "0", rightCount := "0", backColor := false) {
 
 1. 텍스트가 http로 시작할 경우 지정된 형식의 링크로 삽입
 2. 텍스트에 속할 경우 일반 붙여넣기
-3. Slack에서 복사한 이미지일 경우(UINT format -> 50121) 그림으로 붙여넣기
+3. Slack에서 복사한 이미지일 경우 그림으로 붙여넣기
 */
 paste() {
 	if (DllCall("CountClipboardFormats") = 6 && DllCall("IsClipboardFormatAvailable", "UInt", 2)) {
 		A_Clipboard := ClipboardAll()
-	}
-
-	if (SubStr(A_Clipboard, 1, 4) = "http") {
+		SendInput("!4")
+		SendInput("{Esc}")
+	} else if (SubStr(A_Clipboard, 1, 4) = "http") {
 		SendInput("^k")
 		Sleep(150)
 		ControlSetText("Link", "RICHEDIT60W3", "ahk_exe ONENOTE.EXE")
 		ControlSetText(A_Clipboard, "RICHEDIT60W2", "ahk_exe ONENOTE.EXE")
 		ControlFocus("RICHEDIT60W3", "ahk_exe ONENOTE.EXE")
 		SendInput("{Enter}")
-	} else if(DllCall("IsClipboardFormatAvailable", "UInt", 49437)) {
-		SendInput("!4")
-		SendInput("{Esc}")
 	} else {
 		SendInput("^v")
 	}
