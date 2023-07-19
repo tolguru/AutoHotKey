@@ -447,6 +447,11 @@ XButton2::SendInput("!{Right}")
 +WheelUp::SendInput("^+`>") ; 폰트 크기 키우기
 +WheelDown::SendInput("^+`<") ; 폰트 크기 줄이기
 
+; 줄머리 기호
+:*:> :: {
+	toolKeyboardSelect(BULLET_POINT_KEY, "3", "2")
+}
+
 /*
 도구 선택 이후 방향키로 세부 항목 선택
 #param String key        : 도구 선택 입력키
