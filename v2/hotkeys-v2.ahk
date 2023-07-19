@@ -44,7 +44,9 @@ global RIBBON_TOOL1_XY := "x0 y0"
 global RIBBON_TOOL2_XY := "x0 y0"
 
 ; 원노트 공통 핫키
+DRAW_FIGURE_KEY    := "!1"
 ORIGINAL_PASTE_KEY := "!3"
+BULLET_POINT_KEY   := "!08"
 
 ; 물 알람
 waterAlarmList := [subPC]
@@ -396,8 +398,9 @@ gptPrompt(prompt := "") {
 	tmpBuffer := ClipboardAll()
 
 	A_Clipboard := prompt
-	ClipWait(2)
-	SendInput("^{v}{Up 10}{End}{Left}")
+	if (ClipWait(2)) {
+		SendInput("^{v}{Up 10}{End}{Left}")
+	}
 
 	A_Clipboard := tmpBuffer
 }
@@ -408,10 +411,10 @@ gptPrompt(prompt := "") {
 ########################################
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - Highlight`n!w - 폰트 색 설정`n!e - Bold 12pt`n!z - 서식 제거`n!x - 줄머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n^+z - 맨 밑에 페이지 추가`n^+x - 현재 페이지 밑에 페이지 추가`n^+c - 페이지 수준 내리기`n^+q - 현재 페이지 목차 생성`n#q - LARGE_STAR_EMOTICON`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n!PgUp, !사이드 앞 - 객체 맨 앞으로`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지")
+!/::MsgBox("!q - Highlight`n!w - 폰트 색 설정`n!e - Bold 12pt`n!z - 서식 제거`n!x - 말머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n^+z - 맨 밑에 페이지 추가`n^+x - 현재 페이지 밑에 페이지 추가`n^+c - 페이지 수준 내리기`n^+q - 현재 페이지 목차 생성`n#q - LARGE_STAR_EMOTICON`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n!PgUp, !사이드 앞 - 객체 맨 앞으로`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지")
 
-!a::selectFigure() ; 그리기 직선(도형 도구 - 빠른 실행 도구 1번째에 지정)
-!s::selectFigure("0", "1") ; 그리기 화살표(도형 도구 - 빠른 실행 도구 1번째에 지정)
+!a::toolKeyboardSelect(DRAW_FIGURE_KEY) ; 그리기 직선(도형 도구 - 빠른 실행 도구 1번째에 지정)
+!s::toolKeyboardSelect(DRAW_FIGURE_KEY, "0", "1") ; 그리기 화살표(도형 도구 - 빠른 실행 도구 1번째에 지정)
 !w::paintFont("7") ; 글씨색 변경 빨간색(빠른 실행 도구 2번째에 지정, 팔레트 기준 7번째 아래 위치)
 ^+v::SendInput(ORIGINAL_PASTE_KEY) ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
 ^v::paste() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입 / 이미지는 그림으로 붙여넣기(빠른 실행 도구 4번째에 지정)
@@ -420,7 +423,7 @@ gptPrompt(prompt := "") {
 !e::SendInput("!7") ; Bold 12pt(빠른 실행 도구 7번째에 지정)
 #q::setTextWithSize("⭐", 36) ; 큰 별 넣기 (폰트 크기 - 빠른 실행 도구 8번째에 지정)
 ^+x::SendInput("!09") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 10번째에 지정)
-!x::SendInput("!08") ; 줄머리 넣기(빠른 실행 도구 11번째에 지정)
+!x::SendInput(BULLET_POINT_KEY) ; 말머리 넣기(빠른 실행 도구 11번째에 지정)
 ^+q::SendInput("!07") ; 목차 생성(빠른 실행 도구 12번째에 지정)
 !d::SendInput("!06") ; 1레벨 목차 설정(빠른 실행 도구 13번째에 지정)
 !f::SendInput("!05") ; 2레벨 목차 설정(빠른 실행 도구 14번째에 지정)
@@ -444,6 +447,19 @@ XButton2::SendInput("!{Right}")
 +WheelUp::SendInput("^+`>") ; 폰트 크기 키우기
 +WheelDown::SendInput("^+`<") ; 폰트 크기 줄이기
 
+/*
+도구 선택 이후 방향키로 세부 항목 선택
+#param String key        : 도구 선택 입력키
+#param String downCount  : 세부 항목에서 아래 방향으로 향할 횟수
+#param String rightCount : 세부 항목에서 오른쪽 방향으로 향할 횟수
+*/
+toolKeyboardSelect(key, downCount := "0", rightCount := "0") {
+	; STEP 01. 도구 선택
+	SendInput(key)
+
+	; STEP 02. 세부 항목 선택
+	SendInput("{Down " downCount "}{Right " rightCount "}{Space}")
+}
 
 /*
 지정된 사이즈로 지정된 텍스트 삽입
@@ -473,28 +489,6 @@ printResource(resource) {
 		msg("실패 : " e)
 	}
 }
-
-/*
-도형 선택 - 도형 도구 빠른 실행 도구 1번째에 지정
-#param String figureXY : 리본 내 선택할 도형 x, y좌표 (format = "x좌표 y좌표")
-*/
-selectFigure(downCount := "0", rightCount := "0") {
-	; STEP 01. 도형 도구
-	SendInput("!1")
-
-	; STEP 02. 도형 선택
-	SendInput("{Down " downCount "}{Right " rightCount "}{Space}")
-}
-
-/*
-Font Style 지정 후 맨 앞으로 가져오기 - 빠른 실행 도구 16번째에 "맨 앞으로 가져오기" 지정
-#param String locate : 실행할 빠른 실행 도구의 스타일 핫키
-*/
-;~ setFontStyle(locate) {
-	;~ SendInput("!" locate)
-	;~ Sleep(1000)
-	;~ SendInput("!2")
-;~ }
 
 /*
 Font Color 선택 - 빠른 실행 도구 2번째에 지정
