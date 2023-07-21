@@ -107,8 +107,9 @@ alarm() {
 */
 !/::MsgBox("##### 프로그램 실행 #####`n#`` - notepad 실행 및 활성화`n#1 - 나한테 다이렉트 메세지 보내기`n##### 기타 #####`n`n^+F12 - 1분 타이머 후 사운드`n^\ - caps lock 토글`n^사이드 앞 - 페이지 맨 위로 이동`n^사이드 뒤 - 페이지 맨 뒤로 이동")
 
-#`::runNotepadPP()
+#`::runEXE("onenote")
 #1::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE")
+#Tab::runEXE("whale")
 
 ; 1분 타이머, Beep 사운드 알람
 +F12::ringTimer(60)
@@ -264,35 +265,20 @@ findValue(arr, target) {
 }
 
 /*
-Notepad++ 실행
-*/
-runNotepadPP() {
-	if WinExist("ahk_exe notepad++.exe") {
-		WinActivate
-	} else {
-		Run("notepad++.exe")
-	}
-}
+exe파일 실행 또는 활성화
+#param String exeFileName : 실행시킬 파일명
 
-/*
-OneNote 실행
+#File List
+notepad++.exe
+onenote.exe
+idea64.exe
+whale.exe
 */
-runOneNote() {
-	if WinExist("ahk_exe ApplicationFrameHost.exe") {
+runEXE(exeFileName) {
+	if WinExist("ahk_exe " exeFileName ".exe") {
 		WinActivate
 	} else {
-		Run("ApplicationFrameHost.exe")
-	}
-}
-
-/*
-IntelliJ 실행
-*/
-runIntelliJ() {
-	if WinExist("ahk_exe idea64.exe") {
-		WinActivate
-	} else {
-		Run("idea64.exe")
+		Run(exeFileName ".exe")
 	}
 }
 
@@ -460,7 +446,7 @@ XButton2::SendInput("!{Right}")
 +WheelDown::SendInput("^+`<") ; 폰트 크기 줄이기
 
 ; 글머리 기호
-:*:> :: {
+:*:>> :: {
 	toolKeyboardSelect(BULLET_POINT_KEY, "3", "2")
 }
 
