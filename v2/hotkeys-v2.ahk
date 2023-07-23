@@ -385,8 +385,9 @@ Chat GPT Prompt 영어 분석용 함수, 클립보드 사용 후 기존 데이�
 #param String prompt : prompt 문자열
 */
 gptPrompt(prompt := "") {
-	tmpBuffer := ClipboardAll()
+	tmpBuffer := A_Clipboard
 
+	A_Clipboard := ""
 	A_Clipboard := prompt
 	if (ClipWait(2)) {
 		SendInput("^{v}{Up 10}{End}{Left}")
