@@ -330,7 +330,7 @@ switchWithMute(muteFlag) {
 
 /*
 ########################################
-## IntelliJ
+## @IntelliJ
 ########################################
 */
 #HotIf WinActive("ahk_exe idea64.exe")
@@ -353,7 +353,7 @@ switchWithMute(muteFlag) {
 
 /*
 ########################################
-## Chrome
+## @Chrome
 ########################################
 */
 #HotIf WinActive("ahk_exe chrome.exe")
@@ -364,11 +364,11 @@ switchWithMute(muteFlag) {
 
 /*
 ########################################
-## Whale
+## @Whale
 ########################################
 */
 #HotIf WinActive("ahk_exe whale.exe")
-!/::MsgBox("^q - 창 복사`n!a - 새 탭 열기`n!s - 시크릿 모드 창 열기`n#q - Chat GPT 프롬프트(영어 교정)`n#q - Chat GPT 프롬프트(영어 문법 분석)")
+!/::MsgBox("^q - 창 복사`n!a - 새 탭 열기`n!s - 시크릿 모드 창 열기`n#q - Chat GPT 프롬프트(영어 교정)`n#q - Chat GPT 프롬프트(문법 분석)`n#w - Chat GPT 프롬프트(문장 비교)`n#e - Chat GPT 프롬프트(문장 요소 분석)")
 
 global tabFlag := true
 
@@ -376,7 +376,8 @@ global tabFlag := true
 !a::SendInput("^t")
 !s::SendInput("^+n")
 #q::gptPrompt("sentence : `"`"`n`nI want you to write back to me with your corrections in natural sentences, followed by a detailed grammatical explanation of why the sentence was unnatural.")
-#w::gptPrompt("sentence : `"`"`n`nAnalyze the grammatical elements of this sentence.")
+#w::gptPrompt("sentence 1 : `"`"`nsentence 2 : `"`"`n`nWhich sentence is more natural?")
+#e::gptPrompt("sentence : `"`"`n`nAnalyze the grammatical elements of this sentence.")
 `::toggleTab()
 
 
@@ -406,7 +407,7 @@ toggleTab() {
 
 /*
 ########################################
-## 원노트
+## @원노트
 ########################################
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
@@ -543,7 +544,7 @@ paste() {
 
 /*
 ########################################
-## SSMS
+## @SSMS
 ########################################
 */
 #HotIf WinActive("ahk_exe Ssms.exe")
@@ -560,7 +561,7 @@ paste() {
 
 /*
 ########################################
-## DBeaver
+## @DBeaver
 ########################################
 */
 #HotIf WinActive("ahk_exe dbeaver.exe")
@@ -600,7 +601,7 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 
 /*
 ########################################
-## VSCode
+## @VSCode
 ########################################
 */
 #HotIf WinActive("ahk_exe Code.exe")
@@ -613,7 +614,7 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 
 /*
 ########################################
-## SciTE4AutoHotkey
+## @SciTE4AutoHotkey
 ########################################
 */
 #HotIf WinActive("ahk_exe SciTE.exe")
@@ -621,11 +622,12 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 
 !q::SendInput("^{F2}")
 !w::SendInput("{F2}")
+!e::SendInput("^f@!m{Esc}")
 ^/::SendInput("/*`n`n*/{Up}")
 
 /*
 ########################################
-## Slack
+## @Slack
 ########################################
 */
 #HotIf WinActive("ahk_exe slack.exe")
