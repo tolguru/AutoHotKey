@@ -53,6 +53,11 @@ waterAlarmList := [subPC]
 
 global waterAlarm := false
 
+; 환경 변수 데이터
+GMAIL      := EnvGet("aaGmail")
+NAVER_MAIL := EnvGet("aaNmail")
+PHONE_NUM  := EnvGet("aaPhone")
+
 /*
 ++++++++++++++++++++++++++++++++++++++++
 ++ 기본 기능 설정
@@ -130,6 +135,10 @@ Pause::Reload
 
 F1::runParamUrl("https://ko.dict.naver.com/#/search?query=", "국어사전")
 F3::runParamUrl("https://en.dict.naver.com/#/search?query=", "영어사전")
+
+Hotstring(":*:gm.", GMAIL)
+Hotstring(":*:na.", NAVER_MAIL)
+Hotstring(":*:123.", PHONE_NUM)
 
 
 /*
@@ -375,9 +384,9 @@ global tabFlag := true
 ^q::SendInput("^k")
 !a::SendInput("^t")
 !s::SendInput("^+n")
-#q::gptPrompt("sentence : `"`"`n`nI want you to write back to me with your corrections in natural sentences, followed by a detailed grammatical explanation of why the sentence was unnatural.")
-#w::gptPrompt("sentence 1 : `"`"`nsentence 2 : `"`"`n`nWhich sentence is more natural?")
-#e::gptPrompt("sentence : `"`"`n`nAnalyze the grammatical elements of this sentence.")
+#q::gptPrompt("문장 : `"`"`n`n자연스러운 문장으로 수정한 후 문장이 부자연스러운 이유에 대한 자세한 설명을 해줘.`n추가적으로, 더 자연스럽게 사용될 수 있는 문장들이 있으면 추천해줘.")
+#w::gptPrompt("문장 1 : `"`"`n문장 2 : `"`"`n`n어느 문장이 더 자연스러워?")
+#e::gptPrompt("문장 : `"`"`n`n문장의 구성 요소에 대해 분석해줘.")
 `::toggleTab()
 
 
