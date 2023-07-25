@@ -135,6 +135,7 @@ Pause::Reload
 
 F1::runParamUrl("https://ko.dict.naver.com/#/search?query=", "국어사전")
 F3::runParamUrl("https://en.dict.naver.com/#/search?query=", "영어사전")
+F4::SendInput("!^+{F4}")
 
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
