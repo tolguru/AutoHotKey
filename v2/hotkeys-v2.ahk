@@ -385,14 +385,15 @@ global tabFlag := true
 ^q::SendInput("^k")
 !a::SendInput("^t")
 !s::SendInput("^+n")
-#q::gptPrompt("문장 : `"`"`n`n자연스러운 문장으로 수정한 후 문장이 부자연스러운 이유에 대한 자세한 설명을 해줘.`n추가적으로, 더 자연스럽게 사용될 수 있는 문장들이 있으면 추천해줘.")
-#w::gptPrompt("문장 1 : `"`"`n문장 2 : `"`"`n`n어느 문장이 더 자연스러워?")
-#e::gptPrompt("문장 : `"`"`n`n문장의 구성 요소에 대해 분석해줘.")
+#q::setPrompt("문장 : `"`"+{Enter 2}자연스러운 문장으로 수정한 후 문장이 부자연스러운 이유에 대한 자세한 설명을 해줘.+{Enter}추가적으로, 더 자연스럽게 사용될 수 있는 문장들이 있으면 추천해줘.")
+#w::setPrompt("문장 1 : `"`"+{Enter}문장 2 : `"`"+{Enter 2}어느 문장이 더 자연스러워?")
+#e::setPrompt("문장 : `"`"+{Enter 2}문장의 구성 요소에 대해 분석해줘.")
 `::toggleTab()
 
 
 /*
-Chat GPT Prompt 영어 분석용 함수, 클립보드 사용 후 기존 데이터로 클립보드 원복
+Chat AI Prompt 영어 분석용 함수, 클립보드 사용 후 기존 데이터로 클립보드 원복
+!!! 클립보드 덮어씌우기가 제대로 안 되는 경우가 잦음 !!!
 #param String prompt : prompt 문자열
 */
 gptPrompt(prompt := "") {
@@ -405,6 +406,14 @@ gptPrompt(prompt := "") {
 	}
 
 	A_Clipboard := tmpBuffer
+}
+
+/*
+Chat AI Prompt 영어 분석용 함수, SendInput버전
+#param String prompt : prompt 문자열
+*/
+setPrompt(prompt := "") {
+	SendInput(prompt "{Up 10}{End}{Left}")
 }
 
 /*
