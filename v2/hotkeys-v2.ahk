@@ -3,6 +3,15 @@
 ++ 임시 기능 선언
 ++++++++++++++++++++++++++++++++++++++++
 */
+F9:: {
+	standardCount := 16
+	count         := 0
+
+	Loop {
+		Mod(count++, 16) < Floor(standardCount / 2)? SendInput("{WheelDown}") : SendInput("{WheelUp}")
+		Sleep(Random(50, 4000))
+	}
+}
 
 /*
 ++++++++++++++++++++++++++++++++++++++++
@@ -385,7 +394,7 @@ global tabFlag := true
 ^q::SendInput("^k")
 !a::SendInput("^t")
 !s::SendInput("^+n")
-#q::setPrompt("문장 : `"`"+{Enter 2}자연스러운 문장으로 수정한 후 문장이 부자연스러운 이유에 대한 자세한 설명을 해줘.+{Enter}추가적으로, 더 자연스럽게 사용될 수 있는 문장들이 있으면 추천해줘.")
+#q::setPrompt("문장 : `"`"+{Enter 2}문장이 부자연스럽다면, 자연스러운 문장으로 수정한 후 문장이 부자연스러운 이유에 대한 자세한 설명을 해줘.+{Enter}추가적으로, 더 자연스럽게 사용될 수 있는 문장들이 있으면 추천해줘.")
 #w::setPrompt("문장 1 : `"`"+{Enter}문장 2 : `"`"+{Enter 2}어느 문장이 더 자연스러워?")
 #e::setPrompt("문장 : `"`"+{Enter 2}문장의 구성 요소에 대해 분석해줘.")
 `::toggleTab()
@@ -639,6 +648,7 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 #HotIf WinActive("ahk_exe SciTE.exe")
 !/::MsgBox("!q - 책갈피 설정/제거`n!w - 책갈피로 이동`n^/ - 구역 주석")
 
+F1::SendInput("!h{Enter}")
 !q::SendInput("^{F2}")
 !w::SendInput("{F2}")
 !e::SendInput("^f@!m{Esc}")
