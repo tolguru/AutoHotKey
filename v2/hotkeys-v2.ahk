@@ -3,15 +3,100 @@
 ++ 임시 기능 선언
 ++++++++++++++++++++++++++++++++++++++++
 */
-F9:: {
-	standardCount := 16
-	count         := 0
 
+global strIndex := Format("{:02}", 1)
+
+;~ +e:: {
+	;~ SendInput("!1")
+	;~ if (WinWaitActive("사진 인쇄",, 3)) {
+		;~ SendInput("{Enter}")
+		;~ if (WinWaitActive("다음 이름으로 프린터 출력 저장",, 3)) {
+			;~ SendInput(strIndex "{Enter}")
+		;~ }
+		;~ processIndex()
+
+		;~ return
+	;~ }
+
+	;~ msg("실패")
+;~ }
+
+#q:: {
+	processIndex()
+}
+
+#w:: {
+	processIndex(false)
+}
+
+processIndex(increaseFlag := true) {
+	numIndex := Number(strIndex)
+
+	global strIndex := Format("{:02}", increaseFlag? ++numIndex : --numIndex)
+	msg(strIndex)
+}
+
+; 원노트 explorer -> pdf 파일 페이지에 붙여넣기
+F9:: {
 	Loop {
-		Mod(count++, 16) < Floor(standardCount / 2)? SendInput("{WheelDown}") : SendInput("{WheelUp}")
-		Sleep(Random(50, 4000))
+		WinActivate("ahk_class CabinetWClass")
+		SendInput("^c{Down}")
+
+		Sleep(500)
+
+		WinActivate("ahk_exe ONENOTE.EXE")
+		SendInput("^{PgDn}^vp")
+
+		Sleep(3000)
+
 	}
 }
+
+; 임시 페이지 맨 위 파일 삭제
+F10:: {
+	SendInput("^{Home}")
+	Sleep(100)
+	SendInput("{Delete}")
+	Sleep(200)
+	SendInput("^{PgDn}")
+	Sleep(50)
+}
+
+;~ F9:: {
+	;~ Loop {
+		;~ input := InputBox(, "입력", "w100 h70")
+		;~ if input.Result = "OK" {
+			;~ FileMove("C:\Users\kdh\Desktop\그래머존\PDF\05.종합\" strIndex "*.pdf", "C:\Users\kdh\Desktop\그래머존\PDF\05.종합\" strIndex ". " input.value ".pdf")
+			;~ processIndex()
+			;~ msg(strIndex)
+		;~ } else {
+			;~ return
+		;~ }
+	;~ }
+;~ }
+
+;~ F9:: {
+	;~ standardCount := 16
+	;~ count         := 0
+
+	;~ Loop {
+		;~ Mod(count++, 16) < Floor(standardCount / 2)? SendInput("{WheelDown 2}") : SendInput("{WheelUp 2}")
+		;~ Sleep(Random(50, 4000))
+	;~ }
+;~ }
+
+;~ F10:: {
+	;~ Loop {
+		;~ index := Format("{:04}", A_Index + 1)
+
+		;~ if (index = "0144") {
+			;~ break
+		;~ }
+
+		;~ Download("http://ebook.nebooks.co.kr/nw/m/BB09000053/assets/page-images/page-231052-" index ".jpg", "C:\Users\kdh\Desktop\그래머존\워크북_기초\grammar_zone_workbook_level_2_" index ".jpg")
+		;~ msg(index)
+	;~ }
+;~ }
 
 /*
 ++++++++++++++++++++++++++++++++++++++++
