@@ -471,6 +471,10 @@ XButton2::SendInput("!{Right}")
 	toolKeyboardSelect(BULLET_POINT_KEY, "3", "2")
 }
 
+:*:]] :: {
+	toolKeyboardSelect(BULLET_POINT_KEY, "2", "1")
+}
+
 /*
 도구 선택 이후 방향키로 세부 항목 선택
 #param String key        : 도구 선택 입력키
