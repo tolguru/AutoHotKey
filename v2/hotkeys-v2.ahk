@@ -430,7 +430,7 @@ toggleTab() {
 ########################################
 */
 #HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - Highlight`n!w - 폰트 색 설정`n!e - Bold 12pt`n!z - 서식 제거`n!x - 말머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!d - 1레벨 목차 설정`n!f - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n^+z - 맨 밑에 페이지 추가`n^+x - 현재 페이지 밑에 페이지 추가`n^+c - 페이지 수준 내리기`n^+q - 현재 페이지 목차 생성`n#q - LARGE_STAR_EMOTICON`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n!PgUp, !사이드 앞 - 객체 맨 앞으로`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지")
+!/::MsgBox("!q - Highlight`n!w - 폰트 색 설정`n!e - 특정 색 폰트`n!r - 특정 색 폰트`n!d - Bold 14pt`n!z - 서식 제거`n!x - 말머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!1 - 1레벨 목차 설정`n!2 - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n^+z - 맨 밑에 페이지 추가`n^+x - 현재 페이지 밑에 페이지 추가`n^+c - 페이지 수준 내리기`n^+q - 현재 페이지 목차 생성`n#q - LARGE_STAR_EMOTICON`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n!PgUp, !사이드 앞 - 객체 맨 앞으로`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지")
 
 !a::toolKeyboardSelect(DRAW_FIGURE_KEY) ; 그리기 직선(도형 도구 - 빠른 실행 도구 1번째에 지정)
 !s::toolKeyboardSelect(DRAW_FIGURE_KEY, "0", "1") ; 그리기 화살표(도형 도구 - 빠른 실행 도구 1번째에 지정)
@@ -438,14 +438,15 @@ toggleTab() {
 ^+v::SendInput(ORIGINAL_PASTE_KEY) ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
 ^v::paste() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입 / 이미지는 그림으로 붙여넣기(빠른 실행 도구 4번째에 지정)
 !q::SendInput("!5") ; Highlight(빠른 실행 도구 5번째에 지정)
-;!w::SendInput("!6") ; Red emphasis(빠른 실행 도구 6번째에 지정)
-!e::SendInput("!7") ; Bold 12pt(빠른 실행 도구 7번째에 지정)
-#q::setTextWithSize("⭐", 36) ; 큰 별 넣기 (폰트 크기 - 빠른 실행 도구 8번째에 지정)
+!d::SendInput("!6") ; Bold 14pt(빠른 실행 도구 6번째에 지정)
+!e::SendInput("!7") ; Specific color font - 초록(빠른 실행 도구 7번째에 지정)
+!r::SendInput("!8") ; Specific color font - 파랑(빠른 실행 도구 8번째에 지정)
+#q::setTextWithSize("⭐", 36) ; 큰 별 넣기 (폰트 크기 - 빠른 실행 도구 9번째에 지정)
 ^+x::SendInput("!09") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 10번째에 지정)
 !x::SendInput(BULLET_POINT_KEY) ; 글머리 넣기(빠른 실행 도구 11번째에 지정)
 ^+q::SendInput("!07") ; 목차 생성(빠른 실행 도구 12번째에 지정)
-!d::SendInput("!06") ; 1레벨 목차 설정(빠른 실행 도구 13번째에 지정)
-!f::SendInput("!05") ; 2레벨 목차 설정(빠른 실행 도구 14번째에 지정)
+!1::SendInput("!06") ; 1레벨 목차 설정(빠른 실행 도구 13번째에 지정)
+!2::SendInput("!05") ; 2레벨 목차 설정(빠른 실행 도구 14번째에 지정)
 !c::SendInput("!04") ; 텍스트 직선 긋기(빠른 실행 도구 15번째에 지정)
 !PgUp::SendInput("!03") ; 객체 맨 앞으로(빠른 실행 도구 16번째에 지정)
 !XButton2::SendInput("!03") ; 객체 맨 앞으로(빠른 실행 도구 16번째에 지정)
@@ -497,7 +498,7 @@ toolKeyboardSelect(key, downCount := "0", rightCount := "0") {
 */
 setTextWithSize(text := "", size := 0) {
 	if (size > 0) {
-		SendInput("!8" size "{Enter}" text)
+		SendInput("!9" size "{Enter}" text)
 	} else {
 		MsgBox("사이즈는 0보다 커야 합니다.")
 	}
