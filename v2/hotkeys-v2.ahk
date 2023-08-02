@@ -641,12 +641,13 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 ########################################
 */
 #HotIf WinActive("ahk_exe SciTE.exe")
-!/::MsgBox("!q - 책갈피 설정/제거`n!w - 책갈피로 이동`n^/ - 구역 주석")
+!/::MsgBox("!q - 책갈피 설정/제거`n!w - 책갈피로 이동`n!e - 프로그램별 책갈피 설정`n!r - 모든 책갈피 제거 후 현재 위치 책갈피 설정`n^/ - 구역 주석")
 
 F1::SendInput("!h{Enter}")
 !q::SendInput("^{F2}")
 !w::SendInput("{F2}")
 !e::SendInput("^f@!m{Esc}")
+!r::SendInput("!sc^{F2}")
 ^/::SendInput("/*`n`n*/{Up}")
 
 /*
