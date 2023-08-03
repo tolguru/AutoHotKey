@@ -451,6 +451,8 @@ toggleTab() {
 !PgUp::SendInput("!03") ; 객체 맨 앞으로(빠른 실행 도구 16번째에 지정)
 !XButton2::SendInput("!03") ; 객체 맨 앞으로(빠른 실행 도구 16번째에 지정)
 F5::SendInput("!02") ; 즐겨찾기(빠른 실행 도구 17번째에 지정)
+^+PgUp::setParagraph(10) ; 단락 간격 넓히기(빠른 실행 도구 18번째에 지정)
+^+PgDn::setParagraph(-10) ; 단락 간격 줄이기(빠른 실행 도구 18번째에 지정)
 
 !z::SendInput("^+n") ; 글 서식 제거
 
@@ -474,6 +476,25 @@ XButton2::SendInput("!{Right}")
 
 :*:]] :: {
 	toolKeyboardSelect(BULLET_POINT_KEY, "2", "1")
+}
+
+
+/*
+단락 간격 조정
+#param Number size : 조정할 수치
+*/
+setParagraph(size := 10) {
+	SendInput("!01")
+
+	if (WinWaitActive("단락 간격",, 3)) {
+		control     := "RICHEDIT60W3"
+		currentSize := ControlGetText(control, "A")
+
+		ControlSetText(currentSize + size, control, "A")
+		SendInput("{Enter}")
+	} else {
+		msg("실패")
+	}
 }
 
 /*
@@ -556,11 +577,12 @@ paste() {
 		SendInput("{Esc}")
 	} else if (SubStr(A_Clipboard, 1, 4) = "http") {
 		SendInput("^k")
-		Sleep(150)
-		ControlSetText("Link", "RICHEDIT60W3", "ahk_exe ONENOTE.EXE")
-		ControlSetText(A_Clipboard, "RICHEDIT60W2", "ahk_exe ONENOTE.EXE")
-		ControlFocus("RICHEDIT60W3", "ahk_exe ONENOTE.EXE")
-		SendInput("{Enter}")
+		if (WinWaitActive("링크",,3)) {
+			ControlSetText("Link", "RICHEDIT60W3", "A")
+			ControlSetText(A_Clipboard, "RICHEDIT60W2", "A")
+			ControlFocus("RICHEDIT60W3", "A")
+			SendInput("{Enter}")
+		}
 	} else {
 		SendInput("^v")
 	}
