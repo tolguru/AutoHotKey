@@ -485,16 +485,19 @@ XButton2::SendInput("!{Right}")
 */
 setParagraph(size := 10) {
 	SendInput("!01")
-
-	if (WinWaitActive("단락 간격",, 3)) {
-		control     := "RICHEDIT60W3"
+	Sleep(80)
+	control := "RICHEDIT60W3"
+	try {
 		currentSize := ControlGetText(control, "A")
-
 		ControlSetText(currentSize + size, control, "A")
 		SendInput("{Enter}")
-	} else {
-		msg("실패")
+	} catch {
+		SendInput("{Esc}")
 	}
+	;~ if (WinWaitActive("단락 간격",, 3)) {
+	;~ } else {
+		;~ msg("실패")
+	;~ }
 }
 
 /*
