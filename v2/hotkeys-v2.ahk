@@ -451,8 +451,10 @@ toggleTab() {
 !PgUp::SendInput("!03") ; 객체 맨 앞으로(빠른 실행 도구 16번째에 지정)
 !XButton2::SendInput("!03") ; 객체 맨 앞으로(빠른 실행 도구 16번째에 지정)
 F5::SendInput("!02") ; 즐겨찾기(빠른 실행 도구 17번째에 지정)
-^+PgUp::setParagraph(10) ; 단락 간격 넓히기(빠른 실행 도구 18번째에 지정)
-^+PgDn::setParagraph(-10) ; 단락 간격 줄이기(빠른 실행 도구 18번째에 지정)
+^+PgUp::setParagraph(5) ; 단락 간격 넓히기 - 상단(빠른 실행 도구 18번째에 지정)
+^+PgDn::setParagraph(-5) ; 단락 간격 줄이기 - 상단(빠른 실행 도구 18번째에 지정)
+!+PgUp::setParagraph(5, false) ; 단락 간격 넓히기 - 하단(빠른 실행 도구 18번째에 지정)
+!+PgDn::setParagraph(-5, false) ; 단락 간격 줄이기 - 하단(빠른 실행 도구 18번째에 지정)
 !1::SendInput("!0a") ; 단락 간격 10(빠른 실행 도구 19번째에 지정)
 !2::SendInput("!0b") ; 단락 간격 20(빠른 실행 도구 20번째에 지정)
 
@@ -486,10 +488,10 @@ XButton2::SendInput("!{Right}")
 단락 간격 조정
 #param Number size : 조정할 수치
 */
-setParagraph(size := 10) {
+setParagraph(size := 10, upsideFlag := true) {
 	SendInput("!01")
 	Sleep(80)
-	control := "RICHEDIT60W3"
+	control := upsideFlag ? "RICHEDIT60W3" : "RICHEDIT60W2"
 	try {
 		currentSize := ControlGetText(control, "A")
 		ControlSetText(currentSize + size, control, "A")
