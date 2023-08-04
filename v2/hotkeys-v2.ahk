@@ -465,6 +465,7 @@ XButton1::SendInput("!{Left}")
 XButton2::SendInput("!{Right}")
 
 +Enter::SendInput("{End}{Enter}") ; 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기
+^Enter::SendInput("{Home}{Enter}^{Up}") ; 현재 커서 위치랑 상관 없이 윗 줄 추가한 후 넘어가기
 
 +PgUp::SendInput("^+`>") ; 폰트 크기 키우기
 +PgDn::SendInput("^+`<") ; 폰트 크기 줄이기
