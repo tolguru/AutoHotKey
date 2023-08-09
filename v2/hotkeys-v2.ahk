@@ -378,11 +378,12 @@ switchWithMute(muteFlag) {
 ########################################
 */
 #HotIf WinActive("ahk_exe whale.exe")
-!/::MsgBox("^q - 창 복사`n!a - 새 탭 열기`n!s - 시크릿 모드 창 열기`n#q - Chat GPT 프롬프트(영어 교정)`n#q - Chat GPT 프롬프트(문법 분석)`n#w - Chat GPT 프롬프트(문장 비교)`n#e - Chat GPT 프롬프트(문장 요소 분석)")
+!/::MsgBox("!q - 창 복사`n!w - 사이트 번역`n!a - 새 탭 열기`n!s - 시크릿 모드 창 열기`n#q - Chat GPT 프롬프트(영어 교정)`n#q - Chat GPT 프롬프트(문법 분석)`n#w - Chat GPT 프롬프트(문장 비교)`n#e - Chat GPT 프롬프트(문장 요소 분석)")
 
 global tabFlag := true
 
-^q::SendInput("^k")
+!q::SendInput("^k")
+!w::translate()
 !a::SendInput("^t")
 !s::SendInput("^+n")
 #q::setPrompt("문장 : `"`"+{Enter 2}문장이 부자연스럽다면, 자연스러운 문장으로 수정한 후 문장이 부자연스러운 이유에 대한 자세한 설명을 해줘.+{Enter}추가적으로, 더 자연스럽게 사용될 수 있는 문장들이 있으면 추천해줘.")
@@ -390,6 +391,20 @@ global tabFlag := true
 #e::setPrompt("문장 : `"`"+{Enter 2}문장의 구성 요소에 대해 분석해줘.")
 `::toggleTab()
 
+/*
+구글 번역 확장 프로그램을 통한 웹 페이지 번역
+*/
+translate() {
+	title := WinGetTitle("A")
+
+	SendInput("{F10}{Left 4}{Enter}")
+
+	if (WinWaitNotActive(title,, 1)) {
+		SendInput("{Tab 2}{Enter}")
+	} else {
+		msg("실패")
+	}
+}
 
 /*
 Chat AI Prompt 영어 분석용 함수, 클립보드 사용 후 기존 데이터로 클립보드 원복
