@@ -49,7 +49,7 @@ ORIGINAL_PASTE_KEY := "!3"
 BULLET_POINT_KEY   := "!08"
 
 ; 물 알람
-waterAlarmList := [subPC]
+waterAlarmList := []
 
 global waterAlarm := false
 
@@ -384,6 +384,7 @@ global tabFlag := true
 
 !q::SendInput("^k")
 !w::translate()
+!e::ControlClick("x381 y151", "A",,,, "NA") ; 번역 토글 임시 기능
 !a::SendInput("^t")
 !s::SendInput("^+n")
 #q::setPrompt("문장 : `"`"+{Enter 2}문장이 부자연스럽다면, 자연스러운 문장으로 수정한 후 문장이 부자연스러운 이유에 대한 자세한 설명을 해줘.+{Enter}추가적으로, 더 자연스럽게 사용될 수 있는 문장들이 있으면 추천해줘.")
@@ -400,6 +401,7 @@ translate() {
 	SendInput("{F10}{Left 4}{Enter}")
 
 	if (WinWaitNotActive(title,, 1)) {
+		Sleep(50)
 		SendInput("{Tab 2}{Enter}")
 	} else {
 		msg("실패")
