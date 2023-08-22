@@ -22,6 +22,12 @@ mainPC := "PAY-331"
 subPC  := "DESKTOP-2SVBCIT"
 homePC := "DESKTOP-4AJLHVU"
 
+; Default Browser
+global defaultBrowser := "chrome.exe"
+
+; Default Browser 설정 리스트
+useWhaleList := [subPC]
+
 ; 좌표 변동용 값
 laptopList  := [subPC]
 desktopList := [mainPC, homePC]
@@ -80,6 +86,11 @@ config() {
 	; 화면 비율 설정(좌표 초기화용)
 	if (findValue(ratio25List, A_ComputerName)) {
 		global ratioNow := RATIO_X25
+	}
+
+	; Default browser 설정
+	if (findValue(useWhaleList, A_ComputerName)) {
+		global defaultBrowser := "whale.exe"
 	}
 
 	; 원노트 좌표 초기화
@@ -143,6 +154,27 @@ Hotstring(":*:123.", PHONE_NUM)
 
 
 /*
+URL Encode(ref : https://www.autohotkey.com/boards/viewtopic.php?t=112741)
+*/
+urlEncode(originData, re := "[0-9A-Za-z]") {
+	response := ""
+    buf := Buffer(StrPut(originData, "UTF-8"), 0)
+
+    StrPut(originData, buf, "UTF-8")
+
+    While code := NumGet(buf, A_Index - 1, "UChar") {
+		char := Chr(code)
+        if RegExMatch(char, re) {
+            response := response char
+        }
+        else {
+            response := response Format("%{:02X}", code)
+        }
+    }
+    return response
+}
+
+/*
 클립보드 데이터를 .\resources에 파일로 저장
 */
 clipboardSave() {
@@ -188,14 +220,14 @@ displayCounter(count := 3) {
 }
 
 /*
-URL에 param 더해서 실행하는 함수
+URL에 param 더해서 실행하는 함수(팝업창)
 #param String url   : URL
 #param String title : 입력 창 제목 (default = "Run URL")
 */
 runParamUrl(url, title := "Run URL") {
 	input := InputBox(, title, "w100 h70")
 	if input.Result = "OK" {
-		Run(url input.value)
+		Run(defaultBrowser " --app=" url urlEncode(input.value) " --app-window-size=900,500")
 	}
 }
 
