@@ -267,7 +267,8 @@ URL에 param 더해서 실행하는 함수(팝업창)
 #param String text : 입력할 param text
 */
 runParamUrl(url, text) {
-	Run(defaultBrowser " --app=" url urlEncode(text) " --app-window-size=900,500")
+	Run("chrome.exe --app=" url urlEncode(text) " --window-size=1100,700")
+	;~ Run(defaultBrowser " --app=" url urlEncode(text) " --app-window-size=900,600") ; 1320 1020
 }
 
 /*
