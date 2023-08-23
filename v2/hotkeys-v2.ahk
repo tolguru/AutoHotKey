@@ -138,8 +138,8 @@ alarm() {
 !+WheelDown::setTransparent(-10)
 ^XButton2::SendInput("^{Home}") ; 스크롤 맨 위로
 ^XButton1::SendInput("^{End}") ; 스크롤 맨 아래로
-!XButton2::translatePopup("https://translate.google.co.kr/?sl=en&tl=ko&text=") ; Deeple 팝업 번역
-!XButton1::SendInput("!^+{F4}") ; Deeple 팝업 번역
++XButton2::googleTranslate() ; 구글 팝업 번역
++XButton1::SendInput("!^+{F4}") ; Deeple 팝업 번역
 
 ^#Right::switchWithMute(true)
 ^#Left::switchWithMute(false)
@@ -159,16 +159,26 @@ Hotstring(":*:123.", PHONE_NUM)
 URL에 클립보드 데이터 넣어서 실행
 #param String url : URL
 */
-translatePopup(url) {
+googleTranslate() {
 	A_Clipboard := ""
 
 	SendInput("^c")
 
 	if (ClipWait(3)) {
-		runParamUrl(url, A_Clipboard)
-	} else {
-		msg("실패")
+		if WinExist("Google 번역") {
+			WinActivate
+
+			SendInput("^a^v")
+
+			return
+		} else {
+			runParamUrl("https://translate.google.co.kr/?sl=en&tl=ko&text=", A_Clipboard)
+		}
+
+		return
 	}
+
+	msg("실패")
 }
 
 /*
