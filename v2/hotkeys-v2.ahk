@@ -94,7 +94,7 @@ config() {
 	}
 
 	; 원노트 좌표 초기화
-	global RIBBON_TOOL2_XY      := screenRatioSet(STANDARD_RIBBON_TOOL2_X, STANDARD_RIBBON_TOOL2_Y)
+	global RIBBON_TOOL2_XY := screenRatioSet(STANDARD_RIBBON_TOOL2_X, STANDARD_RIBBON_TOOL2_Y)
 }
 
 /*
@@ -136,17 +136,19 @@ alarm() {
 
 !+WheelUp::setTransparent(10)
 !+WheelDown::setTransparent(-10)
-^XButton1::SendInput("^{End}")
-^XButton2::SendInput("^{Home}")
+^XButton2::SendInput("^{Home}") ; 스크롤 맨 위로
+^XButton1::SendInput("^{End}") ; 스크롤 맨 아래로
+!XButton2::translatePopup("https://translate.google.co.kr/?sl=en&tl=ko&text=") ; Deeple 팝업 번역
+!XButton1::SendInput("!^+{F4}") ; Deeple 팝업 번역
 
 ^#Right::switchWithMute(true)
 ^#Left::switchWithMute(false)
 
 Pause::Reload
 
-F1::runParamUrl("https://ko.dict.naver.com/#/search?query=", "국어사전")
-F3::runParamUrl("https://en.dict.naver.com/#/search?query=", "영어사전")
-F4::SendInput("!^+{F4}")
+F1::runInputWeb("https://ko.dict.naver.com/#/search?query=", "국어사전")
+F3::runInputWeb("https://en.dict.naver.com/#/search?query=", "영어사전")
+F4::runInputWeb("https://translate.google.co.kr/?sl=en&tl=ko&text=", "구글번역")
 
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
@@ -154,7 +156,25 @@ Hotstring(":*:123.", PHONE_NUM)
 
 
 /*
+URL에 클립보드 데이터 넣어서 실행
+#param String url : URL
+*/
+translatePopup(url) {
+	A_Clipboard := ""
+
+	SendInput("^c")
+
+	if (ClipWait(3)) {
+		runParamUrl(url, A_Clipboard)
+	} else {
+		msg("실패")
+	}
+}
+
+/*
 URL Encode(ref : https://www.autohotkey.com/boards/viewtopic.php?t=112741)
+#param String originData : text to be changed
+#param String re         : regex
 */
 urlEncode(originData, re := "[0-9A-Za-z]") {
 	response := ""
@@ -220,15 +240,24 @@ displayCounter(count := 3) {
 }
 
 /*
-URL에 param 더해서 실행하는 함수(팝업창)
+URL에 param 더해서 실행하는 함수
 #param String url   : URL
 #param String title : 입력 창 제목 (default = "Run URL")
 */
-runParamUrl(url, title := "Run URL") {
+runInputWeb(url, title := "Run URL") {
 	input := InputBox(, title, "w100 h70")
 	if input.Result = "OK" {
-		Run(defaultBrowser " --app=" url urlEncode(input.value) " --app-window-size=900,500")
+		runParamUrl(url, input.value)
 	}
+}
+
+/*
+URL에 param 더해서 실행하는 함수(팝업창)
+#param String url  : URL
+#param String text : 입력할 param text
+*/
+runParamUrl(url, text) {
+	Run(defaultBrowser " --app=" url urlEncode(text) " --app-window-size=900,500")
 }
 
 /*
