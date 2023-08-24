@@ -295,7 +295,7 @@ runPopup(url, uuidKey, inputFlag := false, enterFlag := false) {
 		if (inputText = "") {
 			return
 		}
-		
+
 		A_Clipboard := inputText
 	} else {
 		SendInput("^c")
@@ -334,13 +334,16 @@ showInputBox(title := "title") {
 }
 
 /*
-URL에 param 더해서 실행하는 함수(팝업창)
+URL에 param 더해서 실행하는 함수
+UUID Key가 있다면 Config에 실행된 Process의 ID 저장
 #param String url     : URL
 #param String text    : 입력할 param text
 #param String uuidKey : config에 저장할 이름
 */
 runParamUrl(url, text, uuidKey := "") {
-	RunWait("chrome.exe --app=" url urlEncode(text) " --window-size=1100,700")
+	beforeProcessID := WinGetID("A")
+	Run("chrome.exe --app=" url urlEncode(text) " --window-size=1100,700")
+	WinWaitNotActive("ahk_id " beforeProcessID,, 2)
 
 	if (uuidKey != "") {
 		getConfigMap().Set(uuidKey, WinGetID("A"))
