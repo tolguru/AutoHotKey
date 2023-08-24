@@ -290,7 +290,13 @@ runPopup(url, uuidKey, inputFlag := false, enterFlag := false) {
 	A_Clipboard := ""
 
 	if (inputFlag) {
-		A_Clipboard := showInputBox("URL 실행")
+		inputText := showInputBox("URL 실행")
+
+		if (inputText = "") {
+			return
+		}
+		
+		A_Clipboard := inputText
 	} else {
 		SendInput("^c")
 	}
@@ -322,6 +328,8 @@ showInputBox(title := "title") {
 	input := InputBox(, title, "w100 h70")
 	if input.Result = "OK" {
 		return input.value
+	} else {
+		return ""
 	}
 }
 
