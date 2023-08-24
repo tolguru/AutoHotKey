@@ -343,7 +343,11 @@ UUID Key가 있다면 Config에 실행된 Process의 ID 저장
 runParamUrl(url, text, uuidKey := "") {
 	beforeProcessID := WinGetID("A")
 	Run("chrome.exe --app=" url urlEncode(text) " --window-size=1100,700")
+
+	; 오류를 줄이고자 실행 시 입력 방지
+	BlockInput True
 	WinWaitNotActive("ahk_id " beforeProcessID,, 2)
+	BlockInput False
 
 	if (uuidKey != "") {
 		getConfigMap().Set(uuidKey, WinGetID("A"))
