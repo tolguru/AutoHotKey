@@ -344,14 +344,17 @@ runParamUrl(url, text, uuidKey := "") {
 	beforeProcessID := WinGetID("A")
 	Run("chrome.exe --app=" url urlEncode(text) " --window-size=1100,700")
 
-	; 오류를 줄이고자 실행 시 입력 방지
-	BlockInput True
-	WinWaitNotActive("ahk_id " beforeProcessID,, 2)
-	BlockInput False
-
 	if (uuidKey != "") {
-		getConfigMap().Set(uuidKey, WinGetID("A"))
-		configSave()
+		; 오류를 줄이고자 실행 시 입력 방지
+		BlockInput True
+		
+		if (WinWaitNotActive("ahk_id " beforeProcessID,, 2)) {
+			getConfigMap().Set(uuidKey, WinGetID("A"))
+			configSave()
+		} else {
+			msg("실행시간 타임아웃")
+		}
+		BlockInput False
 	}
 }
 
