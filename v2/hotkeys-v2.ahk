@@ -14,6 +14,14 @@ global isFirst := true
 global gX      := ""
 global gY      := ""
 
+; Config
+configMap := Map()
+
+; Config Keys
+GOOGLE_TRANSLATE_UUID_KEY := "googleTranslateUUID"
+NAVER_KO_DIC_UUID_KEY     := "koreanDictionaryUUID"
+NAVER_EN_DIC_UUID_KEY     := "englishDictionaryUUID"
+
 ; 에러 코드
 ERROR_PATH_NOT_FOUND := 3
 
@@ -64,6 +72,11 @@ GMAIL      := EnvGet("aaGmail")
 NAVER_MAIL := EnvGet("aaNmail")
 PHONE_NUM  := EnvGet("aaPhone")
 
+; URL
+GOOGLE_TRANSLATE_URL := "https://translate.google.co.kr/?sl=en&tl=ko&text="
+NAVER_KO_DIC_URL     := "https://ko.dict.naver.com/#/search?query="
+NAVER_EN_DIC_URL     := "https://en.dict.naver.com/#/search?query="
+
 /*
 ++++++++++++++++++++++++++++++++++++++++
 ++ 기본 기능 설정
@@ -78,6 +91,9 @@ alarm()
 최초 실행 시 초기 설정 함수
 */
 config() {
+	; File Config 불러오기
+	configLoad()
+
 	; 특정 PC만 울리게 설정
 	if (findValue(waterAlarmList, A_ComputerName)) {
 		global waterAlarm := true
@@ -95,6 +111,45 @@ config() {
 
 	; 원노트 좌표 초기화
 	global RIBBON_TOOL2_XY := screenRatioSet(STANDARD_RIBBON_TOOL2_X, STANDARD_RIBBON_TOOL2_Y)
+}
+
+/*
+configMap 스태틱 변수 return
+*/
+getConfigMap() {
+	return configMap
+}
+
+/*
+config 파일의 데이터를 key, value로 나눈 후 configMap 초기화
+*/
+configLoad() {
+	configFile := FileOpen(".\config.txt", "rw", "UTF-8")
+
+	; 줄바꿈 문자로 config 구분 후 ":" 문자로 Key, Value 구분
+	Loop Parse, configFile.Read(), "`n" {
+		configData := StrSplit(A_LoopField, ":",, 2)
+
+		; 해당 config에 value가 설정되어 있지 않으면 "NULL" 문자열 지정
+		if (A_LoopField != "") {
+			getConfigMap().Set(configData[1], configData.Length = 2 ? configData[2] : "NULL")
+		}
+	}
+
+	configFile.Close()
+}
+
+/*
+현재 configMap 객체에 있는 데이터를 파일로 저장
+*/
+configSave() {
+	configFile := FileOpen(".\config.txt", "w", "UTF-8")
+	
+	For key, data in getConfigMap() {
+		configFile.WriteLine(key ":" data)
+	}
+
+	configFile.Close()
 }
 
 /*
@@ -138,48 +193,21 @@ alarm() {
 !+WheelDown::setTransparent(-10)
 ^XButton2::SendInput("^{Home}") ; 스크롤 맨 위로
 ^XButton1::SendInput("^{End}") ; 스크롤 맨 아래로
-+XButton2::googleTranslate() ; 구글 팝업 번역
-+XButton1::SendInput("!^+{F4}") ; Deeple 팝업 번역
++XButton2::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY) ; 구글 번역 팝업
++XButton1::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY,, true) ; 네이버 영어사전 팝업
 
 ^#Right::switchWithMute(true)
 ^#Left::switchWithMute(false)
 
 Pause::Reload
 
-F1::runInputWeb("https://ko.dict.naver.com/#/search?query=", "국어사전")
-F3::runInputWeb("https://en.dict.naver.com/#/search?query=", "영어사전")
-F4::runInputWeb("https://translate.google.co.kr/?sl=en&tl=ko&text=", "구글번역")
+F1::runPopup(NAVER_KO_DIC_URL, NAVER_KO_DIC_UUID_KEY, true, true)
+F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, true, true)
+F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, true)
 
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
 Hotstring(":*:123.", PHONE_NUM)
-
-
-/*
-URL에 클립보드 데이터 넣어서 실행
-#param String url : URL
-*/
-googleTranslate() {
-	A_Clipboard := ""
-
-	SendInput("^c")
-
-	if (ClipWait(3)) {
-		if WinExist("Google 번역") {
-			WinActivate
-
-			SendInput("^a^v")
-
-			return
-		} else {
-			runParamUrl("https://translate.google.co.kr/?sl=en&tl=ko&text=", A_Clipboard)
-		}
-
-		return
-	}
-
-	msg("실패")
-}
 
 /*
 URL Encode(ref : https://www.autohotkey.com/boards/viewtopic.php?t=112741)
@@ -250,25 +278,66 @@ displayCounter(count := 3) {
 }
 
 /*
-URL에 param 더해서 실행하는 함수
-#param String url   : URL
-#param String title : 입력 창 제목 (default = "Run URL")
+URL에 클립보드 데이터 넣어서 실행
+Config에서 UUID 조회 후 Active 가능
+저장된 UUID가 현재 실행 중인 엉뚱한 프로세스와 겹치면 좀 대책없긴 함(개선 필요)
+#param String url        : URL
+#param String uuidKey    : config에 저장/조회할 UUID의 key name
+#param boolean inputFlag : 입력받을지 여부 (default = false)
+#param boolean enterFlag : 엔터 입력 여부 (default = false)
 */
-runInputWeb(url, title := "Run URL") {
+runPopup(url, uuidKey, inputFlag := false, enterFlag := false) {
+	A_Clipboard := ""
+
+	if (inputFlag) {
+		A_Clipboard := showInputBox("URL 실행")
+	} else {
+		SendInput("^c")
+	}
+
+	if (ClipWait(1)) {
+		try {
+			if WinExist("ahk_id " getConfigMap().Get(uuidKey)) {
+				WinActivate
+	
+				enterFlag ? SendInput("^a^v{Enter}") : SendInput("^a^v")
+				return
+			}
+		} catch Error {
+			; 나중에 파일 로깅하는 것도 고려해볼만 할 듯
+		}
+
+		runParamUrl(url, A_Clipboard, uuidKey)
+		return
+	}
+
+	msg("실패")
+}
+
+/*
+input된 값을 리턴
+#param String title : 입력 창 제목 (default = "title")
+*/
+showInputBox(title := "title") {
 	input := InputBox(, title, "w100 h70")
 	if input.Result = "OK" {
-		runParamUrl(url, input.value)
+		return input.value
 	}
 }
 
 /*
 URL에 param 더해서 실행하는 함수(팝업창)
-#param String url  : URL
-#param String text : 입력할 param text
+#param String url     : URL
+#param String text    : 입력할 param text
+#param String uuidKey : config에 저장할 이름
 */
-runParamUrl(url, text) {
-	Run("chrome.exe --app=" url urlEncode(text) " --window-size=1100,700")
-	;~ Run(defaultBrowser " --app=" url urlEncode(text) " --app-window-size=900,600") ; 1320 1020
+runParamUrl(url, text, uuidKey := "") {
+	RunWait("chrome.exe --app=" url urlEncode(text) " --window-size=1100,700")
+
+	if (uuidKey != "") {
+		getConfigMap().Set(uuidKey, WinGetID("A"))
+		configSave()
+	}
 }
 
 /*
