@@ -315,8 +315,11 @@ runPopup(url, uuidKey, inputFlag := false, enterFlag := false) {
 
 	if (ClipWait(1)) {
 		try {
-			if WinExist("ahk_id " getConfigMap().Get(uuidKey)) {
+			findParam := "ahk_id " getConfigMap().Get(uuidKey)
+
+			if (WinExist(findParam)) {
 				WinActivate
+				WinWaitActive(findParam,, 2)
 	
 				enterFlag ? SendInput("^a^v{Enter}") : SendInput("^a^v")
 				return
@@ -366,6 +369,7 @@ runParamUrl(url, text, uuidKey := "") {
 		} else {
 			msg("실행시간 타임아웃")
 		}
+
 		BlockInput False
 	}
 }
