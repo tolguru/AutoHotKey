@@ -193,8 +193,8 @@ alarm() {
 !+WheelDown::setTransparent(-10)
 ^XButton2::SendInput("^{Home}") ; 스크롤 맨 위로
 ^XButton1::SendInput("^{End}") ; 스크롤 맨 아래로
-+XButton2::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY) ; 구글 번역 팝업
-+XButton1::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY,, true) ; 네이버 영어사전 팝업
++XButton2::runPopupBlockedInput(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY,,, "{Blind}{Shift Up}") ; 구글 번역 팝업
++XButton1::runPopupBlockedInput(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY,, true, "{Blind}{Shift Up}") ; 네이버 영어사전 팝업
 
 ^#Right::switchWithMute(true)
 ^#Left::switchWithMute(false)
@@ -275,6 +275,16 @@ displayCounter(count := 3) {
 		locatedMsg(A_Index)
 		Sleep(1000)
 	}
+}
+
+/*
+runPopup 함수 실행 중 Input Block, 추가 입력(호출 핫키를 Release해서 입력간 오류 방지용)
+*/
+runPopupBlockedInput(url, uuidKey, inputFlag := false, enterFlag := false, input := "") {
+	BlockInput True
+	SendInput(input)
+	runPopup(url, uuidKey, inputFlag, enterFlag)
+	BlockInput False
 }
 
 /*
