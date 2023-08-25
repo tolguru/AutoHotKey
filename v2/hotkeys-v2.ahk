@@ -287,15 +287,17 @@ Config에서 UUID 조회 후 Active 가능
 #param boolean enterFlag : 엔터 입력 여부 (default = false)
 */
 runPopup(url, uuidKey, inputFlag := false, enterFlag := false) {
-	A_Clipboard := ""
-
 	if (inputFlag) {
 		inputText := showInputBox("URL 실행")
-
+		
 		if (inputText = "") {
 			return
 		}
+	}
 
+	A_Clipboard := ""
+	
+	if (inputFlag) {
 		A_Clipboard := inputText
 	} else {
 		SendInput("^c")
