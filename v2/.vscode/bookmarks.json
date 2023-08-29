@@ -1,0 +1,39 @@
+{
+	"files": [
+		{
+			"path": "hotkeys-v2.ahk",
+			"bookmarks": [
+				{
+					"line": 175,
+					"column": 11,
+					"label": "기본 기능"
+				},
+				{
+					"line": 517,
+					"column": 12,
+					"label": "IntelliJ"
+				},
+				{
+					"line": 542,
+					"column": 9,
+					"label": "Chrome"
+				},
+				{
+					"line": 553,
+					"column": 9,
+					"label": "Whale"
+				},
+				{
+					"line": 622,
+					"column": 7,
+					"label": "원노트"
+				},
+				{
+					"line": 852,
+					"column": 10,
+					"label": "VSCode"
+				}
+			]
+		}
+	]
+}
