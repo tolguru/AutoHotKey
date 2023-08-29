@@ -30,11 +30,11 @@ mainPC := "PAY-331"
 subPC  := "DESKTOP-2SVBCIT"
 homePC := "DESKTOP-4AJLHVU"
 
-; Default Browser
-global defaultBrowser := "chrome.exe"
+; Default Run Param app Browser
+global runAppBrowser := "chrome.exe"
 
 ; Default Browser 설정 리스트
-useWhaleList := [subPC]
+useWhaleList := [mainPC]
 
 ; 좌표 변동용 값
 laptopList  := [subPC]
@@ -104,9 +104,9 @@ config() {
 		global ratioNow := RATIO_X25
 	}
 
-	; Default browser 설정
+	; Run Param app Browser 설정
 	if (findValue(useWhaleList, A_ComputerName)) {
-		global defaultBrowser := "whale.exe"
+		global runAppBrowser := "whale.exe"
 	}
 
 	; 원노트 좌표 초기화
@@ -144,7 +144,7 @@ configLoad() {
 */
 configSave() {
 	configFile := FileOpen(".\config.txt", "w", "UTF-8")
-	
+
 	For key, data in getConfigMap() {
 		configFile.WriteLine(key ":" data)
 	}
@@ -299,14 +299,14 @@ Config에서 UUID 조회 후 Active 가능
 runPopup(url, uuidKey, inputFlag := false, enterFlag := false) {
 	if (inputFlag) {
 		inputText := showInputBox("URL 실행")
-		
+
 		if (inputText = "") {
 			return
 		}
 	}
 
 	A_Clipboard := ""
-	
+
 	if (inputFlag) {
 		A_Clipboard := inputText
 	} else {
@@ -320,7 +320,7 @@ runPopup(url, uuidKey, inputFlag := false, enterFlag := false) {
 			if (WinExist(findParam)) {
 				WinActivate
 				WinWaitActive(findParam,, 2)
-	
+
 				enterFlag ? SendInput("^a^v{Enter}") : SendInput("^a^v")
 				return
 			}
@@ -357,13 +357,13 @@ UUID Key가 있다면 Config에 실행된 Process의 ID 저장
 */
 runParamUrl(url, text, uuidKey := "") {
 	beforeProcessID := WinGetID("A")
-	Run("chrome.exe --app=" url urlEncode(text) " --window-size=1100,700")
+	Run(runAppBrowser " --app=" url urlEncode(text) " --window-size=1100,700")
 
 	if (uuidKey != "") {
 		; 오류를 줄이고자 실행 시 입력 방지
 		BlockInput True
-		
-		if (WinWaitNotActive("ahk_id " beforeProcessID,, 2)) {
+
+		if (WinWaitNotActive("ahk_id " beforeProcessID,, 3)) {
 			getConfigMap().Set(uuidKey, WinGetID("A"))
 			configSave()
 		} else {
