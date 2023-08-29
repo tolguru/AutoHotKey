@@ -180,7 +180,7 @@ alarm() {
 
 #`::runEXE("onenote")
 #1::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE")
-#Tab::runEXE("whale")
+#Tab::runEXE("notepad++")
 
 ; 1분 타이머, Beep 사운드 알람
 +F12::ringTimer(60)
