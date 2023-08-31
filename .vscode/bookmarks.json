@@ -4,9 +4,14 @@
 			"path": "v2/hotkeys-v2.ahk",
 			"bookmarks": [
 				{
-					"line": 175,
+					"line": 173,
 					"column": 11,
 					"label": "기본 기능"
+				},
+				{
+					"line": 517,
+					"column": 10,
+					"label": "Notion"
 				},
 				{
 					"line": 531,
