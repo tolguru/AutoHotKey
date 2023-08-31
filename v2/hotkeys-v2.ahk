@@ -515,6 +515,20 @@ switchWithMute(muteFlag) {
 
 /*
 ########################################
+## @Notion
+########################################
+*/
+#HotIf WinActive("ahk_exe notion.exe")
+
+!w::SendComplex("/red", "{Enter}")
+
+SendComplex(text, input := "") {
+	SendText(text)
+	SendInput(input)
+}
+
+/*
+########################################
 ## @IntelliJ
 ########################################
 */
