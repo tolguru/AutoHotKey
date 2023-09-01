@@ -193,8 +193,8 @@ alarm() {
 !+WheelDown::setTransparent(-10)
 ^XButton2::SendInput("^{Home}") ; 스크롤 맨 위로
 ^XButton1::SendInput("^{End}") ; 스크롤 맨 아래로
-+XButton2::runPopupBlockedInput(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY,,, "{Blind}{Shift Up}") ; 구글 번역 팝업
-+XButton1::runPopupBlockedInput(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY,, true, "{Blind}{Shift Up}") ; 네이버 영어사전 팝업
++XButton1::runPopupBlockedInput(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY,,, "{Blind}{Shift Up}") ; 구글 번역 팝업
++XButton2::runPopupBlockedInput(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY,, true, "{Blind}{Shift Up}") ; 네이버 영어사전 팝업
 
 ^#Right::switchWithMute(true)
 ^#Left::switchWithMute(false)
@@ -518,10 +518,28 @@ switchWithMute(muteFlag) {
 ## @Notion
 ########################################
 */
-#HotIf WinActive("ahk_exe notion.exe")
+#HotIf WinActive("ahk_exe Notion.exe")
 
-!w::SendComplex("/red", "{Enter}")
+; 텍스트 BOLD
+!q::SendInput("^b")
+; 텍스트 이탤릭
+!w::SendInput("^i")
+; 텍스트 최근 사용 색상 적용
+!e::SendInput("^+h")
 
+; 배경색 선택
+!a::SendText("/bac")
+; 글씨색 선택
+!s::SendText("/colo")
+; 배경색 보라색
+!d::SendText("/purpleb`n")
+
+; 글씨색, 배경색 초기화
+!z::SendText("/def`n")
+
+/*
+SendText, SendInput을 연속 입력
+*/
 SendComplex(text, input := "") {
 	SendText(text)
 	SendInput(input)
