@@ -549,8 +549,8 @@ switchWithMute(muteFlag) {
 /*
 SendText, SendInput을 연속 입력
 */
-SendComplex(text, input := "") {
-	SendText(text)
+SendComplex(text, input := "", carriageFlag := false) {
+	carriageFlag ? SendTextBlockLineBreak(text) : SendText(text)
 	SendInput(input)
 }
 
