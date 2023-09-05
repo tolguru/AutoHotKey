@@ -540,6 +540,9 @@ switchWithMute(muteFlag) {
 ; 글씨색, 배경색 초기화
 !z::SendText("/def`n")
 
+; 콜아웃
+^q::SendText("/ca`n")
+
 ; 지우기
 `::SendInput("{Delete}")
 
