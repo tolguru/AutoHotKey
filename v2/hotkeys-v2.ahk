@@ -520,6 +520,9 @@ switchWithMute(muteFlag) {
 */
 #HotIf WinActive("ahk_exe Notion.exe")
 
+; 글씨색 빨간색 적용 후 초기화
+!1::SendComplex("/red`n", "^z")
+
 ; 텍스트 BOLD
 !q::SendInput("^b")
 ; 텍스트 이탤릭
@@ -536,6 +539,12 @@ switchWithMute(muteFlag) {
 
 ; 글씨색, 배경색 초기화
 !z::SendText("/def`n")
+
+; 지우기
+`::SendInput("{Delete}")
+
+; 블록 링크 복사
+^+c::SendInput("!+l")
 
 /*
 SendText, SendInput을 연속 입력
