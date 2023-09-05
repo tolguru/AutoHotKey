@@ -555,6 +555,15 @@ SendComplex(text, input := "") {
 }
 
 /*
+SendText 시 항목 내 줄바꿈 적용
+*/
+SendTextBlockLineBreak(text) {
+	SendInput("{Shift Down}")
+	SendText(text)
+	SendInput("{Shift Up}")
+}
+
+/*
 ########################################
 ## @IntelliJ
 ########################################
