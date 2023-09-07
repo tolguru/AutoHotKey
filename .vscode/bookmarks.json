@@ -10,31 +10,31 @@
 				},
 				{
 					"line": 517,
-					"column": 10,
-					"label": "Notion"
+					"column": 12,
+					"label": "Obsidian"
 				},
 				{
-					"line": 570,
+					"line": 586,
 					"column": 12,
 					"label": "IntelliJ"
 				},
 				{
-					"line": 595,
+					"line": 611,
 					"column": 9,
 					"label": "Chrome"
 				},
 				{
-					"line": 606,
+					"line": 622,
 					"column": 9,
 					"label": "Whale"
 				},
 				{
-					"line": 675,
+					"line": 691,
 					"column": 7,
 					"label": "원노트"
 				},
 				{
-					"line": 905,
+					"line": 921,
 					"column": 10,
 					"label": "VSCode"
 				}
