@@ -524,7 +524,7 @@ switchWithMute(muteFlag) {
 +Enter::SendInput("{End}`n")
 
 ; 줄바꿈(<br>)
-^Enter::SendText("<br>`n")
+!Enter::SendText("<br>`n")
 
 ; 콜아웃
 ::/ca1::> [{!}TIP] TIP
