@@ -535,6 +535,9 @@ switchWithMute(muteFlag) {
 ::/ca3::> [{!}EXAMPLE] EXAMPLE
 ::/ca4::> [{!}WARNING] WARNING
 
+; 체크박스
+::/?::- [?] 
+
 /*
 ########################################
 ## @Notion
