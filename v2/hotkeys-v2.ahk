@@ -637,7 +637,7 @@ SendTextBlockLineBreak(text) {
 
 global tabFlag := true
 
-!q::SendInput("^k")
+!q::SendInput("!+'")
 !w::translate()
 !e::ControlClick("x381 y151", "A",,,, "NA") ; 번역 토글 임시 기능
 !a::SendInput("^t")
