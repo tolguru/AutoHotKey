@@ -523,6 +523,9 @@ switchWithMute(muteFlag) {
 ; 다음 줄로 이동
 +Enter::SendInput("{End}`n")
 
+; 윗 줄 추가
+^+Enter::SendInput("{Home}`n{Up}")
+
 ; 줄바꿈(<br>)
 !Enter::SendText("<br>`n")
 
