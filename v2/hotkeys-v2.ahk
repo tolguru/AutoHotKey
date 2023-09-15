@@ -4,6 +4,8 @@
 ++++++++++++++++++++++++++++++++++++++++
 */
 
+F9::msg(TRANSLATE_TOGGLE_XY)
+
 /*
 ++++++++++++++++++++++++++++++++++++++++
 ++ 전역변수 선언
@@ -48,8 +50,8 @@ RATIO_1440 := 1.333
 RATIO_X25  := 1.25
 
 ; Whale 좌표
-STANDARD_TRANSLATE_TOGGLE_X := 281
-STANDARD_TRANSLATE_TOGGLE_Y := 128
+STANDARD_TRANSLATE_TOGGLE_X := 304
+STANDARD_TRANSLATE_TOGGLE_Y := 120
 
 global TRANSLATE_TOGGLE_XY := "x0 y0"
 
@@ -647,7 +649,7 @@ global tabFlag := true
 
 !q::SendInput("!+'")
 !w::translate()
-!e::ControlClick("x381 y151", "A",,,, "NA") ; 번역 토글 임시 기능
+!e::ControlClick(TRANSLATE_TOGGLE_XY, "A",,,, "NA") ; 번역 토글 임시 기능
 !a::SendInput("^t")
 !s::SendInput("^+n")
 #q::setPrompt("문장 : `"`"+{Enter 2}문장이 부자연스럽다면, 자연스러운 문장으로 수정한 후 문장이 부자연스러운 이유에 대한 자세한 설명을 해줘.+{Enter}추가적으로, 더 자연스럽게 사용될 수 있는 문장들이 있으면 추천해줘.")
