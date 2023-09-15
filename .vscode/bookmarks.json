@@ -4,37 +4,32 @@
 			"path": "v2/hotkeys-v2.ahk",
 			"bookmarks": [
 				{
-					"line": 173,
+					"line": 180,
 					"column": 11,
 					"label": "기본 기능"
 				},
 				{
-					"line": 517,
+					"line": 524,
 					"column": 12,
 					"label": "Obsidian"
 				},
 				{
-					"line": 596,
+					"line": 603,
 					"column": 12,
 					"label": "IntelliJ"
 				},
 				{
-					"line": 621,
-					"column": 9,
-					"label": "Chrome"
-				},
-				{
-					"line": 632,
+					"line": 639,
 					"column": 9,
 					"label": "Whale"
 				},
 				{
-					"line": 700,
+					"line": 707,
 					"column": 7,
 					"label": "원노트"
 				},
 				{
-					"line": 930,
+					"line": 937,
 					"column": 10,
 					"label": "VSCode"
 				}
