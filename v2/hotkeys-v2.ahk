@@ -534,7 +534,7 @@ switchWithMute(muteFlag) {
 ^Enter::SendInput("{Home}`n{Up}")
 
 ; 줄바꿈(<br>)
-!Enter::SendText("<br>`n")
+!Enter::SendText("`n`n<br>`n`n")
 
 ; 콜아웃
 ::/ca1::> [{!}TIP] TIP
