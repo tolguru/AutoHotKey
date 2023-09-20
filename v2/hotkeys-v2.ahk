@@ -1,8 +1,13 @@
-﻿/*
+﻿#Include "./library/Class_CNG.ahk"
+
+/*
 ++++++++++++++++++++++++++++++++++++++++
 ++ 임시 기능 선언
 ++++++++++++++++++++++++++++++++++++++++
 */
+
+F9::A_Clipboard := (Encrypt.String("AES", "CBC", "평문", "EhfrnEhfrnEhfrn1", "123"))
+F10::MsgBox(Decrypt.String("AES", "CBC", A_Clipboard, "EhfrnEhfrnEhfrn1", "123"))
 
 /*
 ++++++++++++++++++++++++++++++++++++++++
@@ -203,6 +208,9 @@ alarm() {
 +XButton1::runPopupBlockedInput(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY,,, "{Blind}{Shift Up}") ; 구글 번역 팝업
 +XButton2::runPopupBlockedInput(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY,, true, "{Blind}{Shift Up}") ; 네이버 영어사전 팝업
 
+!+c::encryptClipboard()
+!+v::decryptPaste()
+
 ; 현재 온메모리 상태의 config의 특정 map값을 NULL로 수정(파일 수정 X) -> 팝업 UUID 잘못됐을 때 refresh용으로 사용
 ^+XButton1::getConfigMap().Set(GOOGLE_TRANSLATE_UUID_KEY, "NULL")
 ^+XButton2::getConfigMap().Set(NAVER_EN_DIC_UUID_KEY, "NULL")
@@ -219,6 +227,22 @@ F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, true)
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
 Hotstring(":*:123.", PHONE_NUM)
+
+
+/*
+클립보드 암호화
+*/
+encryptClipboard() {
+	A_Clipboard := (Encrypt.String("AES", "CBC", A_Clipboard, "EhfrnEhfrnEhfrn1", "123"))
+	msg("암호화됨")
+}
+
+/*
+클립보드 복호화 후 붙여넣기
+*/
+decryptPaste() {
+	SendText(Decrypt.String("AES", "CBC", A_Clipboard, "EhfrnEhfrnEhfrn1", "123"))
+}
 
 /*
 URL Encode(ref : https://www.autohotkey.com/boards/viewtopic.php?t=112741)
