@@ -209,7 +209,7 @@ alarm() {
 +XButton2::runPopupBlockedInput(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY,, true, "{Blind}{Shift Up}") ; 네이버 영어사전 팝업
 
 !+c::encryptClipboard()
-!+v::decryptPaste()
+!+x::decryptClipboard()
 
 ; 현재 온메모리 상태의 config의 특정 map값을 NULL로 수정(파일 수정 X) -> 팝업 UUID 잘못됐을 때 refresh용으로 사용
 ^+XButton1::getConfigMap().Set(GOOGLE_TRANSLATE_UUID_KEY, "NULL")
@@ -228,20 +228,45 @@ Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
 Hotstring(":*:123.", PHONE_NUM)
 
-
 /*
 클립보드 암호화
 */
 encryptClipboard() {
-	A_Clipboard := (Encrypt.String("AES", "CBC", A_Clipboard, "EhfrnEhfrnEhfrn1", "123"))
+	A_Clipboard := ""
+	clipboardStr := ""
+
+	SendInput("^c")
+	if (ClipWait(3)) {
+		clipboardStr := Encrypt.String("AES", "CBC", A_Clipboard, "EhfrnEhfrnEhfrn1", "123")
+
+		A_Clipboard := ""
+		A_Clipboard := clipboardStr
+		if (!ClipWait(3)) {
+			msg("암호화 실패")
+			return
+		}
+	} else {
+		msg("복사 실패")
+		return
+	}
+	 
 	msg("암호화됨")
 }
 
 /*
-클립보드 복호화 후 붙여넣기
+클립보드 복호화
 */
-decryptPaste() {
-	SendText(Decrypt.String("AES", "CBC", A_Clipboard, "EhfrnEhfrnEhfrn1", "123"))
+decryptClipboard() {
+	clipboardStr := A_Clipboard
+	
+	A_Clipboard := ""
+	A_Clipboard := Decrypt.String("AES", "CBC", clipboardStr, "EhfrnEhfrnEhfrn1", "123")
+
+	if (ClipWait(3)) {
+		msg("복호화됨")
+	} else {
+		msg("실패")
+	}
 }
 
 /*
