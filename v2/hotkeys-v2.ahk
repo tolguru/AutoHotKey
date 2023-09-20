@@ -6,9 +6,6 @@
 ++++++++++++++++++++++++++++++++++++++++
 */
 
-F9::A_Clipboard := (Encrypt.String("AES", "CBC", "평문", "EhfrnEhfrnEhfrn1", "123"))
-F10::MsgBox(Decrypt.String("AES", "CBC", A_Clipboard, "EhfrnEhfrnEhfrn1", "123"))
-
 /*
 ++++++++++++++++++++++++++++++++++++++++
 ++ 전역변수 선언
