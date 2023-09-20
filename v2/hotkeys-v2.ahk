@@ -203,6 +203,10 @@ alarm() {
 +XButton1::runPopupBlockedInput(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY,,, "{Blind}{Shift Up}") ; 구글 번역 팝업
 +XButton2::runPopupBlockedInput(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY,, true, "{Blind}{Shift Up}") ; 네이버 영어사전 팝업
 
+; 현재 온메모리 상태의 config의 특정 map값을 NULL로 수정(파일 수정 X) -> 팝업 UUID 잘못됐을 때 refresh용으로 사용
+^+XButton1::getConfigMap().Set(GOOGLE_TRANSLATE_UUID_KEY, "NULL")
+^+XButton2::getConfigMap().Set(NAVER_EN_DIC_UUID_KEY, "NULL")
+
 ^#Right::switchWithMute(true)
 ^#Left::switchWithMute(false)
 
