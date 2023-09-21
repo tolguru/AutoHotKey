@@ -662,7 +662,8 @@ SendTextBlockLineBreak(text) {
 ^+w::SendInput("!i") ; IntelluJ 기본 키설정을 해당 키로 변경
 ^e::SendInput("!u") ; IntelluJ 기본 키설정을 해당 키로 변경
 ; ^.::SendInput("!+h") ; 메서드 Document 주석 달기(IntelliJ JavaDoc plugin 키설정을 해당 키로 변경)
-^.::SendInput("/**`n") ; 메서드 Document 주석 달기(Javscript만 되는지는 모르겠음)
+^.::SendInput("/**`n") ; 주석 달기(IntelliJ 설정에 따라 Doc 자동 생성됨)
+^+.::SendInput("^!+[") ; 주석 업데이트. "Keymap - Other - Fix doc comment"의 단축키를 "Ctrl + Alt + Shift + [" 로 변경 (fix가 좀 애매하게 됨)
 !z::SendInput("!^o") ; 안 쓰는 Imports 제거
 !x::SendInput("^!v") ; return값으로 변수 자동 생성
 !c::SendInput("^!m") ; 메서드화
