@@ -6,6 +6,41 @@
 ++++++++++++++++++++++++++++++++++++++++
 */
 
+F10::msg('zzz') ; 되나?
+
+F9:: {
+	ahkFile := FileOpen(".\" A_ScriptName, "r", "UTF-8")
+
+	; 줄바꿈 문자로 config 구분 후 ":" 문자로 Key, Value 구분
+	Loop Parse, ahkFile.Read(), "`n" {
+		
+		hotkeyArr := StrSplit(A_LoopField, "::",, 2)
+
+		; ::로 분리됐을 때
+		if (hotkeyArr.Length = 2) {
+			; 첫 번째 문자가 ';'(주석)가 아닐 때
+			if (SubStr(hotkeyArr[1], 1, 1) != ";") {
+				; 내용에서 주석 찾아 분리
+				valueArr := StrSplit(hotkeyArr[2], ";",, 2)
+
+				if (valueArr.Length = 2) {
+					
+					msg("테스트 : " valueArr[2])
+					; Sleep(1000)
+				}			
+			}
+		}
+		
+
+		; ; 해당 config에 value가 설정되어 있지 않으면 "NULL" 문자열 지정
+		; if (A_LoopField != "") {
+		; 	getConfigMap().Set(configData[1], configData.Length = 2 ? configData[2] : "NULL")
+		; }
+	}
+
+	ahkFile.Close()
+}
+
 /*
 ++++++++++++++++++++++++++++++++++++++++
 ++ 전역변수 선언
@@ -641,3 +676,5 @@ copyImage() {
 	Sleep(50)
 	SendInput("{Down}{Enter}")
 }
+
+F10::msg('zzz') ; 끝~~
