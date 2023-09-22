@@ -9,27 +9,22 @@
 					"label": "기본 기능"
 				},
 				{
-					"line": 574,
+					"line": 461,
 					"column": 12,
 					"label": "Obsidian"
 				},
 				{
-					"line": 653,
+					"line": 487,
 					"column": 12,
 					"label": "IntelliJ"
 				},
 				{
-					"line": 691,
+					"line": 525,
 					"column": 9,
 					"label": "Whale"
 				},
 				{
-					"line": 759,
-					"column": 7,
-					"label": "원노트"
-				},
-				{
-					"line": 989,
+					"line": 613,
 					"column": 10,
 					"label": "VSCode"
 				}

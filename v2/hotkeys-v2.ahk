@@ -191,15 +191,10 @@ alarm() {
 #1::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE")
 #Tab::runEXE("notepad++")
 
-; 1분 타이머, Beep 사운드 알람
-+F12::ringTimer(60)
-
 !+F12::Suspend
 ^\::SetCapsLockState !GetKeyState("CapsLock", "T")
 *ScrollLock::blockAllInput() ; 관리자 권한으로 실행 필요
 
-!+WheelUp::setTransparent(10)
-!+WheelDown::setTransparent(-10)
 ^XButton2::SendInput("^{Home}") ; 스크롤 맨 위로
 ^XButton1::SendInput("^{End}") ; 스크롤 맨 아래로
 +XButton1::runPopupBlockedInput(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY,,, "{Blind}{Shift Up}") ; 구글 번역 팝업
@@ -211,9 +206,6 @@ alarm() {
 ; 현재 온메모리 상태의 config의 특정 map값을 NULL로 수정(파일 수정 X) -> 팝업 UUID 잘못됐을 때 refresh용으로 사용
 ^+XButton1::getConfigMap().Set(GOOGLE_TRANSLATE_UUID_KEY, "NULL")
 ^+XButton2::getConfigMap().Set(NAVER_EN_DIC_UUID_KEY, "NULL")
-
-^#Right::switchWithMute(true)
-^#Left::switchWithMute(false)
 
 Pause::Reload
 
@@ -287,51 +279,6 @@ urlEncode(originData, re := "[0-9A-Za-z]") {
         }
     }
     return response
-}
-
-/*
-클립보드 데이터를 .\resources에 파일로 저장
-*/
-clipboardSave() {
-	try {
-		FileAppend(ClipboardAll(), ".\resources\" A_Now)
-	} catch OSError {
-		if (A_LastError = ERROR_PATH_NOT_FOUND) {
-			; 경로가 없을 시 경로 생성
-			DirCreate(".\resources")
-			MsgBox("경로 생성 완료.`n함수 재실행 필요")
-		} else {
-			MsgBox("알 수 없는 OSError 발생, 에러 코드 : " A_LastError)
-		}
-	} catch as e {
-		MsgBox("알 수 없는 Error 발생, 에러 코드 : " A_LastError)
-	}
-}
-
-/*
-타이머 실행 후 사운드 알람, ToolTip 표기
-#param Number time : 타이머 시간(초) (default = 1초)
-*/
-ringTimer(time := 1) {
-	msg(time "초 타이머 시작")
-	SoundBeep(550, 500)
-	SetTimer () => SoundBeep(550, 500), -1000 * time
-
-	displayCounter(time)
-}
-
-/*
-설정한 시간에 따라 매 초 ToolTip 표기
-1부터 N까지 진행
-#param Number time : 타이머 시간(초) (default = 3초)
-*/
-displayCounter(count := 3) {
-	CoordMode("ToolTip", "Screen")
-
-	Loop count {
-		locatedMsg(A_Index)
-		Sleep(1000)
-	}
 }
 
 /*
@@ -432,32 +379,6 @@ runParamUrl(url, text, uuidKey := "") {
 }
 
 /*
-현재 포커스된 창 투명도 조절
-#param Number gap : 변동시킬 투명도 수치
-*/
-setTransparent(gap) {
-	; 현재 투명도 변수에 저장
-	currentValue := WinGetTransparent("A")
-
-	try {
-		if (currentValue = "") {
-			currentValue := 255
-		} else {
-			currentValue := currentValue + gap
-
-			if (currentValue > 255) {
-				currentValue := 255
-			} else if (currentValue < 0) {
-				currentValue := 7
-			}
-		}
-
-		WinSetTransparent(currentValue, "A")
-	} catch Error {
-	}
-}
-
-/*
 60분마다 "물" 메세지 박스 출력
 */
 alarmWater() {
@@ -537,40 +458,6 @@ blockAllInput(time := 0.1) {
 }
 
 /*
-가장 최근 클립보드 데이터의 포맷 출력
-*/
-printClipboardFormatList() {
-	formatCount := DllCall("CountClipboardFormats")
-
-	formatList := []
-
-	formatList.Push(DllCall("custom-utility.dll\checkImageFormats", "UINT", "0"))
-
-	result := formatList[1]
-
-	Loop  formatCount - 1 {
-		formatList.Push(DllCall("custom-utility.dll\checkImageFormats", "UINT", formatList[A_Index]))
-
-		result := result " " formatList[A_Index + 1]
-	}
-
-	MsgBox(result)
-}
-
-/*
-타이머 실행 후 사운드 알람, ToolTip 표기
-#param Number time : 타이머 시간(초) (default = 1초)
-*/
-switchWithMute(muteFlag) {
-	SoundSetMute(muteFlag)
-	if (muteFlag) {
-		SendInput("^#{Right}")
-	} else {
-		SendInput("^#{Left}")
-	}
-}
-
-/*
 ########################################
 ## @Obsidian
 ########################################
@@ -598,59 +485,6 @@ switchWithMute(muteFlag) {
 
 /*
 ########################################
-## @Notion
-########################################
-*/
-#HotIf WinActive("ahk_exe Notion.exe")
-
-; 글씨색 빨간색 적용 후 초기화
-!1::SendComplex("/red`n", "^z")
-
-; 텍스트 BOLD
-!q::SendInput("^b")
-; 텍스트 이탤릭
-!w::SendInput("^i")
-; 텍스트 최근 사용 색상 적용
-!e::SendInput("^+h")
-
-; 배경색 선택
-!a::SendText("/bac")
-; 글씨색 선택
-!s::SendText("/colo")
-; 배경색 보라색
-!d::SendText("/purpleb`n")
-
-; 글씨색, 배경색 초기화
-!z::SendText("/def`n")
-
-; 콜아웃
-^q::SendText("/ca`n")
-
-; 지우기
-`::SendInput("{Delete}")
-
-; 블록 링크 복사
-^+c::SendInput("!+l")
-
-/*
-SendText, SendInput을 연속 입력
-*/
-SendComplex(text, input := "", carriageFlag := false) {
-	carriageFlag ? SendTextBlockLineBreak(text) : SendText(text)
-	SendInput(input)
-}
-
-/*
-SendText 시 항목 내 줄바꿈 적용
-*/
-SendTextBlockLineBreak(text) {
-	SendInput("{Shift Down}")
-	SendText(text)
-	SendInput("{Shift Up}")
-}
-
-/*
-########################################
 ## @IntelliJ
 ########################################
 */
@@ -669,9 +503,9 @@ SendTextBlockLineBreak(text) {
 !c::SendInput("^!m") ; 메서드화
 !q::SendInput("^e") ; 최근 파일 검색
 !w::SendInput("^+n") ; 파일 검색
-!e::SendInput("!7") ; Structure
-!a::SendInput("+{F10}") ; 마지막 모듈 run
-!s::SendInput("+{F9}") ; 마지막 모듈 debug
+; !e::SendInput("!7") ; Structure
+; !a::SendInput("+{F10}") ; 마지막 모듈 run
+; !s::SendInput("+{F9}") ; 마지막 모듈 debug
 `::SendInput("^y") ; 라인 DELETE
 !`::SendInput("``") ; 백틱 입력
 ^Enter::SendInput("{Home}^{Enter}") ; 윗 라인 추가 후 이동
@@ -695,16 +529,12 @@ SendTextBlockLineBreak(text) {
 #HotIf WinActive("ahk_exe whale.exe")
 !/::MsgBox("!q - 창 복사`n!w - 사이트 번역`n!a - 새 탭 열기`n!s - 시크릿 모드 창 열기`n#q - Chat GPT 프롬프트(영어 교정)`n#q - Chat GPT 프롬프트(문법 분석)`n#w - Chat GPT 프롬프트(문장 비교)`n#e - Chat GPT 프롬프트(문장 요소 분석)")
 
-global tabFlag := true
-
 !q::SendInput("!+'")
 !w::translate()
 !e::ControlClick(TRANSLATE_TOGGLE_XY, "A",,,, "NA") ; 번역 토글 임시 기능
 !a::SendInput("^t")
 !s::SendInput("^+n")
-#q::setPrompt("문장 : `"`"+{Enter 2}문장이 부자연스럽다면, 자연스러운 문장으로 수정한 후 문장이 부자연스러운 이유에 대한 자세한 설명을 해줘.+{Enter}추가적으로, 더 자연스럽게 사용될 수 있는 문장들이 있으면 추천해줘.")
-#w::setPrompt("문장 1 : `"`"+{Enter}문장 2 : `"`"+{Enter 2}어느 문장이 더 자연스러워?")
-#e::setPrompt("문장 : `"`"+{Enter 2}문장의 구성 요소에 대해 분석해줘.")
+
 
 /*
 구글 번역 확장 프로그램을 통한 웹 페이지 번역
@@ -719,212 +549,6 @@ translate() {
 		SendInput("{Tab 2}{Enter}")
 	} else {
 		msg("실패")
-	}
-}
-
-/*
-Chat AI Prompt 영어 분석용 함수, 클립보드 사용 후 기존 데이터로 클립보드 원복
-!!! 클립보드 덮어씌우기가 제대로 안 되는 경우가 잦음 !!!
-#param String prompt : prompt 문자열
-*/
-gptPrompt(prompt := "") {
-	tmpBuffer := A_Clipboard
-
-	A_Clipboard := ""
-	A_Clipboard := prompt
-	if (ClipWait(2)) {
-		SendInput("^{v}{Up 10}{End}{Left}")
-	}
-
-	A_Clipboard := tmpBuffer
-}
-
-/*
-Chat AI Prompt 영어 분석용 함수, SendInput버전
-#param String prompt : prompt 문자열
-*/
-setPrompt(prompt := "") {
-	SendInput(prompt "{Up 10}{End}{Left}")
-}
-
-/*
-GPT <-> 영어사전 토글 함수
-*/
-toggleTab() {
-	tabFlag? SendInput("^2") : SendInput("^1")
-	global tabFlag := !tabFlag
-}
-
-/*
-########################################
-## @원노트
-########################################
-*/
-#HotIf WinActive("ahk_exe ONENOTE.EXE")
-!/::MsgBox("!q - Highlight`n!w - 폰트 색 설정`n!e - 특정 색 폰트`n!r - 특정 색 폰트`n!d - Bold 14pt`n!z - 서식 제거`n!x - 말머리 넣기`n!c - 가로줄 넣기`n!a - 그리기 직선`n!s - 그리기 화살표`n!`` - 번호 매기기 초기화`n!F1 - 1레벨 목차 설정`n!F2 - 2레벨 목차 설정`n^v - HTTP URL일 경우 링크 이름 편집 / 이미지 그림 붙여넣기`n^+v - 서식 유지해서 붙여넣기`n^+z - 맨 밑에 페이지 추가`n^+x - 현재 페이지 밑에 페이지 추가`n^+c - 페이지 수준 내리기`n^+q - 현재 페이지 목차 생성`n#q - LARGE_STAR_EMOTICON`nF5 - 즐겨찾기`n+Enter - 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기`n!PgUp, !사이드 앞 - 객체 맨 앞으로`n사이드 앞 - 다음 페이지`n사이드 뒤 - 이전 페이지")
-
-!a::toolKeyboardSelect(DRAW_FIGURE_KEY) ; 그리기 직선(도형 도구 - 빠른 실행 도구 1번째에 지정)
-!s::toolKeyboardSelect(DRAW_FIGURE_KEY, "0", "1") ; 그리기 화살표(도형 도구 - 빠른 실행 도구 1번째에 지정)
-!w::paintFont("7") ; 글씨색 변경 빨간색(빠른 실행 도구 2번째에 지정, 팔레트 기준 7번째 아래 위치)
-^+v::SendInput(ORIGINAL_PASTE_KEY) ; 서식 유지해서 붙여넣기(빠른 실행 도구 3번째에 지정)
-^v::paste() ; HTTP URL일 경우 붙여넣기 시 이름 링크로 삽입 / 이미지는 그림으로 붙여넣기(빠른 실행 도구 4번째에 지정)
-!q::SendInput("!5") ; Highlight(빠른 실행 도구 5번째에 지정)
-!d::SendInput("!6") ; Bold 14pt(빠른 실행 도구 6번째에 지정)
-!e::SendInput("!7") ; Specific color font - 초록(빠른 실행 도구 7번째에 지정)
-!r::SendInput("!8") ; Specific color font - 파랑(빠른 실행 도구 8번째에 지정)
-#q::setTextWithSize("⭐", 36) ; 큰 별 넣기 (폰트 크기 - 빠른 실행 도구 9번째에 지정)
-^+x::SendInput("!09") ; 현재 선택된 페이지 하위에 페이지 추가(빠른 실행 도구 10번째에 지정)
-!x::SendInput(BULLET_POINT_KEY) ; 글머리 넣기(빠른 실행 도구 11번째에 지정)
-^+q::SendInput("!07") ; 목차 생성(빠른 실행 도구 12번째에 지정)
-!F1::SendInput("!06") ; 1레벨 목차 설정(빠른 실행 도구 13번째에 지정)
-!F2::SendInput("!05") ; 2레벨 목차 설정(빠른 실행 도구 14번째에 지정)
-!c::SendInput("!04") ; 텍스트 직선 긋기(빠른 실행 도구 15번째에 지정)
-!PgUp::SendInput("!03") ; 객체 맨 앞으로(빠른 실행 도구 16번째에 지정)
-!XButton2::SendInput("!03") ; 객체 맨 앞으로(빠른 실행 도구 16번째에 지정)
-F5::SendInput("!02") ; 즐겨찾기(빠른 실행 도구 17번째에 지정)
-^+PgUp::setParagraph(5) ; 단락 간격 넓히기 - 상단(빠른 실행 도구 18번째에 지정)
-^+PgDn::setParagraph(-5) ; 단락 간격 줄이기 - 상단(빠른 실행 도구 18번째에 지정)
-!+PgUp::setParagraph(5, false) ; 단락 간격 넓히기 - 하단(빠른 실행 도구 18번째에 지정)
-!+PgDn::setParagraph(-5, false) ; 단락 간격 줄이기 - 하단(빠른 실행 도구 18번째에 지정)
-!1::SendInput("!0a") ; 단락 간격 10(빠른 실행 도구 19번째에 지정)
-!2::SendInput("!0b") ; 단락 간격 20(빠른 실행 도구 20번째에 지정)
-
-!`::SendInput("^/^/{F10 2}") ; 번호 매기기 초기화, F10으로 포커스 아웃인
-!z::SendInput("^+n") ; 글 서식 제거
-
-^+z::SendInput("^n") ; 맨 밑에 페이지 추가
-^+c::SendInput("!^]") ; 페이지 수준 내리기
-
-XButton1::SendInput("!{Left}")
-XButton2::SendInput("!{Right}")
-
-+Enter::SendInput("{End}{Enter}") ; 현재 커서 위치랑 상관 없이 다음 줄로 넘어가기
-^Enter::SendInput("{Home}{Enter}^{Up}") ; 현재 커서 위치랑 상관 없이 윗 줄 추가한 후 넘어가기
-
-+PgUp::SendInput("^+`>") ; 폰트 크기 키우기
-+PgDn::SendInput("^+`<") ; 폰트 크기 줄이기
-+WheelUp::SendInput("^+`>") ; 폰트 크기 키우기
-+WheelDown::SendInput("^+`<") ; 폰트 크기 줄이기
-
-; 글머리 기호
-:*:>> :: {
-	toolKeyboardSelect(BULLET_POINT_KEY, "3", "2")
-}
-
-:*:]] :: {
-	toolKeyboardSelect(BULLET_POINT_KEY, "2", "1")
-}
-
-
-/*
-단락 간격 조정
-#param Number size : 조정할 수치
-*/
-setParagraph(size := 10, upsideFlag := true) {
-	SendInput("!01")
-	Sleep(80)
-	control := upsideFlag ? "RICHEDIT60W3" : "RICHEDIT60W2"
-	try {
-		currentSize := ControlGetText(control, "A")
-		ControlSetText(currentSize + size, control, "A")
-		SendInput("{Enter}")
-	} catch {
-		SendInput("{Esc}")
-	}
-	;~ if (WinWaitActive("단락 간격",, 3)) {
-	;~ } else {
-		;~ msg("실패")
-	;~ }
-}
-
-/*
-도구 선택 이후 방향키로 세부 항목 선택
-#param String key        : 도구 선택 입력키
-#param String downCount  : 세부 항목에서 아래 방향으로 향할 횟수
-#param String rightCount : 세부 항목에서 오른쪽 방향으로 향할 횟수
-*/
-toolKeyboardSelect(key, downCount := "0", rightCount := "0") {
-	; STEP 01. 도구 선택
-	SendInput(key)
-
-	; STEP 02. 세부 항목 선택
-	SendInput("{Down " downCount "}{Right " rightCount "}{Space}")
-}
-
-/*
-지정된 사이즈로 지정된 텍스트 삽입
-기존 사이즈 복사해와서 텍스트 삽입 후 원래 사이즈 다시 입력해주는 로직 추가하는 것도 필요하다면 고려하고 있음
-#param String text : 삽입할 텍스트
-#param Number size : 텍스트 사이즈
-*/
-setTextWithSize(text := "", size := 0) {
-	if (size > 0) {
-		SendInput("!9" size "{Enter}" text)
-	} else {
-		MsgBox("사이즈는 0보다 커야 합니다.")
-	}
-}
-
-/*
-resource 출력, 빠른 실행 도구의 원본 서식 유지해서 붙여넣기 기능에 의존
-입력키를 따로 관리하지 않는 이유는 귀찮아서(개선 여지가 있음)
-#param Object resource : Buffer 객체, ClipboardALl(data)로 생성
-*/
-printResource(resource) {
-	try {
-		A_Clipboard := resource
-		SendInput(ORIGINAL_PASTE_KEY)
-
-	} catch as e {
-		msg("실패 : " e)
-	}
-}
-
-/*
-Font Color 선택 - 빠른 실행 도구 2번째에 지정
-#param String downCount  : 팔레트에서 아래 방향으로 향할 횟수
-#param String rightCount : 팔레트에서 오른쪽 방향으로 향할 횟수
-#param Boolean backColor : 현재 지정되어 있는 배경색 적용 (default = true)
-*/
-paintFont(downCount := "0", rightCount := "0", backColor := false) {
-	if (isFirst) {
-		global isFirst := false
-
-		SendInput("!2")
-		SendInput("{Down " downCount "}{Right " rightCount "}{Enter}")
-	} else {
-		; STEP 01. Font Color 클릭
-		ControlClick(RIBBON_TOOL2_XY, "A",,,, "NA")
-
-		; STEP 02. Font Background Color 추가
-		if (backColor) {
-			SendInput("^+h")
-		}
-	}
-}
-
-/*
-붙여넣기 시 클립보드 내용에 따라 분류해서 처리
-
-1. 텍스트가 http로 시작할 경우 지정된 형식의 링크로 삽입
-2. 텍스트에 속할 경우 일반 붙여넣기
-3. Slack에서 복사한 이미지일 경우 그림으로 붙여넣기
-*/
-paste() {
-	if (DllCall("CountClipboardFormats") = 6 && DllCall("IsClipboardFormatAvailable", "UInt", 2)) {
-		A_Clipboard := ClipboardAll()
-		SendInput("!4")
-		SendInput("{Esc}")
-	} else if (SubStr(A_Clipboard, 1, 4) = "http") {
-		SendInput("^k")
-		if (WinWaitActive("링크",,3)) {
-			ControlSetText("Link", "RICHEDIT60W3", "A")
-			ControlSetText(A_Clipboard, "RICHEDIT60W2", "A")
-			ControlFocus("RICHEDIT60W3", "A")
-			SendInput("{Enter}")
-		}
-	} else {
-		SendInput("^v")
 	}
 }
 
@@ -997,21 +621,6 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 !c::SendInput("console.log(){Left}")
 +Enter::SendInput("^{Enter}")
 ^Enter::SendInput("{End};")
-
-/*
-########################################
-## @SciTE4AutoHotkey
-########################################
-*/
-#HotIf WinActive("ahk_exe SciTE.exe")
-!/::MsgBox("!q - 책갈피 설정/제거`n!w - 책갈피로 이동`n!e - 프로그램별 책갈피 설정`n!r - 모든 책갈피 제거 후 현재 위치 책갈피 설정`n^/ - 구역 주석")
-
-F1::SendInput("!h{Enter}")
-!q::SendInput("^{F2}")
-!w::SendInput("{F2}")
-!e::SendInput("^f@!m{Esc}")
-!r::SendInput("!sc^{F2}")
-^/::SendInput("/*`n`n*/{Up}")
 
 /*
 ########################################
