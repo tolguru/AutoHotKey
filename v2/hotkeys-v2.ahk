@@ -16,10 +16,9 @@ F9:: {
 		
 		hotkeyArr := StrSplit(A_LoopField, "::",, 2)
 
-		; ::로 분리됐을 때
-		if (hotkeyArr.Length = 2) {
-			; 첫 번째 문자가 ';'(주석)가 아닐 때
-			if (SubStr(hotkeyArr[1], 1, 1) != ";") {
+		; ::로 분리됐을 때 && 첫 번째 문자가 ';'(주석)가 아닐 때
+		if (hotkeyArr.Length = 2 && SubStr(hotkeyArr[1], 1, 1) != ";") {
+			; if (SubStr(hotkeyArr[1], 1, 1) != ";") {
 				; 내용에서 주석 찾아 분리
 				valueArr := StrSplit(hotkeyArr[2], ";",, 2)
 
@@ -28,7 +27,7 @@ F9:: {
 					msg("테스트 : " valueArr[2])
 					; Sleep(1000)
 				}			
-			}
+			; }
 		}
 		
 
@@ -217,7 +216,7 @@ alarm() {
 
 /*
 ++++++++++++++++++++++++++++++++++++++++
-++ 기본 기능 선언
+++ @Common
 ++++++++++++++++++++++++++++++++++++++++
 */
 !/::MsgBox("##### 프로그램 실행 #####`n#`` - 노션 실행`n#Tab - notepad 실행 및 활성화`n#1 - 나한테 다이렉트 메세지 보내기`n##### 기타 #####`n`n^+F12 - 1분 타이머 후 사운드`n^\ - caps lock 토글`n^사이드 앞 - 페이지 맨 위로 이동`n^사이드 뒤 - 페이지 맨 뒤로 이동")
@@ -652,7 +651,8 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 #HotIf WinActive("ahk_exe Code.exe")
 !/::MsgBox("CapsLock - 한 줄 지우기`n!c - console.log()")
 
-;~ CapsLock::SendInput("^+k")
+`::SendInput("^+k")
+!`::SendInput("``")
 !c::SendInput("console.log(){Left}")
 +Enter::SendInput("^{Enter}")
 ^Enter::SendInput("{End};")
