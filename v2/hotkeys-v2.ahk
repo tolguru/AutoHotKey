@@ -6,40 +6,6 @@
 ++++++++++++++++++++++++++++++++++++++++
 */
 
-F10::msg('zzz') ; 되나?
-
-F9:: {
-	ahkFile := FileOpen(".\" A_ScriptName, "r", "UTF-8")
-
-	; 줄바꿈 문자로 config 구분 후 ":" 문자로 Key, Value 구분
-	Loop Parse, ahkFile.Read(), "`n" {
-		
-		hotkeyArr := StrSplit(A_LoopField, "::",, 2)
-
-		; ::로 분리됐을 때 && 첫 번째 문자가 ';'(주석)가 아닐 때
-		if (hotkeyArr.Length = 2 && SubStr(hotkeyArr[1], 1, 1) != ";") {
-			; if (SubStr(hotkeyArr[1], 1, 1) != ";") {
-				; 내용에서 주석 찾아 분리
-				valueArr := StrSplit(hotkeyArr[2], ";",, 2)
-
-				if (valueArr.Length = 2) {
-					
-					msg("테스트 : " valueArr[2])
-					; Sleep(1000)
-				}			
-			; }
-		}
-		
-
-		; ; 해당 config에 value가 설정되어 있지 않으면 "NULL" 문자열 지정
-		; if (A_LoopField != "") {
-		; 	getConfigMap().Set(configData[1], configData.Length = 2 ? configData[2] : "NULL")
-		; }
-	}
-
-	ahkFile.Close()
-}
-
 /*
 ++++++++++++++++++++++++++++++++++++++++
 ++ 전역변수 선언
@@ -57,6 +23,9 @@ configMap := Map()
 GOOGLE_TRANSLATE_UUID_KEY := "googleTranslateUUID"
 NAVER_KO_DIC_UUID_KEY     := "koreanDictionaryUUID"
 NAVER_EN_DIC_UUID_KEY     := "englishDictionaryUUID"
+
+; Command
+commandMap := Map()
 
 ; 에러 코드
 ERROR_PATH_NOT_FOUND := 3
@@ -136,6 +105,9 @@ config() {
 	; File Config 불러오기
 	configLoad()
 
+	; Command Guide 불러오기
+	commandGuideLoad()
+
 	; 특정 PC만 울리게 설정
 	if (findValue(waterAlarmList, A_ComputerName)) {
 		global waterAlarm := true
@@ -161,6 +133,48 @@ configMap 스태틱 변수 return
 */
 getConfigMap() {
 	return configMap
+}
+
+/*
+commandMap 스태틱 변수 return
+*/
+getCommandMap() {
+	return commandMap
+}
+
+/* 
+commandMap 초기화
+*/
+commandGuideLoad() {
+	ahkFile := FileOpen(".\" A_ScriptName, "r", "UTF-8") 
+	groupName := ""
+	commandList := ""
+
+	; 줄바꿈 문자로 config 구분 후 ":" 문자로 Key, Value 구분
+	Loop Parse, ahkFile.Read(), "`n" {
+		if (InStr(A_LoopField, "@")) {
+			if (commandList != "" && groupName != "") {
+				getCommandMap().Set(SubStr(groupName, 1, StrLen(groupName) - 1), groupName "`n" commandList)
+
+				commandList := ""
+			}
+
+			groupName := StrSplit(A_LoopField, "@",, 2)[2]
+		}
+
+		hotkeyArr := StrSplit(A_LoopField, "::",, 2)
+
+		; ::로 분리됐을 때 && 첫 번째 문자가 ';'(주석)가 아닐 때
+		if (hotkeyArr.Length = 2 && SubStr(hotkeyArr[1], 1, 1) != ";") {
+			valueArr := StrSplit(hotkeyArr[2], ";#",, 2)
+
+			if (valueArr.Length = 2) {
+				commandList := commandList "`n" hotkeyArr[1] "  -->  " valueArr[2]
+			}			
+		}
+	}
+
+	ahkFile.Close()
 }
 
 /*
@@ -219,33 +233,33 @@ alarm() {
 ++ @Common
 ++++++++++++++++++++++++++++++++++++++++
 */
-!/::MsgBox("##### 프로그램 실행 #####`n#`` - 노션 실행`n#Tab - notepad 실행 및 활성화`n#1 - 나한테 다이렉트 메세지 보내기`n##### 기타 #####`n`n^+F12 - 1분 타이머 후 사운드`n^\ - caps lock 토글`n^사이드 앞 - 페이지 맨 위로 이동`n^사이드 뒤 - 페이지 맨 뒤로 이동")
+!/::MsgBox(getCommandMap().Get("Common"))
 
-#`::runEXE("obsidian")
-#1::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE")
-#Tab::runEXE("notepad++")
+#`::runEXE("obsidian") ;# 옵시디언 실행
+#1::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE") ;# 슬랙 내 채널 열기
+#Tab::runEXE("notepad++") ;# 노트패드 실행
 
 !+F12::Suspend
-^\::SetCapsLockState !GetKeyState("CapsLock", "T")
+^\::SetCapsLockState !GetKeyState("CapsLock", "T") ;# CapsLock 토글
 *ScrollLock::blockAllInput() ; 관리자 권한으로 실행 필요
 
-^XButton2::SendInput("^{Home}") ; 스크롤 맨 위로
-^XButton1::SendInput("^{End}") ; 스크롤 맨 아래로
-+XButton1::runPopupBlockedInput(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY,,, "{Blind}{Shift Up}") ; 구글 번역 팝업
-+XButton2::runPopupBlockedInput(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY,, true, "{Blind}{Shift Up}") ; 네이버 영어사전 팝업
+^XButton2::SendInput("^{Home}") ;# 스크롤 맨 위로
+^XButton1::SendInput("^{End}") ;# 스크롤 맨 아래로
++XButton1::runPopupBlockedInput(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY,,, "{Blind}{Shift Up}") ;# 구글 번역 팝업
++XButton2::runPopupBlockedInput(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY,, true, "{Blind}{Shift Up}") ;# 네이버 영어사전 팝업
 
-!+c::encryptClipboard()
-!+x::decryptClipboard()
+!+c::encryptClipboard() ;# 클립보드 암호화
+!+x::decryptClipboard() ;# 클립보드 복호화
 
 ; 현재 온메모리 상태의 config의 특정 map값을 NULL로 수정(파일 수정 X) -> 팝업 UUID 잘못됐을 때 refresh용으로 사용
-^+XButton1::getConfigMap().Set(GOOGLE_TRANSLATE_UUID_KEY, "NULL")
-^+XButton2::getConfigMap().Set(NAVER_EN_DIC_UUID_KEY, "NULL")
+^+XButton1::getConfigMap().Set(GOOGLE_TRANSLATE_UUID_KEY, "NULL") ;# 구글 config 초기화
+^+XButton2::getConfigMap().Set(NAVER_EN_DIC_UUID_KEY, "NULL") ;# 네이버 영어사전 config 초기화
 
 Pause::Reload
 
-F1::runPopup(NAVER_KO_DIC_URL, NAVER_KO_DIC_UUID_KEY, true, true)
-F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, true, true)
-F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, true)
+F1::runPopup(NAVER_KO_DIC_URL, NAVER_KO_DIC_UUID_KEY, true, true) ;# 네이버 국어사전 입력받아 열기
+F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, true, true) ;# 네이버 영어사전 입력받아 열기
+F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, true) ;# 구글 번역 입력받아 열기
 
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
@@ -497,17 +511,13 @@ blockAllInput(time := 0.1) {
 ########################################
 */
 #HotIf WinActive("ahk_exe Obsidian.exe")
+!/::MsgBox(getCommandMap().Get("Obsidian"))
 
-; 다음 줄로 이동
-+Enter::SendInput("{End}`n")
++Enter::SendInput("{End}`n") ;# 다음 줄로 이동
+^Enter::SendInput("{Home}`n{Up}") ;# 윗 줄 추가
+!Enter::SendText("<br>`n`n") ;# 줄바꿈(<br>)
 
-; 윗 줄 추가
-^Enter::SendInput("{Home}`n{Up}")
-
-; 줄바꿈(<br>)
-!Enter::SendText("<br>`n`n")
-
-; 콜아웃
+;# 콜아웃
 ::/ca1::> [{!}TIP] TIP
 ::/ca2::> [{!}QUESTION] QUESTION
 ::/ca3::> [{!}EXAMPLE] EXAMPLE
@@ -523,26 +533,26 @@ blockAllInput(time := 0.1) {
 ########################################
 */
 #HotIf WinActive("ahk_exe idea64.exe")
-!/::MsgBox("## IntelliJ ##`n(X)CapsLock - 한 줄 제거`n^w - 탭 끄기`n^+w - 고정 탭 제외 끄기`n^e - 핀으로 고정`n!z - 안 쓰는 import 제거`n!x - 메서드 return값으로 변수 생성`n!c - 메서드화`n!q - 최근 사용 파일 검색`n!w - 파일 검색`n!e - 클래스 구조(Structure) 보기`n^. - 메서드 Document 주석 달기`n!a - 마지막 모듈 Run`n!s - 마지막 모듈 Debug`n`` - 라인 DELETE`n!`` - 백틱 입력`n^Enter - 윗 라인 추가 후 이동")
+!/::MsgBox(getCommandMap().Get("IntelliJ"))
 
 ;~ CapsLock::SendInput("^y")
-^w::SendInput("^{F4}")
-^+w::SendInput("!i") ; IntelluJ 기본 키설정을 해당 키로 변경
-^e::SendInput("!u") ; IntelluJ 기본 키설정을 해당 키로 변경
+^w::SendInput("^{F4}") ;# 창 닫기
+^+w::SendInput("!i") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀 제외 닫기
+^e::SendInput("!u") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀으로 고정
 ; ^.::SendInput("!+h") ; 메서드 Document 주석 달기(IntelliJ JavaDoc plugin 키설정을 해당 키로 변경)
-^.::SendInput("/**`n") ; 주석 달기(IntelliJ 설정에 따라 Doc 자동 생성됨)
-^+.::SendInput("^!+[") ; 주석 업데이트. "Keymap - Other - Fix doc comment"의 단축키를 "Ctrl + Alt + Shift + [" 로 변경 (fix가 좀 애매하게 됨)
-!z::SendInput("!^o") ; 안 쓰는 Imports 제거
-!x::SendInput("^!v") ; return값으로 변수 자동 생성
-!c::SendInput("^!m") ; 메서드화
-!q::SendInput("^e") ; 최근 파일 검색
-!w::SendInput("^+n") ; 파일 검색
+^.::SendInput("/**`n") ;# 주석 달기(IntelliJ 설정에 따라 Doc 자동 생성됨)
+^+.::SendInput("^!+[") ; "Keymap - Other - Fix doc comment"의 단축키를 "Ctrl + Alt + Shift + [" 로 변경 (fix가 좀 애매하게 됨) ;# 주석 업데이트
+!z::SendInput("!^o") ;# 안 쓰는 Imports 제거
+!x::SendInput("^!v") ;# return값으로 변수 자동 생성
+!c::SendInput("^!m") ;# 메서드화
+!q::SendInput("^e") ;# 최근 파일 검색
+!w::SendInput("^+n") ;# 파일 검색
 ; !e::SendInput("!7") ; Structure
 ; !a::SendInput("+{F10}") ; 마지막 모듈 run
 ; !s::SendInput("+{F9}") ; 마지막 모듈 debug
-`::SendInput("^y") ; 라인 DELETE
-!`::SendInput("``") ; 백틱 입력
-^Enter::SendInput("{Home}^{Enter}") ; 윗 라인 추가 후 이동
+`::SendInput("^y") ;# 라인 DELETE
+!`::SendInput("``") ;# 백틱 입력
+^Enter::SendInput("{Home}^{Enter}") ;# 윗 라인 추가 후 이동
 
 /*
 ########################################
@@ -550,10 +560,10 @@ blockAllInput(time := 0.1) {
 ########################################
 */
 #HotIf WinActive("ahk_exe chrome.exe")
-!/::MsgBox("## Chrome ##`n^q - 창 복사`n!s - 시크릿 모드 창 열기")
+!/::MsgBox(getCommandMap().Get("Chrome"))
 
-^q::SendInput("{F6}!{Enter}")
-!s::SendInput("^+n")
+^q::SendInput("{F6}!{Enter}") ;# 창 복사
+!s::SendInput("^+n") ;# 시크릿 모드 창 열기
 
 /*
 ########################################
@@ -561,13 +571,13 @@ blockAllInput(time := 0.1) {
 ########################################
 */
 #HotIf WinActive("ahk_exe whale.exe")
-!/::MsgBox("!q - 창 복사`n!w - 사이트 번역`n!a - 새 탭 열기`n!s - 시크릿 모드 창 열기`n#q - Chat GPT 프롬프트(영어 교정)`n#q - Chat GPT 프롬프트(문법 분석)`n#w - Chat GPT 프롬프트(문장 비교)`n#e - Chat GPT 프롬프트(문장 요소 분석)")
+!/::MsgBox(getCommandMap().Get("Whale"))
 
-!q::SendInput("!+'")
-!w::translate()
-!e::ControlClick(TRANSLATE_TOGGLE_XY, "A",,,, "NA") ; 번역 토글 임시 기능
-!a::SendInput("^t")
-!s::SendInput("^+n")
+!q::SendInput("!+'") ;# 창 복사
+!w::translate() ;# 페이지 번역
+!e::ControlClick(TRANSLATE_TOGGLE_XY, "A",,,, "NA") ;# 번역 <-> 원본 토글
+!a::SendInput("^t") ;# 새 탭 열기
+!s::SendInput("^+n") ;# 시크릿 모드
 
 
 /*
@@ -592,7 +602,7 @@ translate() {
 ########################################
 */
 #HotIf WinActive("ahk_exe Ssms.exe")
-!/::MsgBox("^/ - 주석`n^+/ - 주석 해제")
+!/::MsgBox(getCommandMap().Get("SSMS"))
 
 ^/:: {
 	SendInput("^k")
@@ -609,7 +619,7 @@ translate() {
 ########################################
 */
 #HotIf WinActive("ahk_exe dbeaver.exe")
-!/::MsgBox("!q - SELECT, FROM`n!w - WHERE 1 = 1 ~ AND`n!e - AND`n!r - ORDER BY`n!a - 테이블 정보 조회`n!s - 공통 코드 조회`n!d - 최근 10개 항목 조회`n(X)CapsLock - 한 줄 지우기")
+!/::MsgBox(getCommandMap().Get("DBeaver"))
 
 !q::SendInput("SELECT *`nFROM   ")
 !w::SendInput("WHERE  1 = 1`nAND    ")
@@ -649,13 +659,14 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 ########################################
 */
 #HotIf WinActive("ahk_exe Code.exe")
-!/::MsgBox("CapsLock - 한 줄 지우기`n!c - console.log()")
+!/::MsgBox(getCommandMap().Get("VSCode"))
 
-`::SendInput("^+k")
-!`::SendInput("``")
-!c::SendInput("console.log(){Left}")
-+Enter::SendInput("^{Enter}")
-^Enter::SendInput("{End};")
+`::SendInput("^+k") ;# 라인 지우기
+!`::SendInput("``") ;# 백틱 입력
+!c::SendInput("console.log(){Left}") ;# js 콘솔 자동입력
++Enter::SendInput("^{Enter}") ;# 다음 줄 추가
+^Enter::SendInput("{End};") ;# 윗 줄 추가 후 이동
+^+/::SendInput("!+a") ;# 블록 주석 토글
 
 /*
 ########################################
@@ -663,9 +674,9 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 ########################################
 */
 #HotIf WinActive("ahk_exe slack.exe")
-!/::MsgBox("!q - 이미지 복사")
+!/::MsgBox(getCommandMap().Get("Slack"))
 
-!q::copyImage()
+!q::copyImage() ;# 이미지 복사
 
 /*
 이미지 클릭된 상태일 때 이미지 복사
@@ -677,4 +688,4 @@ copyImage() {
 	SendInput("{Down}{Enter}")
 }
 
-F10::msg('zzz') ; 끝~~
+; @
