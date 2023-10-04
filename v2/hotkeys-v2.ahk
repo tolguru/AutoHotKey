@@ -236,8 +236,8 @@ alarm() {
 !/::MsgBox(getCommandMap().Get("Common"))
 
 #`::runEXE("obsidian") ;# 옵시디언 실행
-#1::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE") ;# 슬랙 내 채널 열기
-#Tab::runEXE("notepad++") ;# 노트패드 실행
+#1::runEXE("notepad++") ;# 노트패드 실행
+#2::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE") ;# 슬랙 내 채널 열기
 
 !+F12::Suspend
 ^\::SetCapsLockState !GetKeyState("CapsLock", "T") ;# CapsLock 토글
