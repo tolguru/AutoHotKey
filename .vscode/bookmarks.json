@@ -9,22 +9,22 @@
 					"label": "Common"
 				},
 				{
-					"line": 512,
+					"line": 515,
 					"column": 12,
 					"label": "Obsidian"
 				},
 				{
-					"line": 534,
+					"line": 539,
 					"column": 12,
 					"label": "IntelliJ"
 				},
 				{
-					"line": 572,
+					"line": 577,
 					"column": 9,
 					"label": "Whale"
 				},
 				{
-					"line": 660,
+					"line": 665,
 					"column": 10,
 					"label": "VSCode"
 				}
