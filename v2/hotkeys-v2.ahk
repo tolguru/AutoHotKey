@@ -238,9 +238,13 @@ alarm() {
 *XButton2::SendInput("{XButton2}") Sleep(100) ; 마우스 사이드 버튼 중복 입력 방지
 *XButton1::SendInput("{XButton1}") Sleep(100) ; 마우스 사이드 버튼 중복 입력 방지
 
-#`::runEXE("obsidian") ;# 옵시디언 실행
-#1::runEXE("notepad++") ;# 노트패드 실행
-#2::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE") ;# 슬랙 내 채널 열기
+#`::runEXE("notepad++") ;# 노트패드 실행
+#1::runEXE("obsidian") ;# 옵시디언 실행
+#2::runWaitEXE("slack", slackSendToMe) ;# 슬랙 내 채널 열기
+; #2::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE") ;# 슬랙 내 채널 열기
+
+F9::slackSendToMe()
+
 
 #XButton2::SendInput("^#{Left}") ;# 왼쪽 가상 데스크탑
 #XButton1::SendInput("^#{Right}") ;# 오른쪽 가상 데스크탑
@@ -491,12 +495,38 @@ onenote.exe
 idea64.exe
 whale.exe
 */
-runEXE(exeFileName) {
+runEXE(exeFileName, runHook?) {
 	if WinExist("ahk_exe " exeFileName ".exe") {
 		WinActivate
 	} else {
 		Run(exeFileName ".exe")
 	}
+}
+
+/*
+exe파일 실행 후 대기
+#param String   exeFileName : 실행시킬 파일명
+#param Function runHook     : 실행 후 동작
+*/
+runWaitEXE(exeFileName, runHook?) {
+	runEXE(exeFileName)
+
+	if (WinWaitActive("ahk_exe " exeFileName ".exe",, 3)) {
+		if IsSet(runHook) {
+			runHook
+		}
+	} else {
+		msg("실패")
+	}
+}
+
+/*
+슬랙 내 채널 바로가기
+*/
+slackSendToMe() {
+	SendInput("^k권동한")
+	Sleep(100)
+	SendInput("`n")
 }
 
 /*
