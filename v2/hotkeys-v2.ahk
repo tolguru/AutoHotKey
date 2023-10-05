@@ -235,6 +235,9 @@ alarm() {
 */
 !/::MsgBox(getCommandMap().Get("Common"))
 
+*XButton2::SendInput("{XButton2}") Sleep(100) ; 마우스 사이드 버튼 중복 입력 방지
+*XButton1::SendInput("{XButton1}") Sleep(100) ; 마우스 사이드 버튼 중복 입력 방지
+
 #`::runEXE("obsidian") ;# 옵시디언 실행
 #1::runEXE("notepad++") ;# 노트패드 실행
 #2::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE") ;# 슬랙 내 채널 열기
@@ -519,6 +522,7 @@ blockAllInput(time := 0.1) {
 +Enter::SendInput("{End}`n") ;# 다음 줄로 이동
 ^Enter::SendInput("{Home}`n{Up}") ;# 윗 줄 추가
 !Enter::SendText("<br>`n`n") ;# 줄바꿈(<br>)
+^+Enter::SendInput("{Home}`n{Up}") ;# 윗 줄 추가
 
 ;# 콜아웃
 ::/ca1::> [{!}TIP] TIP
@@ -529,6 +533,7 @@ blockAllInput(time := 0.1) {
 ; 체크박스
 ::/-::- [ ] 
 ::/?::- [?] 
+::/>::- [>] 
 
 /*
 ########################################
