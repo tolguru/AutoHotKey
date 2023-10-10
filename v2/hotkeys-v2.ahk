@@ -704,4 +704,26 @@ copyImage() {
 	SendInput("{Down}{Enter}")
 }
 
+
+/*
+########################################
+## @Lightroom
+########################################
+*/
+#HotIf WinActive("ahk_exe Lightroom.exe")
+!/::MsgBox(getCommandMap().Get("Lightroom"))
+
+!z::SendInput("^y") ;# 되돌리기 취소
+
+
+/*
+########################################
+## @Photoshop
+########################################
+*/
+#HotIf WinActive("ahk_exe Photoshop.exe")
+!/::MsgBox(getCommandMap().Get("Photoshop"))
+
+!z::SendInput("^+z") ;# 되돌리기 취소
+
 ; @
