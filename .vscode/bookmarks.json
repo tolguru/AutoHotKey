@@ -4,27 +4,32 @@
 			"path": "v2/hotkeys-v2.ahk",
 			"bookmarks": [
 				{
-					"line": 232,
+					"line": 213,
 					"column": 11,
 					"label": "Common"
 				},
 				{
-					"line": 542,
+					"line": 523,
 					"column": 12,
 					"label": "Obsidian"
 				},
 				{
-					"line": 566,
+					"line": 547,
 					"column": 12,
 					"label": "IntelliJ"
 				},
 				{
-					"line": 604,
+					"line": 574,
+					"column": 10,
+					"label": "Chrome"
+				},
+				{
+					"line": 585,
 					"column": 9,
 					"label": "Whale"
 				},
 				{
-					"line": 692,
+					"line": 673,
 					"column": 10,
 					"label": "VSCode"
 				}
