@@ -39,7 +39,7 @@ homePC := "DESKTOP-4AJLHVU"
 global runAppBrowser := "chrome.exe"
 
 ; Default Browser 설정 리스트
-useWhaleList := [mainPC]
+; useWhaleList := [mainPC]
 
 ; 좌표 변동용 값
 laptopList  := [subPC]
@@ -57,21 +57,6 @@ STANDARD_TRANSLATE_TOGGLE_X := 304
 STANDARD_TRANSLATE_TOGGLE_Y := 120
 
 global TRANSLATE_TOGGLE_XY := "x0 y0"
-
-; 원노트 좌표
-STANDARD_RIBBON_TOOL1_X := 37
-STANDARD_RIBBON_TOOL1_Y := 145
-
-STANDARD_RIBBON_TOOL2_X := 58
-STANDARD_RIBBON_TOOL2_Y := 145
-
-global RIBBON_TOOL1_XY := "x0 y0"
-global RIBBON_TOOL2_XY := "x0 y0"
-
-; 원노트 공통 핫키
-DRAW_FIGURE_KEY    := "!1"
-ORIGINAL_PASTE_KEY := "!3"
-BULLET_POINT_KEY   := "!08"
 
 ; 물 알람
 waterAlarmList := []
@@ -119,13 +104,9 @@ config() {
 	}
 
 	; Run Param app Browser 설정
-	if (findValue(useWhaleList, A_ComputerName)) {
-		global runAppBrowser := "whale.exe"
-	}
-
-	; 원노트 좌표 초기화
-	global RIBBON_TOOL2_XY := screenRatioSet(STANDARD_RIBBON_TOOL2_X, STANDARD_RIBBON_TOOL2_Y)
-	global TRANSLATE_TOGGLE_XY := screenRatioSet(STANDARD_TRANSLATE_TOGGLE_X, STANDARD_TRANSLATE_TOGGLE_Y)
+	; if (findValue(useWhaleList, A_ComputerName)) {
+	; 	global runAppBrowser := "whale.exe"
+	; }
 }
 
 /*
