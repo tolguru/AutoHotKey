@@ -18,7 +18,7 @@ alwaysOnDisplay() {
 	global isStop := false
 
 	Loop {
-		Sleep(480000)
+		Sleep(300000)
 
 		if (isStop) {
 			break
@@ -26,6 +26,8 @@ alwaysOnDisplay() {
 
 		MouseGetPos(&x, &y)
 		MouseMove(x + 1, y + 1)
+		MouseMove(x + 1, y + 1)
+		MouseMove(x - 1, y - 1)
 		MouseMove(x - 1, y - 1)
 	}
 }

@@ -579,7 +579,23 @@ blockAllInput(time := 0.1) {
 !/::MsgBox(getCommandMap().Get("Chrome"))
 
 ^q::SendInput("{F6}!{Enter}") ;# 창 복사
+!a::SendInput("^t") ;# 새 탭 열기
 !s::SendInput("^+n") ;# 시크릿 모드 창 열기
+!w::translate() ;# 페이지 번역
+; !e::ControlClick(TRANSLATE_TOGGLE_XY, "A",,,, "NA") ;# 번역 <-> 원본 토글
+
+/*
+구글 번역 확장 프로그램을 통한 웹 페이지 번역
+*/
+translate() {
+	SendInput("+{F10}")
+
+	if (WinWait("ahk_class Chrome_WidgetWin_2",, 1)) {
+		SendInput("t")
+	} else {
+		msg("실패")
+	}
+}
 
 /*
 ########################################
@@ -590,8 +606,8 @@ blockAllInput(time := 0.1) {
 !/::MsgBox(getCommandMap().Get("Whale"))
 
 !q::SendInput("!+'") ;# 창 복사
-!w::translate() ;# 페이지 번역
-!e::ControlClick(TRANSLATE_TOGGLE_XY, "A",,,, "NA") ;# 번역 <-> 원본 토글
+; !w::translate() ;# 페이지 번역
+; !e::ControlClick(TRANSLATE_TOGGLE_XY, "A",,,, "NA") ;# 번역 <-> 원본 토글
 !a::SendInput("^t") ;# 새 탭 열기
 !s::SendInput("^+n") ;# 시크릿 모드
 
@@ -599,18 +615,18 @@ blockAllInput(time := 0.1) {
 /*
 구글 번역 확장 프로그램을 통한 웹 페이지 번역
 */
-translate() {
-	title := WinGetTitle("A")
+; translate() {
+; 	title := WinGetTitle("A")
 
-	SendInput("{F10}{Left 4}{Enter}")
+; 	SendInput("{F10}{Left 4}{Enter}")
 
-	if (WinWaitNotActive(title,, 1)) {
-		Sleep(50)
-		SendInput("{Tab 2}{Enter}")
-	} else {
-		msg("실패")
-	}
-}
+; 	if (WinWaitNotActive(title,, 1)) {
+; 		Sleep(50)
+; 		SendInput("{Tab 2}{Enter}")
+; 	} else {
+; 		msg("실패")
+; 	}
+; }
 
 /*
 ########################################
