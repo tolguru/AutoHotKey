@@ -52,12 +52,6 @@ global ratioNow := 1
 RATIO_1440 := 1.333
 RATIO_X25  := 1.25
 
-; Whale 좌표
-STANDARD_TRANSLATE_TOGGLE_X := 304
-STANDARD_TRANSLATE_TOGGLE_Y := 120
-
-global TRANSLATE_TOGGLE_XY := "x0 y0"
-
 ; 물 알람
 waterAlarmList := []
 
@@ -102,11 +96,6 @@ config() {
 	if (findValue(ratio25List, A_ComputerName)) {
 		global ratioNow := RATIO_X25
 	}
-
-	; Run Param app Browser 설정
-	; if (findValue(useWhaleList, A_ComputerName)) {
-	; 	global runAppBrowser := "whale.exe"
-	; }
 }
 
 /*
@@ -578,7 +567,8 @@ blockAllInput(time := 0.1) {
 #HotIf WinActive("ahk_exe chrome.exe")
 !/::MsgBox(getCommandMap().Get("Chrome"))
 
-^q::SendInput("{F6}!{Enter}") ;# 창 복사
+^q::SendInput("!+d") ;# 창 복사(확장 프로그램 : Duplicate Tab Shortcut)
+!q::SendInput("{F10}{Left 2}{Space}") ;# 사이드 패널 열기
 !a::SendInput("^t") ;# 새 탭 열기
 !s::SendInput("^+n") ;# 시크릿 모드 창 열기
 !w::translate() ;# 페이지 번역
@@ -596,37 +586,6 @@ translate() {
 		msg("실패")
 	}
 }
-
-/*
-########################################
-## @Whale
-########################################
-*/
-#HotIf WinActive("ahk_exe whale.exe")
-!/::MsgBox(getCommandMap().Get("Whale"))
-
-!q::SendInput("!+'") ;# 창 복사
-; !w::translate() ;# 페이지 번역
-; !e::ControlClick(TRANSLATE_TOGGLE_XY, "A",,,, "NA") ;# 번역 <-> 원본 토글
-!a::SendInput("^t") ;# 새 탭 열기
-!s::SendInput("^+n") ;# 시크릿 모드
-
-
-/*
-구글 번역 확장 프로그램을 통한 웹 페이지 번역
-*/
-; translate() {
-; 	title := WinGetTitle("A")
-
-; 	SendInput("{F10}{Left 4}{Enter}")
-
-; 	if (WinWaitNotActive(title,, 1)) {
-; 		Sleep(50)
-; 		SendInput("{Tab 2}{Enter}")
-; 	} else {
-; 		msg("실패")
-; 	}
-; }
 
 /*
 ########################################
