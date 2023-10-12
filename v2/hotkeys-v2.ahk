@@ -572,7 +572,6 @@ blockAllInput(time := 0.1) {
 !a::SendInput("^t") ;# 새 탭 열기
 !s::SendInput("^+n") ;# 시크릿 모드 창 열기
 !w::translate() ;# 페이지 번역
-; !e::ControlClick(TRANSLATE_TOGGLE_XY, "A",,,, "NA") ;# 번역 <-> 원본 토글
 
 /*
 구글 번역 확장 프로그램을 통한 웹 페이지 번역
