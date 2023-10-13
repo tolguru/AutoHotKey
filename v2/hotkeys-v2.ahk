@@ -253,10 +253,20 @@ class Spotify {
 	static getHandle() => UIA.ElementFromHandle(Spotify.title)
 	static getPlayingElement() => Spotify.getHandle().FindElement([{Type:"Group", LocalizedType:"내용 정보"}])
 	
-	static next() => Spotify.getPlayingElement()[5].Click() ; 다음 버튼
+	static run() {
+		WinActivate("ahk_exe Spotify.exe")
+	}
+
+	static next() {
+		Spotify.run()
+		Spotify.getPlayingElement()[5].Click() ; 다음 버튼
+	}
+
 	static like() {
-		; 현재 재생 목록의 1번째 자식 요소 중 7번째 자식 요소(좋아요 버튼)
-		likeButton := Spotify.getPlayingElement()[1][7]
+		Spotify.run()
+
+		; 현재 재생 목록의 1번째 자식 요소 중 5번째 자식 요소(좋아요 버튼)
+		likeButton := Spotify.getPlayingElement()[1][5]
 		likeButton.Click()
 
 		msg(InStr(likeButton.name, "삭제") ? "좋아요 취소" : "좋아요")

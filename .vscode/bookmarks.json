@@ -9,22 +9,22 @@
 					"label": "Common"
 				},
 				{
-					"line": 533,
+					"line": 543,
 					"column": 12,
 					"label": "Obsidian"
 				},
 				{
-					"line": 557,
+					"line": 567,
 					"column": 12,
 					"label": "IntelliJ"
 				},
 				{
-					"line": 584,
+					"line": 594,
 					"column": 10,
 					"label": "Chrome"
 				},
 				{
-					"line": 669,
+					"line": 679,
 					"column": 10,
 					"label": "VSCode"
 				}
