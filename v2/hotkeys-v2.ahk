@@ -243,8 +243,6 @@ F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, true) ;# 구글 �
 #Up::Spotify.like() ;# 스포티파이 좋아요
 #Right::Spotify.next() ;# 스포티파이 다음 곡
 
-F9::Spotify.run()
-
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
 Hotstring(":*:123.", PHONE_NUM)
