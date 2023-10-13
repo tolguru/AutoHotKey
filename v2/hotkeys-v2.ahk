@@ -243,6 +243,8 @@ F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, true) ;# 구글 �
 #Up::Spotify.like() ;# 스포티파이 좋아요
 #Right::Spotify.next() ;# 스포티파이 다음 곡
 
+F9::Spotify.run()
+
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
 Hotstring(":*:123.", PHONE_NUM)
@@ -253,15 +255,27 @@ class Spotify {
 	static getHandle() => UIA.ElementFromHandle(Spotify.title)
 	static getPlayingElement() => Spotify.getHandle().FindElement([{Type:"Group", LocalizedType:"내용 정보"}])
 	
+	/*
+	Spotify가 최소화돼있을 시 활성화시킨 후 우선순위 맨 뒤로 이동
+	*/
 	static run() {
-		WinActivate("ahk_exe Spotify.exe")
+		if (WinGetMinMax(Spotify.title) = -1) {
+			WinActivate(Spotify.title)
+			WinMoveBottom(Spotify.title)
+		}
 	}
 
+	/*
+	다음 곡 재생
+	*/
 	static next() {
 		Spotify.run()
 		Spotify.getPlayingElement()[5].Click() ; 다음 버튼
 	}
 
+	/*
+	좋아요 처리
+	*/
 	static like() {
 		Spotify.run()
 
