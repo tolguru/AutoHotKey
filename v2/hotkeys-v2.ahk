@@ -1,4 +1,5 @@
 ﻿#Include "./library/Class_CNG.ahk"
+#include "./library/UIA.ahk"
 
 /*
 ++++++++++++++++++++++++++++++++++++++++
@@ -73,6 +74,7 @@ NAVER_EN_DIC_URL     := "https://en.dict.naver.com/#/search?query="
 ++++++++++++++++++++++++++++++++++++++++
 */
 SetControlDelay -1
+UIA.AutoSetFocus := False ; UIA 기능 실행 시 포커스되는 것을 방지
 
 config()
 alarm()
@@ -238,9 +240,28 @@ F1::runPopup(NAVER_KO_DIC_URL, NAVER_KO_DIC_UUID_KEY, true, true) ;# 네이버 �
 F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, true, true) ;# 네이버 영어사전 입력받아 열기
 F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, true) ;# 구글 번역 입력받아 열기
 
+#Up::Spotify.like() ;# 스포티파이 좋아요
+#Right::Spotify.next() ;# 스포티파이 다음 곡
+
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
 Hotstring(":*:123.", PHONE_NUM)
+
+class Spotify {
+	static title := "ahk_exe Spotify.exe"
+	
+	static getHandle() => UIA.ElementFromHandle(Spotify.title)
+	static getPlayingElement() => Spotify.getHandle().FindElement([{Type:"Group", LocalizedType:"내용 정보"}])
+	
+	static next() => Spotify.getPlayingElement()[5].Click() ; 다음 버튼
+	static like() {
+		; 현재 재생 목록의 1번째 자식 요소 중 7번째 자식 요소(좋아요 버튼)
+		likeButton := Spotify.getPlayingElement()[1][7]
+		likeButton.Click()
+
+		msg(InStr(likeButton.name, "삭제") ? "좋아요 취소" : "좋아요")
+	}
+}
 
 /*
 클립보드 암호화
@@ -572,6 +593,7 @@ blockAllInput(time := 0.1) {
 !a::SendInput("^t") ;# 새 탭 열기
 !s::SendInput("^+n") ;# 시크릿 모드 창 열기
 !w::translate() ;# 페이지 번역
+!`::SendInput("!+j") ;# Tab Manager Plus for Chrome 열기
 
 /*
 구글 번역 확장 프로그램을 통한 웹 페이지 번역
