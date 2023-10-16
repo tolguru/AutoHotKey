@@ -6,7 +6,6 @@
 ++ 임시 기능 선언
 ++++++++++++++++++++++++++++++++++++++++
 */
-
 F12::KeyHistory
 
 ;Right & Up::msg("zz")
@@ -223,7 +222,6 @@ alarm() {
 
 *XButton2::SendInput("{XButton2}") Sleep(100) ; 마우스 사이드 버튼 중복 입력 방지
 *XButton1::SendInput("{XButton1}") Sleep(100) ; 마우스 사이드 버튼 중복 입력 방지
-*RAlt::SendInput("+{Space}") ; 한영 키 지정
 
 #`::runEXE("notepad++") ;# 노트패드 실행
 #1::runEXE("obsidian") ;# 옵시디언 실행
