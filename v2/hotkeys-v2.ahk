@@ -7,6 +7,12 @@
 ++++++++++++++++++++++++++++++++++++++++
 */
 
+F12::KeyHistory
+
+;Right & Up::msg("zz")
+
+SC11D & Up::msg("gg")
+
 /*
 ++++++++++++++++++++++++++++++++++++++++
 ++ 전역변수 선언
@@ -42,7 +48,7 @@ global runAppBrowser := "chrome.exe"
 ; Default Browser 설정 리스트
 ; useWhaleList := [mainPC]
 
-; 좌표 변동용 값
+; PC별 변동값 설정용
 laptopList  := [subPC]
 desktopList := [mainPC, homePC]
 ratio25List := [subPC]
@@ -67,6 +73,9 @@ PHONE_NUM  := EnvGet("aaPhone")
 GOOGLE_TRANSLATE_URL := "https://translate.google.co.kr/?sl=en&tl=ko&text="
 NAVER_KO_DIC_URL     := "https://ko.dict.naver.com/#/search?query="
 NAVER_EN_DIC_URL     := "https://en.dict.naver.com/#/search?query="
+
+; UIA
+global spotifyLikeIndex := 5
 
 /*
 ++++++++++++++++++++++++++++++++++++++++
@@ -97,6 +106,11 @@ config() {
 	; 화면 비율 설정(좌표 초기화용)
 	if (findValue(ratio25List, A_ComputerName)) {
 		global ratioNow := RATIO_X25
+	}
+
+	; 화면 비율 설정(좌표 초기화용)
+	if (findValue(laptopList, A_ComputerName)) {
+		; global spotifyLikeIndex := 7
 	}
 }
 
@@ -209,6 +223,7 @@ alarm() {
 
 *XButton2::SendInput("{XButton2}") Sleep(100) ; 마우스 사이드 버튼 중복 입력 방지
 *XButton1::SendInput("{XButton1}") Sleep(100) ; 마우스 사이드 버튼 중복 입력 방지
+*RAlt::SendInput("+{Space}") ; 한영 키 지정
 
 #`::runEXE("notepad++") ;# 노트패드 실행
 #1::runEXE("obsidian") ;# 옵시디언 실행
@@ -234,14 +249,20 @@ alarm() {
 ^+XButton1::getConfigMap().Set(GOOGLE_TRANSLATE_UUID_KEY, "NULL") ;# 구글 config 초기화
 ^+XButton2::getConfigMap().Set(NAVER_EN_DIC_UUID_KEY, "NULL") ;# 네이버 영어사전 config 초기화
 
-Pause::Reload
+Pause:: {
+	ToolTip("Reload")
+	Reload
+}
 
 F1::runPopup(NAVER_KO_DIC_URL, NAVER_KO_DIC_UUID_KEY, true, true) ;# 네이버 국어사전 입력받아 열기
 F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, true, true) ;# 네이버 영어사전 입력받아 열기
 F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, true) ;# 구글 번역 입력받아 열기
 
-#Up::Spotify.like() ;# 스포티파이 좋아요
-#Right::Spotify.next() ;# 스포티파이 다음 곡
+
+RCtrl & Up::A_PriorKey = "Up" && A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 400 ? Spotify.like(true) : Spotify.like() ;# 스포티파이 좋아요
+RCtrl & Down::Spotify.replay() ;# 스포티파이 곡 반복
+RCtrl & Right::Spotify.playBarClick(5) ;# 스포티파이 다음 곡
+RCtrl & Left::Spotify.playBarClick(3) ;# 스포티파이 이전 곡
 
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
@@ -260,28 +281,60 @@ class Spotify {
 		if (WinGetMinMax(Spotify.title) = -1) {
 			WinActivate(Spotify.title)
 			WinMoveBottom(Spotify.title)
+			WinMove(6000, 6000,,, Spotify.title)
 		}
 	}
 
 	/*
-	다음 곡 재생
+	현재 재생 상태 바의 버튼 클릭
 	*/
-	static next() {
+	static playBarClick(index) {
 		Spotify.run()
-		Spotify.getPlayingElement()[5].Click() ; 다음 버튼
+		Spotify.getPlayingElement()[index].Click()
 	}
 
 	/*
-	좋아요 처리
+	현재 재생 상태 바의 버튼 클릭
 	*/
-	static like() {
+	static replay() {
 		Spotify.run()
 
-		; 현재 재생 목록의 1번째 자식 요소 중 5번째 자식 요소(좋아요 버튼)
-		likeButton := Spotify.getPlayingElement()[1][5]
-		likeButton.Click()
+		playingBarEl := Spotify.getPlayingElement()[6]
+		clickCount := 1
+		isReplay := true
 
-		msg(InStr(likeButton.name, "삭제") ? "좋아요 취소" : "좋아요")
+		; if (InStr(playingBarEl.name, "비활성화")) {
+		; 	msg("반복 종료")
+		if (playingBarEl.name = "반복 비활성화하기") {
+			isReplay := false
+		} else if (playingBarEl.name = "반복 활성화하기"){
+			clickCount := 2
+		}
+
+		msg(isReplay ? "반복 활성화" : "반복 종료")
+		Loop clickCount {
+			playingBarEl.Click()
+			Sleep(100)
+		}
+	}
+
+	; 반복 활성화하기, 한 트랙 반복 활성화하기, 반복 비활성화하기
+
+	/*
+	좋아요/삭제 처리
+	*/
+	static like(unlike := false) {
+		Spotify.run()
+
+		; 현재 재생 목록의 1번째 자식 요소 중 N번째 자식 요소(좋아요 버튼)
+		likeButton := Spotify.getPlayingElement()[1][spotifyLikeIndex]
+
+		; 저장 가능한 상태고 삭제 요청이 아니라면 저장
+		if (InStr(likeButton.name, "저장") && !unlike || InStr(likeButton.name, "삭제") && unlike) {
+			likeButton.Click()
+		}
+
+		msg(unlike ? "삭제됨" : "저장됨")
 	}
 }
 
