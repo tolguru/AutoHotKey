@@ -6,11 +6,6 @@
 ++ 임시 기능 선언
 ++++++++++++++++++++++++++++++++++++++++
 */
-F12::KeyHistory
-
-;Right & Up::msg("zz")
-
-SC11D & Up::msg("gg")
 
 /*
 ++++++++++++++++++++++++++++++++++++++++
@@ -257,10 +252,10 @@ F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, true, true) ;# 네이버 �
 F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, true) ;# 구글 번역 입력받아 열기
 
 
-RCtrl & Up::A_PriorKey = "Up" && A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 400 ? Spotify.like(true) : Spotify.like() ;# 스포티파이 좋아요
-RCtrl & Down::Spotify.replay() ;# 스포티파이 곡 반복
-RCtrl & Right::Spotify.playBarClick(5) ;# 스포티파이 다음 곡
-RCtrl & Left::Spotify.playBarClick(3) ;# 스포티파이 이전 곡
+VK19 & Up::A_PriorKey = "Up" && A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 400 ? Spotify.like(true) : Spotify.like() ;# 스포티파이 좋아요
+VK19 & Down::Spotify.replay() ;# 스포티파이 곡 반복
+VK19 & Right::Spotify.playBarClick(5) ;# 스포티파이 다음 곡
+VK19 & Left::Spotify.playBarClick(3) ;# 스포티파이 이전 곡
 
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
@@ -278,8 +273,12 @@ class Spotify {
 	static run() {
 		if (WinGetMinMax(Spotify.title) = -1) {
 			WinActivate(Spotify.title)
-			WinMoveBottom(Spotify.title)
-			WinMove(6000, 6000,,, Spotify.title)
+
+			if (WinWaitActive(Spotify.title,, 3)) {
+				WinMoveBottom(Spotify.title)
+				WinMove(6000, 6000,,, Spotify.title)
+				Sleep(500)
+			}
 		}
 	}
 
@@ -301,8 +300,6 @@ class Spotify {
 		clickCount := 1
 		isReplay := true
 
-		; if (InStr(playingBarEl.name, "비활성화")) {
-		; 	msg("반복 종료")
 		if (playingBarEl.name = "반복 비활성화하기") {
 			isReplay := false
 		} else if (playingBarEl.name = "반복 활성화하기"){
@@ -310,13 +307,12 @@ class Spotify {
 		}
 
 		msg(isReplay ? "반복 활성화" : "반복 종료")
+
 		Loop clickCount {
 			playingBarEl.Click()
-			Sleep(100)
+			Sleep(1000)
 		}
 	}
-
-	; 반복 활성화하기, 한 트랙 반복 활성화하기, 반복 비활성화하기
 
 	/*
 	좋아요/삭제 처리
@@ -750,7 +746,7 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 !`::SendInput("``") ;# 백틱 입력
 !c::SendInput("console.log(){Left}") ;# js 콘솔 자동입력
 +Enter::SendInput("^{Enter}") ;# 다음 줄 추가
-^Enter::SendInput("{End};") ;# 윗 줄 추가 후 이동
+^Enter::SendInput("{Home}{Enter}{Up}") ;# 윗 줄 추가 후 이동
 ^+/::SendInput("!+a") ;# 블록 주석 토글
 
 /*
