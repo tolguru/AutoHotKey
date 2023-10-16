@@ -1,5 +1,6 @@
 ﻿#Include "./library/Class_CNG.ahk"
 #include "./library/UIA.ahk"
+#include "./library/UIA_Browser.ahk"
 
 /*
 ++++++++++++++++++++++++++++++++++++++++
@@ -24,6 +25,7 @@ configMap := Map()
 GOOGLE_TRANSLATE_UUID_KEY := "googleTranslateUUID"
 NAVER_KO_DIC_UUID_KEY     := "koreanDictionaryUUID"
 NAVER_EN_DIC_UUID_KEY     := "englishDictionaryUUID"
+SPOTIFY_UUID_KEY          := "spotifyUUID"
 
 ; Command
 commandMap := Map()
@@ -43,9 +45,10 @@ global runAppBrowser := "chrome.exe"
 ; useWhaleList := [mainPC]
 
 ; PC별 변동값 설정용
-laptopList  := [subPC]
-desktopList := [mainPC, homePC]
-ratio25List := [subPC]
+laptopList       := [subPC]
+desktopList      := [mainPC, homePC]
+ratio25List      := [subPC]
+spotifyPopupList := [mainPC]
 
 ; 좌표 비율
 global ratioNow := 1
@@ -67,6 +70,7 @@ PHONE_NUM  := EnvGet("aaPhone")
 GOOGLE_TRANSLATE_URL := "https://translate.google.co.kr/?sl=en&tl=ko&text="
 NAVER_KO_DIC_URL     := "https://ko.dict.naver.com/#/search?query="
 NAVER_EN_DIC_URL     := "https://en.dict.naver.com/#/search?query="
+SPOTIFY_URL          := "https://open.spotify.com"
 
 ; UIA
 global spotifyLikeIndex := 5
@@ -102,9 +106,9 @@ config() {
 		global ratioNow := RATIO_X25
 	}
 
-	; 화면 비율 설정(좌표 초기화용)
-	if (findValue(laptopList, A_ComputerName)) {
-		; global spotifyLikeIndex := 7
+	; 스포티파이 팝업으로 실행 시 config 초기화
+	if (findValue(spotifyPopupList, A_ComputerName)) {
+		Spotify.setUUIDTitle(getConfigMap().Get(SPOTIFY_UUID_KEY))
 	}
 }
 
@@ -251,7 +255,7 @@ F1::runPopup(NAVER_KO_DIC_URL, NAVER_KO_DIC_UUID_KEY, true, true) ;# 네이버 �
 F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, true, true) ;# 네이버 영어사전 입력받아 열기
 F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, true) ;# 구글 번역 입력받아 열기
 
-
+VK19 & F1::Spotify.popupRun() ;# 스포티파이 팝업으로 실행
 VK19 & Up::A_PriorKey = "Up" && A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 400 ? Spotify.like(true) : Spotify.like() ;# 스포티파이 좋아요
 VK19 & Down::Spotify.replay() ;# 스포티파이 곡 반복
 VK19 & Right::Spotify.playBarClick(5) ;# 스포티파이 다음 곡
@@ -264,8 +268,27 @@ Hotstring(":*:123.", PHONE_NUM)
 class Spotify {
 	static title := "ahk_exe Spotify.exe"
 	
-	static getHandle() => UIA.ElementFromHandle(Spotify.title)
-	static getPlayingElement() => Spotify.getHandle().FindElement([{Type:"Group", LocalizedType:"내용 정보"}])
+	/*
+	핸들 가져오기
+	*/
+	static getHandle() {
+		try {
+			return UIA.ElementFromHandle(Spotify.title)
+		} catch {
+			msg("핸들 가져오기 실패")
+		}
+	}
+
+	/*
+	Elements 가져오기
+	*/
+	static getPlayingElement() {
+		try {
+			return Spotify.getHandle().FindElement([{Type:"Group", LocalizedType:"내용 정보"}])
+		} catch {
+			msg("Elements 가져오기 실패")
+		}
+	}
 	
 	/*
 	Spotify가 최소화돼있을 시 활성화시킨 후 우선순위 맨 뒤로 이동
@@ -280,6 +303,21 @@ class Spotify {
 				Sleep(500)
 			}
 		}
+	}
+
+	/*
+	Spotify 브라우저 팝업으로 실행
+	*/
+	static popupRun() {
+		runPopup(SPOTIFY_URL, SPOTIFY_UUID_KEY, false)
+		Spotify.setUUIDTitle(getConfigMap().Get(SPOTIFY_UUID_KEY))
+	}
+
+	/*
+	Spotify 브라우저 팝업으로 실행
+	*/
+	static setUUIDTitle(uuid) {
+		Spotify.title := "ahk_id " uuid
 	}
 
 	/*
@@ -402,7 +440,7 @@ runPopup 함수 실행 중 Input Block, 추가 입력(호출 핫키를 Release�
 runPopupBlockedInput(url, uuidKey, inputFlag := false, enterFlag := false, input := "") {
 	BlockInput True
 	SendInput(input)
-	runPopup(url, uuidKey, inputFlag, enterFlag)
+	runPopup(url, uuidKey,, inputFlag, enterFlag)
 	BlockInput False
 }
 
@@ -415,7 +453,7 @@ Config에서 UUID 조회 후 Active 가능
 #param boolean inputFlag : 입력받을지 여부 (default = false)
 #param boolean enterFlag : 엔터 입력 여부 (default = false)
 */
-runPopup(url, uuidKey, inputFlag := false, enterFlag := false) {
+runPopup(url, uuidKey, dataFlag := true, inputFlag := false, enterFlag := false) {
 	if (inputFlag) {
 		inputText := showInputBox("URL 실행")
 
@@ -424,15 +462,18 @@ runPopup(url, uuidKey, inputFlag := false, enterFlag := false) {
 		}
 	}
 
-	A_Clipboard := ""
+	if (dataFlag) {
+		A_Clipboard := ""
 
-	if (inputFlag) {
-		A_Clipboard := inputText
-	} else {
-		SendInput("^c")
+		if (inputFlag) {
+			A_Clipboard := inputText
+		} else {
+			SendInput("^c")
+		}
 	}
-
-	if (ClipWait(1)) {
+	
+	; data를 넘기는 작업이 아니면 패스
+	if (!dataFlag || ClipWait(1)) {
 		try {
 			findParam := "ahk_id " getConfigMap().Get(uuidKey)
 
@@ -447,7 +488,7 @@ runPopup(url, uuidKey, inputFlag := false, enterFlag := false) {
 			; 나중에 파일 로깅하는 것도 고려해볼만 할 듯
 		}
 
-		runParamUrl(url, A_Clipboard, uuidKey)
+		runParamUrl(url, dataFlag ? A_Clipboard : "", uuidKey)
 		return
 	}
 
