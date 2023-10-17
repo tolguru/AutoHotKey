@@ -427,7 +427,13 @@ runMultiHotkey(getCount, clear, funcArr) {
 		return
 	}
 
-	funcArr[count]()
+	; 에러가 발생해도 메세지박스 출력 후 무조건 clear되게 처리
+	try {
+		funcArr[count]()
+	} catch {
+		MsgBox(A_LastError)
+	}
+	
 	clear()
 }
 
