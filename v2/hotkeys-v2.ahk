@@ -1,6 +1,5 @@
 ﻿#Include "./library/Class_CNG.ahk"
 #include "./library/UIA.ahk"
-#include "./library/UIA_Browser.ahk"
 
 /*
 ++++++++++++++++++++++++++++++++++++++++
@@ -276,7 +275,7 @@ class Spotify {
 	static getHandle() {
 		try {
 			return UIA.ElementFromHandle(Spotify.title)
-		} catch {
+	} catch {
 			msg("핸들 가져오기 실패")
 		}
 	}
@@ -309,11 +308,11 @@ class Spotify {
 					WinMoveBottom(Spotify.title)
 				} else {
 					; 우선순위 맨 뒤, 화면 바깥으로 보내기
-					WinMoveBottom(Spotify.title)
-					WinMove(6000, 6000,,, Spotify.title)
-				}
-			}
+			WinMoveBottom(Spotify.title)
+			WinMove(6000, 6000,,, Spotify.title)
 		}
+	}
+}
 
 		Sleep(500)
 	}
@@ -350,7 +349,7 @@ class Spotify {
 		playingBarEl := Spotify.getPlayingElement()[6]
 		clickCount := 1
 		isReplay := true
-
+		
 		if (playingBarEl.name = "반복 비활성화하기") {
 			isReplay := false
 		} else if (playingBarEl.name = "반복 활성화하기"){
@@ -430,8 +429,8 @@ runMultiHotkey(getCount, clear, funcArr) {
 	; 에러가 발생해도 메세지박스 출력 후 무조건 clear되게 처리
 	try {
 		funcArr[count]()
-	} catch {
-		MsgBox(A_LastError)
+	} catch Error {
+		MsgBox("멀티 핫키 처리 중 에러 발생")
 	}
 	
 	clear()
@@ -529,16 +528,16 @@ runPopup(url, uuidKey, dataFlag := true, inputFlag := false, enterFlag := false)
 		}
 	}
 
-	if (dataFlag) {
-		A_Clipboard := ""
+if (dataFlag) {
+	A_Clipboard := ""
 
-		if (inputFlag) {
-			A_Clipboard := inputText
-		} else {
-			SendInput("^c")
-		}
+	if (inputFlag) {
+		A_Clipboard := inputText
+	} else {
+		SendInput("^c")
 	}
-	
+}
+
 	; data를 넘기는 작업이 아니면 패스
 	if (!dataFlag || ClipWait(1)) {
 		try {
