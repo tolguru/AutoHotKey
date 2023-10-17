@@ -300,19 +300,18 @@ class Spotify {
 			WinActivate(Spotify.title)
 
 			if (WinWaitActive(Spotify.title,, 3)) {
+				WinMoveBottom(Spotify.title)
+
 				if (Spotify.isBrowser) {
 					if (WinGetTransparent(Spotify.title) != 0) {
 						WinSetTransparent(0, Spotify.title)
 					}
-
-					WinMoveBottom(Spotify.title)
 				} else {
-					; 우선순위 맨 뒤, 화면 바깥으로 보내기
-			WinMoveBottom(Spotify.title)
-			WinMove(6000, 6000,,, Spotify.title)
+					; 화면 바깥으로 보내기
+					WinMove(6000, 6000,,, Spotify.title)
+				}
+			}
 		}
-	}
-}
 
 		Sleep(500)
 	}
