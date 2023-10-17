@@ -109,6 +109,7 @@ config() {
 	; 스포티파이 팝업으로 실행 시 config 초기화
 	if (findValue(spotifyPopupList, A_ComputerName)) {
 		Spotify.setUUIDTitle(getConfigMap().Get(SPOTIFY_UUID_KEY))
+		Spotify.isBrowser := true
 	}
 }
 
@@ -256,17 +257,18 @@ F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, true, true) ;# 네이버 �
 F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, true) ;# 구글 번역 입력받아 열기
 
 VK19 & F1::Spotify.popupRun() ;# 스포티파이 팝업으로 실행
-VK19 & Up::A_PriorKey = "Up" && A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 400 ? Spotify.like(true) : Spotify.like() ;# 스포티파이 좋아요
 VK19 & Down::Spotify.replay() ;# 스포티파이 곡 반복
 VK19 & Right::Spotify.playBarClick(5) ;# 스포티파이 다음 곡
 VK19 & Left::Spotify.playBarClick(3) ;# 스포티파이 이전 곡
+VK19 & Up::setMultiHotkey(, () => Spotify.like(false), () => Spotify.like(true)) ;# 스포티파이 좋아요(2번 입력 시 좋아요 취소)
 
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
 Hotstring(":*:123.", PHONE_NUM)
 
 class Spotify {
-	static title := "ahk_exe Spotify.exe"
+	static title     := "ahk_exe Spotify.exe"
+	static isBrowser := false
 	
 	/*
 	핸들 가져오기
@@ -291,18 +293,29 @@ class Spotify {
 	}
 	
 	/*
-	Spotify가 최소화돼있을 시 활성화시킨 후 우선순위 맨 뒤로 이동
+	UIA를 통한 작업이 실행될 수 있게 스포티파이를 세팅
 	*/
 	static run() {
-		if (WinGetMinMax(Spotify.title) = -1) {
+		; Spotify가 최소화돼있을 시 or 브라우저일 시 활성화
+		if (WinGetMinMax(Spotify.title) = -1 || Spotify.isBrowser) {
 			WinActivate(Spotify.title)
 
 			if (WinWaitActive(Spotify.title,, 3)) {
-				WinMoveBottom(Spotify.title)
-				WinMove(6000, 6000,,, Spotify.title)
-				Sleep(500)
+				if (Spotify.isBrowser) {
+					if (WinGetTransparent(Spotify.title) != 0) {
+						WinSetTransparent(0, Spotify.title)
+					}
+
+					WinMoveBottom(Spotify.title)
+				} else {
+					; 우선순위 맨 뒤, 화면 바깥으로 보내기
+					WinMoveBottom(Spotify.title)
+					WinMove(6000, 6000,,, Spotify.title)
+				}
 			}
 		}
+
+		Sleep(500)
 	}
 
 	/*
@@ -368,6 +381,54 @@ class Spotify {
 
 		msg(unlike ? "삭제됨" : "저장됨")
 	}
+}
+
+/*
+핫키 여러 번 입력 시 각기 다른 메서드 실행
+#param Number time    : 처리될 타이머 시간
+#param Function func* : function 다중 param
+*/
+setMultiHotkey(time := 400, func*) {
+	static pressCount := 0
+
+	if (pressCount > 0) {
+		pressCount++
+		return
+	}
+
+	pressCount := 1
+	SetTimer(run, -time)
+
+	run() {
+		runMultiHotkey(set, clear, func)
+	}
+
+	set() {
+		return pressCount
+	}
+
+	clear() {
+		pressCount := 0
+	}
+}
+
+/*
+멀티 핫키 실행
+#param Function set       : return static 변수값
+#param Function clear     : static 변수값 0으로 초기화
+#param Function[] funcArr : function 배열
+*/
+runMultiHotkey(getCount, clear, funcArr) {
+	count := getCount()
+
+	if (count > funcArr.Length) {
+		msg("키 입력 개수 초과")
+		clear()
+		return
+	}
+
+	funcArr[count]()
+	clear()
 }
 
 /*
