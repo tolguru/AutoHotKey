@@ -290,7 +290,7 @@ maxSizeMove(isLeft := true) {
 
 	WinMove(isLeft ? min : max + 100, 100,,, "A")
 
-	SendInput("#{Up}")
+	WinMaximize("A")
 }
 
 class Spotify {
