@@ -340,8 +340,6 @@ class Spotify {
 				}
 			}
 		}
-
-		Sleep(500)
 	}
 
 	/*
