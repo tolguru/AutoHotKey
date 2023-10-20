@@ -227,6 +227,9 @@ alarm() {
 #2::runWaitEXE("slack", slackSendToMe) ;# 슬랙 내 채널 열기
 ; #2::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE") ;# 슬랙 내 채널 열기
 
+#Left::WinRestore("A") WinMove(100, 100,,, "A") SendInput("#{Up}") ;# 현재 포커싱된 창 왼쪽 모니터의 전체 화면으로 전환
+#Right:: WinRestore("A") MonitorGet(1, &a) MonitorGet(2, &b) WinMove((a < b ? b : a) + 100, 100,,, "A") SendInput("#{Up}") ;# 현재 포커싱된 창 오른쪽 모니터의 전체 화면으로 전환
+
 #XButton2::SendInput("^#{Left}") ;# 왼쪽 가상 데스크탑
 #XButton1::SendInput("^#{Right}") ;# 오른쪽 가상 데스크탑
 
