@@ -227,8 +227,10 @@ alarm() {
 #2::runWaitEXE("slack", slackSendToMe) ;# 슬랙 내 채널 열기
 ; #2::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE") ;# 슬랙 내 채널 열기
 
-#Left::WinRestore("A") WinMove(100, 100,,, "A") SendInput("#{Up}") ;# 현재 포커싱된 창 왼쪽 모니터의 전체 화면으로 전환
-#Right:: WinRestore("A") MonitorGet(1, &a) MonitorGet(2, &b) WinMove((a < b ? b : a) + 100, 100,,, "A") SendInput("#{Up}") ;# 현재 포커싱된 창 오른쪽 모니터의 전체 화면으로 전환
+#Left::maxSizeMove() ;# 현재 포커싱된 창 왼쪽 모니터의 전체 화면으로 전환
+#Right::maxSizeMove(false) ;# 현재 포커싱된 창 오른쪽 모니터의 전체 화면으로 전환
+
+F12:: MonitorGet(1, &a) MonitorGet(2, &b) msg(b)
 
 #XButton2::SendInput("^#{Left}") ;# 왼쪽 가상 데스크탑
 #XButton1::SendInput("^#{Right}") ;# 오른쪽 가상 데스크탑
@@ -267,6 +269,29 @@ VK19 & Left::Spotify.playBarClick(3) ;# 스포티파이 이전 곡
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
 Hotstring(":*:123.", PHONE_NUM)
+
+/*
+왼쪽/오른쪽 화면으로 창 이동 후 전체화면
+#param boolean isLeft : 왼쪽 화면으로 이동할지 여부
+*/
+maxSizeMove(isLeft := true) {
+	WinRestore("A")
+
+	MonitorGet(1, &a)
+	MonitorGet(2, &b)
+	
+	max := a
+	min := b
+
+	if (a < b) {
+		max := b
+		min := a
+	}
+
+	WinMove(isLeft ? min : max + 100, 100,,, "A")
+
+	SendInput("#{Up}")
+}
 
 class Spotify {
 	static title     := "ahk_exe Spotify.exe"
