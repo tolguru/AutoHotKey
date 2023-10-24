@@ -25,6 +25,11 @@
 				},
 				{
 					"line": 881,
+					"column": 0,
+					"label": "Azure Data Studio"
+				},
+				{
+					"line": 896,
 					"column": 10,
 					"label": "VSCode"
 				}
