@@ -261,6 +261,7 @@ F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, true, true) ;# 네이버 �
 F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, true) ;# 구글 번역 입력받아 열기
 
 VK19 & F1::Spotify.popupRun() ;# 스포티파이 팝업으로 실행
+VK19 & F2::setUUID(SPOTIFY_UUID_KEY) ;# 스포티파이 팝업에 UUID 지정
 VK19 & Up::setMultiHotkey(, () => Spotify.like(false), () => Spotify.like(true)) ;# 스포티파이 좋아요(2번 입력 시 좋아요 취소)
 VK19 & Down::Spotify.replay() ;# 스포티파이 곡 반복
 VK19 & Right::Spotify.playBarClick(5) ;# 스포티파이 다음 곡
@@ -553,15 +554,15 @@ runPopup(url, uuidKey, dataFlag := true, inputFlag := false, enterFlag := false)
 		}
 	}
 
-if (dataFlag) {
-	A_Clipboard := ""
+	if (dataFlag) {
+		A_Clipboard := ""
 
-	if (inputFlag) {
-		A_Clipboard := inputText
-	} else {
-		SendInput("^c")
+		if (inputFlag) {
+			A_Clipboard := inputText
+		} else {
+			SendInput("^c")
+		}
 	}
-}
 
 	; data를 넘기는 작업이 아니면 패스
 	if (!dataFlag || ClipWait(1)) {
@@ -584,6 +585,16 @@ if (dataFlag) {
 	}
 
 	msg("실패")
+}
+
+/*
+해당 창의 UUID를 직접 지정
+#param String uuidKey : config에 저장할 UUID의 key name
+*/
+setUUID(uuidKey) {
+	msg(uuidKey "에 저장 시작")
+	getConfigMap().Set(uuidKey, WinGetID("A"))
+	configSave()
 }
 
 /*
