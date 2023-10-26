@@ -24,12 +24,12 @@
 					"label": "Chrome"
 				},
 				{
-					"line": 881,
+					"line": 864,
 					"column": 0,
 					"label": "Azure Data Studio"
 				},
 				{
-					"line": 896,
+					"line": 879,
 					"column": 10,
 					"label": "VSCode"
 				}
