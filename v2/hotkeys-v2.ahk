@@ -774,8 +774,8 @@ blockAllInput(time := 0.1) {
 !/::MsgBox(getCommandMap().Get("IntelliJ"))
 
 ;~ CapsLock::SendInput("^y")
-^w::SendInput("^{F4}") ;# 창 닫기
-^+w::SendInput("!i") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀 제외 닫기
+^+w::SendInput("^{F4}") ;# 창 닫기
+; ^+w::SendInput("!i") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀 제외 닫기
 ^e::SendInput("!u") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀으로 고정
 ; ^.::SendInput("!+h") ; 메서드 Document 주석 달기(IntelliJ JavaDoc plugin 키설정을 해당 키로 변경)
 ^.::SendInput("/**`n") ;# 주석 달기(IntelliJ 설정에 따라 Doc 자동 생성됨)
