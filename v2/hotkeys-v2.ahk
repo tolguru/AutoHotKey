@@ -927,6 +927,30 @@ copyImage() {
 	SendInput("{Down}{Enter}")
 }
 
+/*
+########################################
+## @Millie
+########################################
+*/
+#HotIf WinActive("ahk_exe millie.exe")
+!/::MsgBox(getCommandMap().Get("Millie"))
+
+^x::copyText() ;# 내용 복사 후 뒤에 잡소리 제거
+
+/*
+내용 복사 후 뒤에 잡소리 제거
+*/
+copyText() {
+	splitedText := StrSplit(A_Clipboard, " - <")[1]
+	A_Clipboard := ""
+	A_Clipboard := splitedText
+	if (ClipWait(3)) {
+		msg("복사됨")
+		return
+	}
+
+	msg("실패")
+}
 
 /*
 ########################################
