@@ -230,8 +230,6 @@ alarm() {
 #Left::maxSizeMove() ;# 현재 포커싱된 창 왼쪽 모니터의 전체 화면으로 전환
 #Right::maxSizeMove(false) ;# 현재 포커싱된 창 오른쪽 모니터의 전체 화면으로 전환
 
-F12:: MonitorGet(1, &a) MonitorGet(2, &b) msg(b)
-
 #XButton2::SendInput("^#{Left}") ;# 왼쪽 가상 데스크탑
 #XButton1::SendInput("^#{Right}") ;# 오른쪽 가상 데스크탑
 
