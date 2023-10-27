@@ -775,8 +775,7 @@ blockAllInput(time := 0.1) {
 
 ;~ CapsLock::SendInput("^y")
 ^+w::SendInput("^{F4}") ;# 창 닫기
-; ^+w::SendInput("!i") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀 제외 닫기
-^e::SendInput("!u") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀으로 고정
+!+w::SendInput("!i") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀 제외 닫기
 ; ^.::SendInput("!+h") ; 메서드 Document 주석 달기(IntelliJ JavaDoc plugin 키설정을 해당 키로 변경)
 ^.::SendInput("/**`n") ;# 주석 달기(IntelliJ 설정에 따라 Doc 자동 생성됨)
 ^+.::SendInput("^!+[") ; "Keymap - Other - Fix doc comment"의 단축키를 "Ctrl + Alt + Shift + [" 로 변경 (fix가 좀 애매하게 됨) ;# 주석 업데이트
@@ -785,12 +784,24 @@ blockAllInput(time := 0.1) {
 !c::SendInput("^!m") ;# 메서드화
 !q::SendInput("^e") ;# 최근 파일 검색
 !w::SendInput("^+n") ;# 파일 검색
+!p::SendInput("!u") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀으로 고정
 ; !e::SendInput("!7") ; Structure
 ; !a::SendInput("+{F10}") ; 마지막 모듈 run
 ; !s::SendInput("+{F9}") ; 마지막 모듈 debug
 `::SendInput("^y") ;# 라인 DELETE
 !`::SendInput("``") ;# 백틱 입력
 ^Enter::SendInput("{Home}^{Enter}") ;# 윗 라인 추가 후 이동
+
+/* 
+기본 단축키들 도움말 출력용
+^+f:: ;# 문자열로 검색
+^p:: ;# Parameter Info
+^F12:: ;# Show Local History(키 지정)
+!F12:: ;# Put Label(Local History)(키 지정)
+!Insert:: ;# Getter 등등 다양하게 추가
+*/
+
+
 
 /*
 ########################################
