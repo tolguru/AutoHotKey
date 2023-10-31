@@ -795,6 +795,7 @@ blockAllInput(time := 0.1) {
 ^+f:: ;# 문자열로 검색
 ^p:: ;# Parameter Info
 ^F12:: ;# Show Local History(키 지정)
+^+F12:: ;# Show Local History for Selection(키 지정)
 !F12:: ;# Put Label(Local History)(키 지정)
 !Insert:: ;# Getter 등등 다양하게 추가
 */
