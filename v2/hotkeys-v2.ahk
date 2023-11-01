@@ -794,6 +794,8 @@ blockAllInput(time := 0.1) {
 기본 단축키들 도움말 출력용
 ^+f:: ;# 문자열로 검색
 ^p:: ;# Parameter Info
+^F1:: ;# Stash Changes(키 지정)
+!F1:: ;# Unstash Changes(키 지정)
 ^F12:: ;# Show Local History(키 지정)
 ^+F12:: ;# Show Local History for Selection(키 지정)
 !F12:: ;# Put Label(Local History)(키 지정)
