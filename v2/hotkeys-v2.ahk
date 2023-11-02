@@ -153,7 +153,7 @@ commandGuideLoad() {
 			valueArr := StrSplit(hotkeyArr[2], ";#",, 2)
 
 			if (valueArr.Length = 2) {
-				commandList := commandList "`n" hotkeyArr[1] "  -->  " valueArr[2]
+				commandList := commandList "`n" (StrLen(hotkeyArr[1]) = 0 ? valueArr[2] : hotkeyArr[1] "  -->  " valueArr[2])
 			}			
 		}
 	}
@@ -772,17 +772,17 @@ blockAllInput(time := 0.1) {
 !/::MsgBox(getCommandMap().Get("IntelliJ"))
 
 ;~ CapsLock::SendInput("^y")
-^+w::SendInput("^{F4}") ;# 창 닫기
-!+w::SendInput("!i") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀 제외 닫기
+; ^+w::SendInput("^{F4}") ;# 창 닫기
+; !+w::SendInput("!i") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀 제외 닫기
 ; ^.::SendInput("!+h") ; 메서드 Document 주석 달기(IntelliJ JavaDoc plugin 키설정을 해당 키로 변경)
 ^.::SendInput("/**`n") ;# 주석 달기(IntelliJ 설정에 따라 Doc 자동 생성됨)
-^+.::SendInput("^!+[") ; "Keymap - Other - Fix doc comment"의 단축키를 "Ctrl + Alt + Shift + [" 로 변경 (fix가 좀 애매하게 됨) ;# 주석 업데이트
-!z::SendInput("!^o") ;# 안 쓰는 Imports 제거
-!x::SendInput("^!v") ;# return값으로 변수 자동 생성
-!c::SendInput("^!m") ;# 메서드화
-!q::SendInput("^e") ;# 최근 파일 검색
-!w::SendInput("^+n") ;# 파일 검색
-!p::SendInput("!u") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀으로 고정
+; ^+.::SendInput("^!+[") ; "Keymap - Other - Fix doc comment"의 단축키를 "Ctrl + Alt + Shift + [" 로 변경 (fix가 좀 애매하게 됨) ;# 주석 업데이트
+; !z::SendInput("!^o") ;# 안 쓰는 Imports 제거
+; !x::SendInput("^!v") ;# return값으로 변수 자동 생성
+; !c::SendInput("^!m") ;# 메서드화
+; !q::SendInput("^e") ;# 최근 파일 검색
+; !w::SendInput("^+n") ;# 파일 검색
+; !p::SendInput("!u") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀으로 고정
 ; !e::SendInput("!7") ; Structure
 ; !a::SendInput("+{F10}") ; 마지막 모듈 run
 ; !s::SendInput("+{F9}") ; 마지막 모듈 debug
@@ -792,14 +792,26 @@ blockAllInput(time := 0.1) {
 
 /* 
 기본 단축키들 도움말 출력용
-^+f:: ;# 문자열로 검색
+::;#
+::;#
+::;# ---- 키 지정 라인 ----
+::;#
+!z:: ;# Optimize Imports -> 안 쓰는 Imports 제거
+!x:: ;# Introduce Variable -> return값으로 변수 자동 생성
+!q:: ;# Recent Files -> 최근 파일 검색
+!w:: ;# Go to File -> 파일 검색
+^+q:: ;# Pin Active Tab
+^+w:: ;# Close Tab
+^+e:: ;# Close All but Pinned
+^+f:: ;# Find in Files -> 문자열로 파일에서 찾기
 ^p:: ;# Parameter Info
-^F1:: ;# Stash Changes(키 지정)
-!F1:: ;# Unstash Changes(키 지정)
-^F12:: ;# Show Local History(키 지정)
-^+F12:: ;# Show Local History for Selection(키 지정)
-!F12:: ;# Put Label(Local History)(키 지정)
-!Insert:: ;# Getter 등등 다양하게 추가
+^F1:: ;# Stash Changes
+!F1:: ;# Unstash Changes
+^F12:: ;# Show Local History
+^+F12:: ;# Show Local History for Selection
+!F12:: ;# Put Label(Local History)
+!Insert:: ;# Generate -> Getter 등등 다양하게 추가
+^+.:: ; "Keymap - Other - Fix doc comment"의 단축키를 "Ctrl + Alt + Shift + [" 로 변경 (fix가 좀 애매하게 됨) ;# 주석 업데이트
 */
 
 

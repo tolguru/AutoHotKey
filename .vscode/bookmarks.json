@@ -19,17 +19,17 @@
 					"label": "IntelliJ"
 				},
 				{
-					"line": 808,
+					"line": 820,
 					"column": 10,
 					"label": "Chrome"
 				},
 				{
-					"line": 876,
+					"line": 888,
 					"column": 0,
 					"label": "Azure Data Studio"
 				},
 				{
-					"line": 891,
+					"line": 903,
 					"column": 10,
 					"label": "VSCode"
 				}
