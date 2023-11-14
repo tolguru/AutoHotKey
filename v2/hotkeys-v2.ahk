@@ -993,4 +993,16 @@ copyText() {
 
 !z::SendInput("^+z") ;# 되돌리기 취소
 
+/*
+########################################
+## @Trello
+########################################
+*/
+#HotIf WinActive("ahk_exe trello.exe")
+!/::MsgBox(getCommandMap().Get("Trello"))
+
+^+1::SendInput("^!1") ;# 폰트 헤더 1
+^+2::SendInput("^!2") ;# 폰트 헤더 2
+^+3::SendInput("^!3") ;# 폰트 헤더 3
+
 ; @
