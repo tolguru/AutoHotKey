@@ -753,10 +753,10 @@ blockAllInput(time := 0.1) {
 ^+Enter::SendInput("{Home}`n{Up}") ;# 윗 줄 추가
 
 ;# 콜아웃
-::/ca1::> [{!}TIP] TIP
-::/ca2::> [{!}QUESTION] QUESTION
-::/ca3::> [{!}EXAMPLE] EXAMPLE
-::/ca4::> [{!}WARNING] WARNING
+::/cat::> [{!}TIP] TIP
+::/caq::> [{!}QUESTION] QUESTION
+::/cae::> [{!}EXAMPLE] EXAMPLE
+::/caw::> [{!}WARNING] WARNING
 
 ; 체크박스
 ::/-::- [ ] 
