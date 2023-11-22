@@ -67,7 +67,8 @@ PHONE_NUM  := EnvGet("aaPhone")
 
 ; URL
 GOOGLE_TRANSLATE_URL := "https://translate.google.co.kr/?sl=en&tl=ko&text="
-NAVER_KO_DIC_URL     := "https://ko.dict.naver.com/#/search?query="
+NAVER_KO_DIC_URL     := "https://ko.dict.naver.com/"
+; NAVER_KO_DIC_URL     := "https://ko.dict.naver.com/#/search?query="
 NAVER_EN_DIC_URL     := "https://en.dict.naver.com/#/search?query="
 SPOTIFY_URL          := "https://open.spotify.com"
 
@@ -254,9 +255,9 @@ Pause:: {
 	Reload
 }
 
-F1::runPopup(NAVER_KO_DIC_URL, NAVER_KO_DIC_UUID_KEY, true, true) ;# 네이버 국어사전 입력받아 열기
-F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, true, true) ;# 네이버 영어사전 입력받아 열기
-F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, true) ;# 구글 번역 입력받아 열기
+F1::runPopup(NAVER_KO_DIC_URL, NAVER_KO_DIC_UUID_KEY, false) ;# 네이버 국어사전 열기
+F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, false) ;# 네이버 영어사전 열기
+F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, false) ;# 구글 번역 열기
 
 VK19 & F1::Spotify.popupRun() ;# 스포티파이 팝업으로 실행
 VK19 & F2::setUUID(SPOTIFY_UUID_KEY) ;# 스포티파이 팝업에 UUID 지정
@@ -571,7 +572,10 @@ runPopup(url, uuidKey, dataFlag := true, inputFlag := false, enterFlag := false)
 				WinActivate
 				WinWaitActive(findParam,, 2)
 
-				enterFlag ? SendInput("^a^v{Enter}") : SendInput("^a^v")
+				if (dataFlag) {
+					enterFlag ? SendInput("^a^v{Enter}") : SendInput("^a^v")
+				}
+
 				return
 			}
 		} catch Error {
