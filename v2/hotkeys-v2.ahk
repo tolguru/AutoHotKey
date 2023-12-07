@@ -813,9 +813,10 @@ blockAllInput(time := 0.1) {
 !x:: ;# Introduce Variable -> return값으로 변수 자동 생성
 !q:: ;# Recent Files -> 최근 파일 검색
 !w:: ;# Go to File -> 파일 검색
-^+q:: ;# Pin Active Tab
-^+w:: ;# Close Tab
-^+e:: ;# Close All but Pinned
+^q:: ;# Pin Active Tab
+^w:: ;# Close Tab
+^+w:: ;# Close All but Pinned
+^e:: ;# Extend Selection
 ^+f:: ;# Find in Files -> 문자열로 파일에서 찾기
 ^p:: ;# Parameter Info
 ^F1:: ;# Stash Changes
