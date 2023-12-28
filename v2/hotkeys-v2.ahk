@@ -799,9 +799,9 @@ blockAllInput(time := 0.1) {
 ; !e::SendInput("!7") ; Structure
 ; !a::SendInput("+{F10}") ; 마지막 모듈 run
 ; !s::SendInput("+{F9}") ; 마지막 모듈 debug
-`::SendInput("^y") ;# 라인 DELETE
-!`::SendInput("``") ;# 백틱 입력
-^Enter::SendInput("{Home}^{Enter}") ;# 윗 라인 추가 후 이동
+; `::SendInput("^y") ;# 라인 DELETE
+; !`::SendInput("``") ;# 백틱 입력
+; ^Enter::SendInput("{Home}^{Enter}") ;# 윗 라인 추가 후 이동
 
 /* 
 기본 단축키들 도움말 출력용
