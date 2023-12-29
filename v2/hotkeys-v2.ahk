@@ -774,6 +774,8 @@ blockAllInput(time := 0.1) {
 ::;# ---- 키 지정 라인 ----
 ::;#
 ^Tab:: ;# 저장하고 다른 작업공간 레이아웃 불러오기
+!q:: ;# Connect elements
+!w:: ;# Normalize Selected Arrows
 */
 
 /*
