@@ -776,6 +776,7 @@ blockAllInput(time := 0.1) {
 ^Tab:: ;# 저장하고 다른 작업공간 레이아웃 불러오기
 !q:: ;# Connect elements
 !w:: ;# Normalize Selected Arrows
+!r:: ;# Reverse arrows
 */
 
 /*
