@@ -949,13 +949,15 @@ copyImage() {
 	SendInput("{Down}{Enter}")
 }
 
-::/sa::is:saved
+:*:/s::is:saved `
+:*:/f::from:@
 
 /*
 ^g::;# 검색
 ::;#
 ::;#----- 키워드 -----
-/sa:: ;# is:saved
+/s:: ;# is:saved
+/f:: ;# from:@
 ::;#
 ::;#----- 검색 필터 -----
 ::;#
