@@ -831,8 +831,6 @@ blockAllInput(time := 0.1) {
 ^+.:: ; "Keymap - Other - Fix doc comment"의 단축키를 "Ctrl + Alt + Shift + [" 로 변경 (fix가 좀 애매하게 됨) ;# 주석 업데이트
 */
 
-
-
 /*
 ########################################
 ## @Chrome
@@ -951,9 +949,13 @@ copyImage() {
 	SendInput("{Down}{Enter}")
 }
 
+::/sa::is:saved
+
 /*
 ^g::;# 검색
 ::;#
+::;#----- 키워드 -----
+/sa:: ;# is:saved
 ::;#
 ::;#----- 검색 필터 -----
 ::;#
