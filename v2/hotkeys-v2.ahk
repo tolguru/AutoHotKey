@@ -137,14 +137,14 @@ commandGuideLoad() {
 
 	; 줄바꿈 문자로 config 구분 후 ":" 문자로 Key, Value 구분
 	Loop Parse, ahkFile.Read(), "`n" {
-		if (InStr(A_LoopField, "@")) {
+		if (InStr(A_LoopField, "# @")) {
 			if (commandList != "" && groupName != "") {
 				getCommandMap().Set(SubStr(groupName, 1, StrLen(groupName) - 1), groupName "`n" commandList)
 
 				commandList := ""
 			}
 
-			groupName := StrSplit(A_LoopField, "@",, 2)[2]
+			groupName := StrSplit(A_LoopField, "# @",, 2)[2]
 		}
 
 		hotkeyArr := StrSplit(A_LoopField, "::",, 2)
@@ -961,8 +961,7 @@ copyImage() {
 ::;#
 ::;#----- 검색 필터 -----
 ::;#
-::;# #채널명
-::;# in:#채널명 in:골뱅이사람이름
+::;# in:#채널명 in:@사람이름
 ::;# is:saved -> 저장된 항목만 검색
 ::;# during: before: after: on:... today, 8월... -> 특정 기간, 날짜 내에서 검색
 ::;#
@@ -1026,4 +1025,4 @@ copyText() {
 ^+2::SendInput("^!2") ;# 폰트 헤더 2
 ^+3::SendInput("^!3") ;# 폰트 헤더 3
 
-; @
+; # @
