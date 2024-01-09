@@ -225,7 +225,8 @@ alarm() {
 
 #`::runEXE("notepad++") ;# 노트패드 실행
 #1::runEXE("obsidian") ;# 옵시디언 실행
-#2::runWaitEXE("slack", slackSendToMe) ;# 슬랙 내 채널 열기
+#2::runEXE("vivaldi") ;# 비발디 열기
+; #2::runWaitEXE("slack", slackSendToMe) ;# 슬랙 내 채널 열기
 ; #2::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE") ;# 슬랙 내 채널 열기
 
 #Left::maxSizeMove() ;# 현재 포커싱된 창 왼쪽 모니터의 전체 화면으로 전환
