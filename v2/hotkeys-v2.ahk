@@ -928,8 +928,8 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 ; `::SendInput("^+k") ;# 라인 지우기
 ; !`::SendInput("``") ;# 백틱 입력
 !c::SendInput("console.log(){Left}") ;# js 콘솔 자동입력
-+Enter::SendInput("^{Enter}") ;# 다음 줄 추가
-^Enter::SendInput("{Home}{Enter}{Up}") ;# 윗 줄 추가 후 이동
+; +Enter::SendInput("^{Enter}") ;# 다음 줄 추가
+; ^Enter::SendInput("{Home}{Enter}{Up}") ;# 윗 줄 추가 후 이동
 ^+/::SendInput("!+a") ;# 블록 주석 토글
 
 /*
