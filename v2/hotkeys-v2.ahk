@@ -910,8 +910,8 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 #HotIf WinActive("ahk_exe azuredatastudio.exe")
 !/::MsgBox(getCommandMap().Get("Azure Data Studio"))
 
-`::SendInput("^+k") ;# 라인 지우기
-!`::SendInput("``") ;# 백틱 입력
+!`::SendInput("^+k") ;# 라인 지우기
+; !`::SendInput("``") ;# 백틱 입력
 ^+c::SendInput("^+h") ;# Header 복사
 +Enter::SendInput("^{Enter}") ;# 다음 줄 추가
 ^Enter::SendInput("{Home}{Enter}{Up}") ;# 윗 줄 추가 후 이동
@@ -925,8 +925,8 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 #HotIf WinActive("ahk_exe Code.exe")
 !/::MsgBox(getCommandMap().Get("VSCode"))
 
-`::SendInput("^+k") ;# 라인 지우기
-!`::SendInput("``") ;# 백틱 입력
+; `::SendInput("^+k") ;# 라인 지우기
+; !`::SendInput("``") ;# 백틱 입력
 !c::SendInput("console.log(){Left}") ;# js 콘솔 자동입력
 +Enter::SendInput("^{Enter}") ;# 다음 줄 추가
 ^Enter::SendInput("{Home}{Enter}{Up}") ;# 윗 줄 추가 후 이동
