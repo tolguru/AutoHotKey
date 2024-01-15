@@ -7,18 +7,6 @@
 ########################################
 */
 
-class Popup {
-	__New(uuidKey, url, needle) {
-		this.uuidKey := uuidKey
-		this.url := url
-		this.needle := needle
-	}
-
-	static copy(popupObject, uuidKey := "", url := "", needle := "") {
-		return Popup(uuidKey? uuidKey : popupObject.uuidKey, url? url : popupObject.url, needle? needle : popupObject.needle)
-	}
-}
-
 /*
 ########################################
 ## 전역변수 선언
@@ -92,6 +80,18 @@ UIA.AutoSetFocus := False ; UIA 기능 실행 시 포커스되는 것을 방지
 
 config()
 alarm()
+
+class Popup {
+	__New(uuidKey, url, needle) {
+		this.uuidKey := uuidKey
+		this.url := url
+		this.needle := needle
+	}
+
+	static copy(popupObject, uuidKey := "", url := "", needle := "") {
+		return Popup(uuidKey? uuidKey : popupObject.uuidKey, url? url : popupObject.url, needle? needle : popupObject.needle)
+	}
+}
 
 /*
 최초 실행 시 초기 설정 함수
