@@ -248,8 +248,8 @@ alarm() {
 
 ^XButton2::SendInput("^{Home}") ;# 스크롤 맨 위로
 ^XButton1::SendInput("^{End}") ;# 스크롤 맨 아래로
-+XButton1::runPopupBlockedInput(googleTranslatePopup,,, "{Blind}{Shift Up}") ;# 구글 번역 팝업
-+XButton2::runPopupBlockedInput(naverEnDicSearchPopup,, true, "{Blind}{Shift Up}") ;# 네이버 영어사전 팝업
++XButton1::runPopupBlockedInput(googleTranslatePopup,, "{Blind}{Shift Up}") ;# 구글 번역 팝업
++XButton2::runPopupBlockedInput(naverEnDicSearchPopup, true, "{Blind}{Shift Up}") ;# 네이버 영어사전 팝업
 
 !+c::encryptClipboard() ;# 클립보드 암호화
 !+x::decryptClipboard() ;# 클립보드 복호화
@@ -263,9 +263,9 @@ Pause:: {
 	Reload
 }
 
-F1::runPopup(naverKoDicPopup, false) ;# 네이버 국어사전 열기
-F3::runPopup(naverEnDicPopup, false) ;# 네이버 영어사전 열기
-F4::runPopup(googleTranslatePopup, false) ;# 구글 번역 열기
+F1::runPopup(naverKoDicPopup) ;# 네이버 국어사전 열기
+F3::runPopup(naverEnDicPopup) ;# 네이버 영어사전 열기
+F4::runPopup(googleTranslatePopup) ;# 구글 번역 열기
 
 #F1::setUUID(naverKoDicPopup.uuidKey) ;# 네이버 국어사전 config 지정
 #F3::setUUID(naverEnDicPopup.uuidKey) ;# 네이버 영어사전 config 지정
@@ -358,7 +358,7 @@ class Spotify {
 	Spotify 브라우저 팝업으로 실행
 	*/
 	static popupRun() {
-		runPopup(spotifyPopup, false)
+		runPopup(spotifyPopup)
 		Spotify.setUUIDTitle(getConfigMap().Get(spotifyPopup.uuidKey))
 	}
 
@@ -540,99 +540,26 @@ urlEncode(originData, re := "[0-9A-Za-z]") {
 /*
 runPopup 함수 실행 중 Input Block, 추가 입력(호출 핫키를 Release해서 입력간 오류 방지용)
 */
-runPopupBlockedInput(popupObject, inputFlag := false, enterFlag := false, input := "") {
+runPopupBlockedInput(popupObject, enterFlag := false, input := "") {
 	BlockInput True
 	SendInput(input)
-	runPopup(popupObject,, inputFlag, enterFlag)
+	runPopup(popupObject, true, enterFlag)
 	BlockInput False
 }
 
 /*
 URL에 클립보드 데이터 넣어서 실행
 Config에서 UUID 조회 후 Active 가능
-저장된 UUID가 현재 실행 중인 엉뚱한 프로세스와 겹치면 좀 대책없긴 함(개선 필요)
-#param String url          : URL
-#param String uuidKey      : config에 저장/조회할 UUID의 key name
-#param boolean inputFlag   : 입력받을지 여부 (default = false)
-#param boolean enterFlag   : 엔터 입력 여부 (default = false)
-#param boolean needleTitle : 현재 열린 프로그램이 지정한 프로그램인지 확인하기 위한 문자열
+#param String url : URL
+#param String uuidKey : config에 저장/조회할 UUID의 key name
+#param boolean dataFlag : 클립보드 데이터 사용 여부 (default = false)
+#param boolean enterFlag : 엔터 입력 여부 (default = false)
 */
-; runPopup(url, uuidKey, dataFlag := true, inputFlag := false, enterFlag := false, needleTitle := "") {
-; 	if (inputFlag) {
-; 		inputText := showInputBox("URL 실행")
-
-; 		if (inputText = "") {
-; 			return
-; 		}
-; 	}
-
-; 	if (dataFlag) {
-; 		A_Clipboard := ""
-
-; 		if (inputFlag) {
-; 			A_Clipboard := inputText
-; 		} else {
-; 			SendInput("^c")
-; 		}
-; 	}
-
-; 	; data를 넘기는 작업이 아니면 패스
-; 	if (!dataFlag || ClipWait(1)) {
-; 		try {
-; 			findParam := "ahk_id " getConfigMap().Get(uuidKey)
-
-; 			if (WinExist(findParam)) {
-; 				WinActivate
-; 				WinWaitActive(findParam,, 2)
-
-; 				if (needleTitle && !(InStr(WinGetTitle("A"), needleTitle))) {
-; 					msg('needle 불일치. 프로그램 재시작')
-; 				} else {
-; 					if (dataFlag) {
-; 						enterFlag ? SendInput("^a^v{Enter}") : SendInput("^a^v")
-; 					}
-	
-; 					return
-; 				}
-; 			}
-; 		} catch Error {
-; 			; 나중에 파일 로깅하는 것도 고려해볼만 할 듯
-; 		}
-
-; 		runParamUrl(url, dataFlag ? A_Clipboard : "", uuidKey)
-; 		return
-; 	}
-
-; 	msg("실패")
-; }
-
-/*
-URL에 클립보드 데이터 넣어서 실행
-Config에서 UUID 조회 후 Active 가능
-저장된 UUID가 현재 실행 중인 엉뚱한 프로세스와 겹치면 좀 대책없긴 함(개선 필요)
-#param String url          : URL
-#param String uuidKey      : config에 저장/조회할 UUID의 key name
-#param boolean inputFlag   : 입력받을지 여부 (default = false)
-#param boolean enterFlag   : 엔터 입력 여부 (default = false)
-#param boolean needleTitle : 현재 열린 프로그램이 지정한 프로그램인지 확인하기 위한 문자열
-*/
-runPopup(popupObject, dataFlag := true, inputFlag := false, enterFlag := false) {
-	if (inputFlag) {
-		inputText := showInputBox("URL 실행")
-
-		if (inputText = "") {
-			return
-		}
-	}
-
+runPopup(popupObject, dataFlag := false, enterFlag := false) {
 	if (dataFlag) {
 		A_Clipboard := ""
 
-		if (inputFlag) {
-			A_Clipboard := inputText
-		} else {
-			SendInput("^c")
-		}
+		SendInput("^c")
 	}
 
 	; data를 넘기는 작업이 아니면 패스
@@ -697,7 +624,7 @@ UUID Key가 있다면 Config에 실행된 Process의 ID 저장
 */
 runParamUrl(url, text, uuidKey := "") {
 	beforeProcessID := WinGetID("A")
-	Run(runAppBrowser " --app=" url urlEncode(text) " --window-size=1100,700")
+	Run(runAppBrowser " --app=" url urlEncode(text))
 
 	if (uuidKey != "") {
 		; 오류를 줄이고자 실행 시 입력 방지
