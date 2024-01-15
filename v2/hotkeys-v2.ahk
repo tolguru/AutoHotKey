@@ -7,6 +7,18 @@
 ########################################
 */
 
+class Popup {
+	__New(uuidKey, url, needle) {
+		this.uuidKey := uuidKey
+		this.url := url
+		this.needle := needle
+	}
+
+	static copy(popupObject, uuidKey := "", url := "", needle := "") {
+		return Popup(uuidKey? uuidKey : popupObject.uuidKey, url? url : popupObject.url, needle? needle : popupObject.needle)
+	}
+}
+
 /*
 ########################################
 ## 전역변수 선언
@@ -20,17 +32,12 @@ global gY      := ""
 ; Config
 configMap := Map()
 
-; Config Keys
-GOOGLE_TRANSLATE_UUID_KEY := "googleTranslateUUID"
-NAVER_KO_DIC_UUID_KEY     := "koreanDictionaryUUID"
-NAVER_EN_DIC_UUID_KEY     := "englishDictionaryUUID"
-SPOTIFY_UUID_KEY          := "spotifyUUID"
-
-; Config Needles
-GOOGLE_TRANSLATE_NEEDLE := "Google 번역"
-NAVER_KO_DIC_NEEDLE     := "국어사전"
-NAVER_EN_DIC_NEEDLE     := "영어사전"
-SPOTIFY_NEEDLE          := "Spotify"
+; Config Classes
+googleTranslatePopup := Popup("googleTranslateUUID", "https://translate.google.co.kr/?sl=en&tl=ko&text=", "Google 번역")
+naverKoDicPopup := Popup("koreanDictionaryUUID", "https://ko.dict.naver.com/", "국어사전")
+naverEnDicPopup := Popup("englishDictionaryUUID", "https://en.dict.naver.com/", "영어사전")
+naverEnDicSearchPopup := Popup.copy(naverEnDicPopup,, naverEnDicPopup.url "#/search?query=")
+SpotifyPopup := Popup("spotifyUUID", "https://open.spotify.com/", "Spotify")
 
 ; Command
 commandMap := Map()
@@ -72,13 +79,6 @@ GMAIL      := EnvGet("aaGmail")
 NAVER_MAIL := EnvGet("aaNmail")
 PHONE_NUM  := EnvGet("aaPhone")
 
-; URL
-GOOGLE_TRANSLATE_URL    := "https://translate.google.co.kr/?sl=en&tl=ko&text="
-NAVER_KO_DIC_URL        := "https://ko.dict.naver.com/"
-NAVER_EN_DIC_URL        := "https://en.dict.naver.com/"
-NAVER_EN_DIC_SEARCH_URL := "https://en.dict.naver.com/#/search?query="
-SPOTIFY_URL             := "https://open.spotify.com"
-
 ; UIA
 global spotifyLikeIndex := 5
 
@@ -115,7 +115,7 @@ config() {
 
 	; 스포티파이 팝업으로 실행 시 config 초기화
 	if (findValue(spotifyPopupList, A_ComputerName)) {
-		Spotify.setUUIDTitle(getConfigMap().Get(SPOTIFY_UUID_KEY))
+		Spotify.setUUIDTitle(getConfigMap().Get(SpotifyPopup.uuidKey))
 		Spotify.isBrowser := true
 	}
 }
@@ -248,8 +248,8 @@ alarm() {
 
 ^XButton2::SendInput("^{Home}") ;# 스크롤 맨 위로
 ^XButton1::SendInput("^{End}") ;# 스크롤 맨 아래로
-+XButton1::runPopupBlockedInput(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY,,, GOOGLE_TRANSLATE_NEEDLE, "{Blind}{Shift Up}") ;# 구글 번역 팝업
-+XButton2::runPopupBlockedInput(NAVER_EN_DIC_SEARCH_URL, NAVER_EN_DIC_UUID_KEY,, true, NAVER_EN_DIC_NEEDLE, "{Blind}{Shift Up}") ;# 네이버 영어사전 팝업
++XButton1::runPopupBlockedInput(googleTranslatePopup,,, "{Blind}{Shift Up}") ;# 구글 번역 팝업
++XButton2::runPopupBlockedInput(naverEnDicSearchPopup,, true, "{Blind}{Shift Up}") ;# 네이버 영어사전 팝업
 
 !+c::encryptClipboard() ;# 클립보드 암호화
 !+x::decryptClipboard() ;# 클립보드 복호화
@@ -263,16 +263,16 @@ Pause:: {
 	Reload
 }
 
-F1::runPopup(NAVER_KO_DIC_URL, NAVER_KO_DIC_UUID_KEY, false,,, NAVER_KO_DIC_NEEDLE) ;# 네이버 국어사전 열기
-F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, false,,, NAVER_EN_DIC_NEEDLE) ;# 네이버 영어사전 열기
-F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, false,,, GOOGLE_TRANSLATE_NEEDLE) ;# 구글 번역 열기
+F1::runPopup(naverKoDicPopup, false) ;# 네이버 국어사전 열기
+F3::runPopup(naverEnDicPopup, false) ;# 네이버 영어사전 열기
+F4::runPopup(googleTranslatePopup, false) ;# 구글 번역 열기
 
-#F1::setUUID(NAVER_KO_DIC_UUID_KEY) ;# 네이버 국어사전 config 지정
-#F3::setUUID(NAVER_EN_DIC_UUID_KEY) ;# 네이버 영어사전 config 지정
-#F4::setUUID(GOOGLE_TRANSLATE_UUID_KEY) ;# 구글 번역 config 지정
+#F1::setUUID(naverKoDicPopup.uuidKey) ;# 네이버 국어사전 config 지정
+#F3::setUUID(naverEnDicPopup.uuidKey) ;# 네이버 영어사전 config 지정
+#F4::setUUID(googleTranslatePopup.uuidKey) ;# 구글 번역 config 지정
 
 VK19 & F1::Spotify.popupRun() ;# 스포티파이 팝업으로 실행
-VK19 & F2::setUUID(SPOTIFY_UUID_KEY) ;# 스포티파이 팝업에 UUID 지정
+VK19 & F2::setUUID(SpotifyPopup.uuidKey) ;# 스포티파이 팝업에 UUID 지정
 VK19 & Up::setMultiHotkey(, () => Spotify.like(false), () => Spotify.like(true)) ;# 스포티파이 좋아요(2번 입력 시 좋아요 취소)
 VK19 & Down::Spotify.replay() ;# 스포티파이 곡 반복
 VK19 & Right::Spotify.playBarClick(5) ;# 스포티파이 다음 곡
@@ -358,8 +358,8 @@ class Spotify {
 	Spotify 브라우저 팝업으로 실행
 	*/
 	static popupRun() {
-		runPopup(SPOTIFY_URL, SPOTIFY_UUID_KEY, false,,, SPOTIFY_NEEDLE)
-		Spotify.setUUIDTitle(getConfigMap().Get(SPOTIFY_UUID_KEY))
+		runPopup(spotifyPopup, false)
+		Spotify.setUUIDTitle(getConfigMap().Get(spotifyPopup.uuidKey))
 	}
 
 	/*
@@ -540,10 +540,10 @@ urlEncode(originData, re := "[0-9A-Za-z]") {
 /*
 runPopup 함수 실행 중 Input Block, 추가 입력(호출 핫키를 Release해서 입력간 오류 방지용)
 */
-runPopupBlockedInput(url, uuidKey, inputFlag := false, enterFlag := false, needleTitle := "", input := "") {
+runPopupBlockedInput(popupObject, inputFlag := false, enterFlag := false, input := "") {
 	BlockInput True
 	SendInput(input)
-	runPopup(url, uuidKey,, inputFlag, enterFlag, needleTitle)
+	runPopup(popupObject,, inputFlag, enterFlag)
 	BlockInput False
 }
 
@@ -557,7 +557,66 @@ Config에서 UUID 조회 후 Active 가능
 #param boolean enterFlag   : 엔터 입력 여부 (default = false)
 #param boolean needleTitle : 현재 열린 프로그램이 지정한 프로그램인지 확인하기 위한 문자열
 */
-runPopup(url, uuidKey, dataFlag := true, inputFlag := false, enterFlag := false, needleTitle := "") {
+; runPopup(url, uuidKey, dataFlag := true, inputFlag := false, enterFlag := false, needleTitle := "") {
+; 	if (inputFlag) {
+; 		inputText := showInputBox("URL 실행")
+
+; 		if (inputText = "") {
+; 			return
+; 		}
+; 	}
+
+; 	if (dataFlag) {
+; 		A_Clipboard := ""
+
+; 		if (inputFlag) {
+; 			A_Clipboard := inputText
+; 		} else {
+; 			SendInput("^c")
+; 		}
+; 	}
+
+; 	; data를 넘기는 작업이 아니면 패스
+; 	if (!dataFlag || ClipWait(1)) {
+; 		try {
+; 			findParam := "ahk_id " getConfigMap().Get(uuidKey)
+
+; 			if (WinExist(findParam)) {
+; 				WinActivate
+; 				WinWaitActive(findParam,, 2)
+
+; 				if (needleTitle && !(InStr(WinGetTitle("A"), needleTitle))) {
+; 					msg('needle 불일치. 프로그램 재시작')
+; 				} else {
+; 					if (dataFlag) {
+; 						enterFlag ? SendInput("^a^v{Enter}") : SendInput("^a^v")
+; 					}
+	
+; 					return
+; 				}
+; 			}
+; 		} catch Error {
+; 			; 나중에 파일 로깅하는 것도 고려해볼만 할 듯
+; 		}
+
+; 		runParamUrl(url, dataFlag ? A_Clipboard : "", uuidKey)
+; 		return
+; 	}
+
+; 	msg("실패")
+; }
+
+/*
+URL에 클립보드 데이터 넣어서 실행
+Config에서 UUID 조회 후 Active 가능
+저장된 UUID가 현재 실행 중인 엉뚱한 프로세스와 겹치면 좀 대책없긴 함(개선 필요)
+#param String url          : URL
+#param String uuidKey      : config에 저장/조회할 UUID의 key name
+#param boolean inputFlag   : 입력받을지 여부 (default = false)
+#param boolean enterFlag   : 엔터 입력 여부 (default = false)
+#param boolean needleTitle : 현재 열린 프로그램이 지정한 프로그램인지 확인하기 위한 문자열
+*/
+runPopup(popupObject, dataFlag := true, inputFlag := false, enterFlag := false) {
 	if (inputFlag) {
 		inputText := showInputBox("URL 실행")
 
@@ -579,13 +638,13 @@ runPopup(url, uuidKey, dataFlag := true, inputFlag := false, enterFlag := false,
 	; data를 넘기는 작업이 아니면 패스
 	if (!dataFlag || ClipWait(1)) {
 		try {
-			findParam := "ahk_id " getConfigMap().Get(uuidKey)
+			findParam := "ahk_id " getConfigMap().Get(popupObject.uuidKey)
 
 			if (WinExist(findParam)) {
 				WinActivate
 				WinWaitActive(findParam,, 2)
 
-				if (needleTitle && !(InStr(WinGetTitle("A"), needleTitle))) {
+				if (popupObject.needle && !(InStr(WinGetTitle("A"), popupObject.needle))) {
 					msg('needle 불일치. 프로그램 재시작')
 				} else {
 					if (dataFlag) {
@@ -599,7 +658,7 @@ runPopup(url, uuidKey, dataFlag := true, inputFlag := false, enterFlag := false,
 			; 나중에 파일 로깅하는 것도 고려해볼만 할 듯
 		}
 
-		runParamUrl(url, dataFlag ? A_Clipboard : "", uuidKey)
+		runParamUrl(popupObject.url, dataFlag ? A_Clipboard : "", popupObject.uuidKey)
 		return
 	}
 
