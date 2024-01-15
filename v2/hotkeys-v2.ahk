@@ -38,7 +38,8 @@ subPC  := "DESKTOP-2SVBCIT"
 homePC := "DESKTOP-4AJLHVU"
 
 ; Default Run Param app Browser
-global runAppBrowser := "chrome.exe"
+; global runAppBrowser := "chrome.exe"
+global runAppBrowser := EnvGet("AppData") "/../Local/Vivaldi/Application/vivaldi.exe"
 
 ; Default Browser 설정 리스트
 ; useWhaleList := [mainPC]
@@ -66,11 +67,12 @@ NAVER_MAIL := EnvGet("aaNmail")
 PHONE_NUM  := EnvGet("aaPhone")
 
 ; URL
-GOOGLE_TRANSLATE_URL := "https://translate.google.co.kr/?sl=en&tl=ko&text="
-NAVER_KO_DIC_URL     := "https://ko.dict.naver.com/"
-; NAVER_KO_DIC_URL     := "https://ko.dict.naver.com/#/search?query="
-NAVER_EN_DIC_URL     := "https://en.dict.naver.com/#/search?query="
-SPOTIFY_URL          := "https://open.spotify.com"
+GOOGLE_TRANSLATE_URL    := "https://translate.google.co.kr/?sl=en&tl=ko&text="
+NAVER_KO_DIC_URL        := "https://ko.dict.naver.com/"
+; NAVER_KO_DIC_URL      := "https://ko.dict.naver.com/#/search?query="
+NAVER_EN_DIC_URL        := "https://en.dict.naver.com/"
+NAVER_EN_DIC_SEARCH_URL := "https://en.dict.naver.com/#/search?query="
+SPOTIFY_URL             := "https://open.spotify.com"
 
 ; UIA
 global spotifyLikeIndex := 5
@@ -242,7 +244,7 @@ alarm() {
 ^XButton2::SendInput("^{Home}") ;# 스크롤 맨 위로
 ^XButton1::SendInput("^{End}") ;# 스크롤 맨 아래로
 +XButton1::runPopupBlockedInput(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY,,, "{Blind}{Shift Up}") ;# 구글 번역 팝업
-+XButton2::runPopupBlockedInput(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY,, true, "{Blind}{Shift Up}") ;# 네이버 영어사전 팝업
++XButton2::runPopupBlockedInput(NAVER_EN_DIC_SEARCH_URL, NAVER_EN_DIC_UUID_KEY,, true, "{Blind}{Shift Up}") ;# 네이버 영어사전 팝업
 
 !+c::encryptClipboard() ;# 클립보드 암호화
 !+x::decryptClipboard() ;# 클립보드 복호화
