@@ -26,6 +26,12 @@ NAVER_KO_DIC_UUID_KEY     := "koreanDictionaryUUID"
 NAVER_EN_DIC_UUID_KEY     := "englishDictionaryUUID"
 SPOTIFY_UUID_KEY          := "spotifyUUID"
 
+; Config Needles
+GOOGLE_TRANSLATE_NEEDLE := "Google 번역"
+NAVER_KO_DIC_NEEDLE     := "국어사전"
+NAVER_EN_DIC_NEEDLE     := "영어사전"
+SPOTIFY_NEEDLE          := "Spotify"
+
 ; Command
 commandMap := Map()
 
@@ -258,17 +264,13 @@ Pause:: {
 	Reload
 }
 
-F1::runPopup(NAVER_KO_DIC_URL, NAVER_KO_DIC_UUID_KEY, false) ;# 네이버 국어사전 열기
-F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, false) ;# 네이버 영어사전 열기
-F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, false) ;# 구글 번역 열기
+F1::runPopup(NAVER_KO_DIC_URL, NAVER_KO_DIC_UUID_KEY, false,,, NAVER_KO_DIC_NEEDLE) ;# 네이버 국어사전 열기
+F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, false,,, NAVER_EN_DIC_NEEDLE) ;# 네이버 영어사전 열기
+F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, false,,, GOOGLE_TRANSLATE_NEEDLE) ;# 구글 번역 열기
 
 #F1::setUUID(NAVER_KO_DIC_UUID_KEY) ;# 네이버 국어사전 config 지정
 #F3::setUUID(NAVER_EN_DIC_UUID_KEY) ;# 네이버 영어사전 config 지정
 #F4::setUUID(GOOGLE_TRANSLATE_UUID_KEY) ;# 구글 번역 config 지정
-
-^F1::getConfigMap().Set(GOOGLE_TRANSLATE_UUID_KEY, "NULL") ;# 네이버 국어사전 config 초기화
-^F3::getConfigMap().Set(NAVER_EN_DIC_UUID_KEY, "NULL") ;# 네이버 영어사전 config 초기화
-^F4::getConfigMap().Set(GOOGLE_TRANSLATE_UUID_KEY, "NULL") ;# 구글 번역 config 초기화
 
 VK19 & F1::Spotify.popupRun() ;# 스포티파이 팝업으로 실행
 VK19 & F2::setUUID(SPOTIFY_UUID_KEY) ;# 스포티파이 팝업에 UUID 지정
@@ -357,7 +359,7 @@ class Spotify {
 	Spotify 브라우저 팝업으로 실행
 	*/
 	static popupRun() {
-		runPopup(SPOTIFY_URL, SPOTIFY_UUID_KEY, false)
+		runPopup(SPOTIFY_URL, SPOTIFY_UUID_KEY, false,,, SPOTIFY_NEEDLE)
 		Spotify.setUUIDTitle(getConfigMap().Get(SPOTIFY_UUID_KEY))
 	}
 
@@ -539,10 +541,10 @@ urlEncode(originData, re := "[0-9A-Za-z]") {
 /*
 runPopup 함수 실행 중 Input Block, 추가 입력(호출 핫키를 Release해서 입력간 오류 방지용)
 */
-runPopupBlockedInput(url, uuidKey, inputFlag := false, enterFlag := false, input := "") {
+runPopupBlockedInput(url, uuidKey, inputFlag := false, enterFlag := false, needleTitle := "", input := "") {
 	BlockInput True
 	SendInput(input)
-	runPopup(url, uuidKey,, inputFlag, enterFlag)
+	runPopup(url, uuidKey,, inputFlag, enterFlag, needleTitle)
 	BlockInput False
 }
 
@@ -550,12 +552,13 @@ runPopupBlockedInput(url, uuidKey, inputFlag := false, enterFlag := false, input
 URL에 클립보드 데이터 넣어서 실행
 Config에서 UUID 조회 후 Active 가능
 저장된 UUID가 현재 실행 중인 엉뚱한 프로세스와 겹치면 좀 대책없긴 함(개선 필요)
-#param String url        : URL
-#param String uuidKey    : config에 저장/조회할 UUID의 key name
-#param boolean inputFlag : 입력받을지 여부 (default = false)
-#param boolean enterFlag : 엔터 입력 여부 (default = false)
+#param String url          : URL
+#param String uuidKey      : config에 저장/조회할 UUID의 key name
+#param boolean inputFlag   : 입력받을지 여부 (default = false)
+#param boolean enterFlag   : 엔터 입력 여부 (default = false)
+#param boolean needleTitle : 현재 열린 프로그램이 지정한 프로그램인지 확인하기 위한 문자열
 */
-runPopup(url, uuidKey, dataFlag := true, inputFlag := false, enterFlag := false) {
+runPopup(url, uuidKey, dataFlag := true, inputFlag := false, enterFlag := false, needleTitle := "") {
 	if (inputFlag) {
 		inputText := showInputBox("URL 실행")
 
@@ -583,11 +586,15 @@ runPopup(url, uuidKey, dataFlag := true, inputFlag := false, enterFlag := false)
 				WinActivate
 				WinWaitActive(findParam,, 2)
 
-				if (dataFlag) {
-					enterFlag ? SendInput("^a^v{Enter}") : SendInput("^a^v")
+				if (needleTitle && !(InStr(WinGetTitle("A"), needleTitle))) {
+					msg('needle 불일치. 프로그램 재시작')
+				} else {
+					if (dataFlag) {
+						enterFlag ? SendInput("^a^v{Enter}") : SendInput("^a^v")
+					}
+	
+					return
 				}
-
-				return
 			}
 		} catch Error {
 			; 나중에 파일 로깅하는 것도 고려해볼만 할 듯
