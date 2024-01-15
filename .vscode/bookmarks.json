@@ -9,27 +9,27 @@
 					"label": "Common"
 				},
 				{
-					"line": 825,
+					"line": 752,
 					"column": 12,
 					"label": "Obsidian"
 				},
 				{
-					"line": 863,
+					"line": 790,
 					"column": 12,
 					"label": "IntelliJ"
 				},
 				{
-					"line": 915,
+					"line": 842,
 					"column": 10,
 					"label": "Chrome"
 				},
 				{
-					"line": 983,
+					"line": 910,
 					"column": 0,
 					"label": "Azure Data Studio"
 				},
 				{
-					"line": 998,
+					"line": 925,
 					"column": 10,
 					"label": "VSCode"
 				}
