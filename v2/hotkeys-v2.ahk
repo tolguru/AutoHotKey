@@ -39,7 +39,7 @@ homePC := "DESKTOP-4AJLHVU"
 
 ; Default Run Param app Browser
 ; global runAppBrowser := "chrome.exe"
-global runAppBrowser := EnvGet("AppData") "/../Local/Vivaldi/Application/vivaldi.exe"
+global runAppBrowser := A_AppData "/../Local/Vivaldi/Application/vivaldi.exe"
 
 ; Default Browser 설정 리스트
 ; useWhaleList := [mainPC]
@@ -250,8 +250,8 @@ alarm() {
 !+x::decryptClipboard() ;# 클립보드 복호화
 
 ; 현재 온메모리 상태의 config의 특정 map값을 NULL로 수정(파일 수정 X) -> 팝업 UUID 잘못됐을 때 refresh용으로 사용
-^+XButton1::getConfigMap().Set(GOOGLE_TRANSLATE_UUID_KEY, "NULL") ;# 구글 config 초기화
-^+XButton2::getConfigMap().Set(NAVER_EN_DIC_UUID_KEY, "NULL") ;# 네이버 영어사전 config 초기화
+; ^+XButton1::getConfigMap().Set(GOOGLE_TRANSLATE_UUID_KEY, "NULL") ;# 구글 번역 config 초기화
+; ^+XButton2::getConfigMap().Set(NAVER_EN_DIC_UUID_KEY, "NULL") ;# 네이버 영어사전 config 초기화
 
 Pause:: {
 	ToolTip("Reload")
@@ -261,6 +261,14 @@ Pause:: {
 F1::runPopup(NAVER_KO_DIC_URL, NAVER_KO_DIC_UUID_KEY, false) ;# 네이버 국어사전 열기
 F3::runPopup(NAVER_EN_DIC_URL, NAVER_EN_DIC_UUID_KEY, false) ;# 네이버 영어사전 열기
 F4::runPopup(GOOGLE_TRANSLATE_URL, GOOGLE_TRANSLATE_UUID_KEY, false) ;# 구글 번역 열기
+
+#F1::setUUID(NAVER_KO_DIC_UUID_KEY) ;# 네이버 국어사전 config 지정
+#F3::setUUID(NAVER_EN_DIC_UUID_KEY) ;# 네이버 영어사전 config 지정
+#F4::setUUID(GOOGLE_TRANSLATE_UUID_KEY) ;# 구글 번역 config 지정
+
+^F1::getConfigMap().Set(GOOGLE_TRANSLATE_UUID_KEY, "NULL") ;# 네이버 국어사전 config 초기화
+^F3::getConfigMap().Set(NAVER_EN_DIC_UUID_KEY, "NULL") ;# 네이버 영어사전 config 초기화
+^F4::getConfigMap().Set(GOOGLE_TRANSLATE_UUID_KEY, "NULL") ;# 구글 번역 config 초기화
 
 VK19 & F1::Spotify.popupRun() ;# 스포티파이 팝업으로 실행
 VK19 & F2::setUUID(SPOTIFY_UUID_KEY) ;# 스포티파이 팝업에 UUID 지정
@@ -633,6 +641,8 @@ runParamUrl(url, text, uuidKey := "") {
 		if (WinWaitNotActive("ahk_id " beforeProcessID,, 3)) {
 			getConfigMap().Set(uuidKey, WinGetID("A"))
 			configSave()
+
+			WinRestore("A")
 		} else {
 			msg("실행시간 타임아웃")
 		}
