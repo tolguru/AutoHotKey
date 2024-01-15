@@ -232,7 +232,7 @@ alarm() {
 
 #`::runEXE("notepad++") ;# 노트패드 실행
 #1::runEXE("obsidian") ;# 옵시디언 실행
-#2::runEXE("vivaldi") ;# 비발디 열기
+#2::activateTitle("- Vivaldi") ;# 비발디 열기
 ; #2::runWaitEXE("slack", slackSendToMe) ;# 슬랙 내 채널 열기
 ; #2::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE") ;# 슬랙 내 채널 열기
 
@@ -707,6 +707,18 @@ runEXE(exeFileName, runHook?) {
 		WinActivate
 	} else {
 		Run(exeFileName ".exe")
+	}
+}
+
+/*
+매치되는 타이틀의 프로그램 활성화
+#param String title : 실행시킬 프로그램의 타이틀명
+*/
+activateTitle(title) {
+	if WinExist(title) {
+		WinActivate
+	} else {
+		msg("찾을 수 없음")
 	}
 }
 
