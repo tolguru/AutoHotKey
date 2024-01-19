@@ -267,12 +267,12 @@ F1::runPopup(naverKoDicPopup) ;# 네이버 국어사전 열기
 F3::runPopup(naverEnDicPopup) ;# 네이버 영어사전 열기
 F4::runPopup(googleTranslatePopup) ;# 구글 번역 열기
 
-#F1::setUUID(naverKoDicPopup.uuidKey) ;# 네이버 국어사전 config 지정
-#F3::setUUID(naverEnDicPopup.uuidKey) ;# 네이버 영어사전 config 지정
-#F4::setUUID(googleTranslatePopup.uuidKey) ;# 구글 번역 config 지정
+; #F1::setUUID(naverKoDicPopup.uuidKey) ;# 네이버 국어사전 config 지정
+; #F3::setUUID(naverEnDicPopup.uuidKey) ;# 네이버 영어사전 config 지정
+; #F4::setUUID(googleTranslatePopup.uuidKey) ;# 구글 번역 config 지정
 
 VK19 & F1::Spotify.popupRun() ;# 스포티파이 팝업으로 실행
-VK19 & F2::setUUID(SpotifyPopup.uuidKey) ;# 스포티파이 팝업에 UUID 지정
+; VK19 & F2::setUUID(SpotifyPopup.uuidKey) ;# 스포티파이 팝업에 UUID 지정
 VK19 & Up::setMultiHotkey(, () => Spotify.like(false), () => Spotify.like(true)) ;# 스포티파이 좋아요(2번 입력 시 좋아요 취소)
 VK19 & Down::Spotify.replay() ;# 스포티파이 곡 반복
 VK19 & Right::Spotify.playBarClick(5) ;# 스포티파이 다음 곡
@@ -564,29 +564,39 @@ runPopup(popupObject, dataFlag := false, enterFlag := false) {
 
 	; data를 넘기는 작업이 아니면 패스
 	if (!dataFlag || ClipWait(1)) {
-		try {
-			findParam := "ahk_id " getConfigMap().Get(popupObject.uuidKey)
+		findParam := popupObject.needle
 
-			if (WinExist(findParam)) {
-				WinActivate
-				WinWaitActive(findParam,, 2)
-
-				if (popupObject.needle && !(InStr(WinGetTitle("A"), popupObject.needle))) {
-					msg('needle 불일치. 프로그램 재시작')
-				} else {
-					if (dataFlag) {
-						enterFlag ? SendInput("^a^v{Enter}") : SendInput("^a^v")
-					}
-	
-					return
+		if (WinExist(findParam)) {
+			WinActivate
+			if (WinWaitActive(findParam,, 2)) {
+				if (dataFlag) {
+					enterFlag ? SendInput("^a^v{Enter}") : SendInput("^a^v")
 				}
+
+				return
 			}
-		} catch Error {
-			; 나중에 파일 로깅하는 것도 고려해볼만 할 듯
 		}
 
-		runParamUrl(popupObject.url, dataFlag ? A_Clipboard : "", popupObject.uuidKey)
+		runParamUrl(popupObject.url, dataFlag ? A_Clipboard : "")
 		return
+		; try {
+			; findParam := "ahk_id " getConfigMap().Get(popupObject.uuidKey)
+				; if (popupObject.needle && !(InStr(WinGetTitle("A"), popupObject.needle))) {
+				; 	msg('needle 불일치. 프로그램 재시작')
+				; } else {
+				; 	if (dataFlag) {
+				; 		enterFlag ? SendInput("^a^v{Enter}") : SendInput("^a^v")
+				; 	}
+	
+				; 	return
+				; }
+			; }
+		; } catch Error {
+			; 나중에 파일 로깅하는 것도 고려해볼만 할 듯
+		; }
+
+		; runParamUrl(popupObject.url, dataFlag ? A_Clipboard : "", popupObject.uuidKey)
+		; return
 	}
 
 	msg("실패")
@@ -622,25 +632,37 @@ UUID Key가 있다면 Config에 실행된 Process의 ID 저장
 #param String text    : 입력할 param text
 #param String uuidKey : config에 저장할 이름
 */
-runParamUrl(url, text, uuidKey := "") {
+; runParamUrl(url, text, uuidKey := "") {
+runParamUrl(url, text) {
 	beforeProcessID := WinGetID("A")
 	Run(runAppBrowser " --app=" url urlEncode(text))
 
-	if (uuidKey != "") {
-		; 오류를 줄이고자 실행 시 입력 방지
-		BlockInput True
+	; 오류를 줄이고자 실행 시 입력 방지
+	BlockInput True
 
-		if (WinWaitNotActive("ahk_id " beforeProcessID,, 3)) {
-			getConfigMap().Set(uuidKey, WinGetID("A"))
-			configSave()
-
-			WinRestore("A")
-		} else {
-			msg("실행시간 타임아웃")
-		}
-
-		BlockInput False
+	if (WinWaitNotActive("ahk_id " beforeProcessID,, 3)) {
+		WinRestore("A")
+	} else {
+		msg("실행시간 타임아웃")
 	}
+
+	BlockInput False
+
+	; if (uuidKey != "") {
+	; 	; 오류를 줄이고자 실행 시 입력 방지
+	; 	BlockInput True
+
+	; 	if (WinWaitNotActive("ahk_id " beforeProcessID,, 3)) {
+	; 		getConfigMap().Set(uuidKey, WinGetID("A"))
+	; 		configSave()
+
+	; 		WinRestore("A")
+	; 	} else {
+	; 		msg("실행시간 타임아웃")
+	; 	}
+
+	; 	BlockInput False
+	; }
 }
 
 /*
