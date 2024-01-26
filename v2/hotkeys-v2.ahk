@@ -111,6 +111,7 @@ config() {
 }
 
 /*
+(미사용)
 configMap 스태틱 변수 return
 */
 getConfigMap() {
@@ -535,10 +536,10 @@ runPopupBlockedInput(popupObject, enterFlag := false, input := "") {
 }
 
 /*
-URL에 클립보드 데이터 넣어서 실행
+브라우저 팝업 형태로 url 실행
+실행 후 입력 기능 있음
 Config에서 UUID 조회 후 Active 가능
-#param String url : URL
-#param String uuidKey : config에 저장/조회할 UUID의 key name
+#param Popup popupObject : Popup 객체(url, needle)
 #param boolean dataFlag : 클립보드 데이터 사용 여부 (default = false)
 #param boolean enterFlag : 엔터 입력 여부 (default = false)
 */
@@ -566,24 +567,6 @@ runPopup(popupObject, dataFlag := false, enterFlag := false) {
 
 		runParamUrl(popupObject.url, dataFlag ? A_Clipboard : "")
 		return
-		; try {
-			; findParam := "ahk_id " getConfigMap().Get(popupObject.uuidKey)
-				; if (popupObject.needle && !(InStr(WinGetTitle("A"), popupObject.needle))) {
-				; 	msg('needle 불일치. 프로그램 재시작')
-				; } else {
-				; 	if (dataFlag) {
-				; 		enterFlag ? SendInput("^a^v{Enter}") : SendInput("^a^v")
-				; 	}
-	
-				; 	return
-				; }
-			; }
-		; } catch Error {
-			; 나중에 파일 로깅하는 것도 고려해볼만 할 듯
-		; }
-
-		; runParamUrl(popupObject.url, dataFlag ? A_Clipboard : "", popupObject.uuidKey)
-		; return
 	}
 
 	msg("실패")
@@ -601,6 +584,7 @@ setUUID(uuidKey) {
 }
 
 /*
+(미사용)
 input된 값을 리턴
 #param String title : 입력 창 제목 (default = "title")
 */
@@ -614,13 +598,10 @@ showInputBox(title := "title") {
 }
 
 /*
-URL에 param 더해서 실행하는 함수
-UUID Key가 있다면 Config에 실행된 Process의 ID 저장
+URL에 text 더해서 실행하는 함수
 #param String url     : URL
 #param String text    : 입력할 param text
-#param String uuidKey : config에 저장할 이름
 */
-; runParamUrl(url, text, uuidKey := "") {
 runParamUrl(url, text) {
 	beforeProcessID := WinGetID("A")
 	Run(runAppBrowser " --app=" url urlEncode(text))
@@ -635,25 +616,10 @@ runParamUrl(url, text) {
 	}
 
 	BlockInput False
-
-	; if (uuidKey != "") {
-	; 	; 오류를 줄이고자 실행 시 입력 방지
-	; 	BlockInput True
-
-	; 	if (WinWaitNotActive("ahk_id " beforeProcessID,, 3)) {
-	; 		getConfigMap().Set(uuidKey, WinGetID("A"))
-	; 		configSave()
-
-	; 		WinRestore("A")
-	; 	} else {
-	; 		msg("실행시간 타임아웃")
-	; 	}
-
-	; 	BlockInput False
-	; }
 }
 
 /*
+(미사용)
 60분마다 "물" 메세지 박스 출력
 */
 alarmWater() {
@@ -750,6 +716,7 @@ runWaitEXE(exeFileName, runHook?) {
 }
 
 /*
+(미사용)
 슬랙 내 채널 바로가기
 */
 slackSendToMe() {
@@ -816,24 +783,7 @@ blockAllInput(time := 0.1) {
 #HotIf WinActive("ahk_exe idea64.exe")
 !/::MsgBox(getGuideMap().Get("IntelliJ"))
 
-;~ CapsLock::SendInput("^y")
-; ^+w::SendInput("^{F4}") ;# 창 닫기
-; !+w::SendInput("!i") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀 제외 닫기
-; ^.::SendInput("!+h") ; 메서드 Document 주석 달기(IntelliJ JavaDoc plugin 키설정을 해당 키로 변경)
 ^.::SendInput("/**`n") ;# 주석 달기(IntelliJ 설정에 따라 Doc 자동 생성됨)
-; ^+.::SendInput("^!+[") ; "Keymap - Other - Fix doc comment"의 단축키를 "Ctrl + Alt + Shift + [" 로 변경 (fix가 좀 애매하게 됨) ;# 주석 업데이트
-; !z::SendInput("!^o") ;# 안 쓰는 Imports 제거
-; !x::SendInput("^!v") ;# return값으로 변수 자동 생성
-; !c::SendInput("^!m") ;# 메서드화
-; !q::SendInput("^e") ;# 최근 파일 검색
-; !w::SendInput("^+n") ;# 파일 검색
-; !p::SendInput("!u") ; IntelluJ 기본 키설정을 해당 키로 변경 ;# 핀으로 고정
-; !e::SendInput("!7") ; Structure
-; !a::SendInput("+{F10}") ; 마지막 모듈 run
-; !s::SendInput("+{F9}") ; 마지막 모듈 debug
-; `::SendInput("^y") ;# 라인 DELETE
-; !`::SendInput("``") ;# 백틱 입력
-; ^Enter::SendInput("{Home}^{Enter}") ;# 윗 라인 추가 후 이동
 
 /* 
 기본 단축키들 도움말 출력용
@@ -890,46 +840,6 @@ translate() {
 
 /*
 ########################################
-## @DBeaver
-########################################
-*/
-#HotIf WinActive("ahk_exe dbeaver.exe")
-!/::MsgBox(getGuideMap().Get("DBeaver"))
-
-!q::SendInput("SELECT *`nFROM   ")
-!w::SendInput("WHERE  1 = 1`nAND    ")
-!e::SendInput("+{Enter}AND    ")
-!r::SendInput("ORDER BY REG_DT DESC")
-;~ CapsLock::SendInput("{End}+{Home 2}{Backspace 2}{Down}")
-
-/*
-해당 항목으로 쿼리 실행
-#param String query   : 실행시킬 쿼리
-#param Boolean quote  : 뭐더라 (default = true)
-#param String endWord : 뭐더라 (endWord = ";")
-*/
-runClipboardQuery(query, quote := true, endWord := ";") {
-	beforeData := A_Clipboard
-
-	if (quote) {
-		endWord := "'" endWord
-	}
-
-	SendInput("^c")
-	Sleep(10)
-	SendInput("+{Enter}")
-	Sleep(1)
-
-	A_Clipboard := query A_Clipboard endWord
-
-	SendInput("^v+{Home}^\^d")
-
-	Sleep(100)
-	A_Clipboard := beforeData
-}
-
-/*
-########################################
 ## @Azure Data Studio
 ########################################
 */
@@ -951,11 +861,7 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 #HotIf WinActive("ahk_exe Code.exe")
 !/::MsgBox(getGuideMap().Get("VSCode"))
 
-; `::SendInput("^+k") ;# 라인 지우기
-; !`::SendInput("``") ;# 백틱 입력
 !c::SendInput("console.log(){Left}") ;# js 콘솔 자동입력
-; +Enter::SendInput("^{Enter}") ;# 다음 줄 추가
-; ^Enter::SendInput("{Home}{Enter}{Up}") ;# 윗 줄 추가 후 이동
 ^+/::SendInput("!+a") ;# 블록 주석 토글
 
 /*
@@ -1053,5 +959,45 @@ copyText() {
 ^+1::SendInput("^!1") ;# 폰트 헤더 1
 ^+2::SendInput("^!2") ;# 폰트 헤더 2
 ^+3::SendInput("^!3") ;# 폰트 헤더 3
+
+/*
+########################################
+## @DBeaver
+########################################
+*/
+#HotIf WinActive("ahk_exe dbeaver.exe")
+!/::MsgBox(getGuideMap().Get("DBeaver"))
+
+!q::SendInput("SELECT *`nFROM   ")
+!w::SendInput("WHERE  1 = 1`nAND    ")
+!e::SendInput("+{Enter}AND    ")
+!r::SendInput("ORDER BY REG_DT DESC")
+;~ CapsLock::SendInput("{End}+{Home 2}{Backspace 2}{Down}")
+
+/*
+해당 항목으로 쿼리 실행
+#param String query   : 실행시킬 쿼리
+#param Boolean quote  : 뭐더라 (default = true)
+#param String endWord : 뭐더라 (endWord = ";")
+*/
+runClipboardQuery(query, quote := true, endWord := ";") {
+	beforeData := A_Clipboard
+
+	if (quote) {
+		endWord := "'" endWord
+	}
+
+	SendInput("^c")
+	Sleep(10)
+	SendInput("+{Enter}")
+	Sleep(1)
+
+	A_Clipboard := query A_Clipboard endWord
+
+	SendInput("^v+{Home}^\^d")
+
+	Sleep(100)
+	A_Clipboard := beforeData
+}
 
 ; # @
