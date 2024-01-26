@@ -20,12 +20,12 @@ global gY      := ""
 ; Config
 configMap := Map()
 
-; Config Classes
-googleTranslatePopup := Popup("googleTranslateUUID", "https://translate.google.co.kr/?sl=en&tl=ko&text=", "Google 번역")
-naverKoDicPopup := Popup("koreanDictionaryUUID", "https://ko.dict.naver.com/", "국어사전")
-naverEnDicPopup := Popup("englishDictionaryUUID", "https://en.dict.naver.com/", "영어사전")
-naverEnDicSearchPopup := Popup.copy(naverEnDicPopup,, naverEnDicPopup.url "#/search?query=")
-SpotifyPopup := Popup("spotifyUUID", "https://open.spotify.com/", "Spotify")
+; Popup Classes
+googleTranslatePopup := Popup("https://translate.google.co.kr/?sl=en&tl=ko&text=", "Google 번역")
+naverKoDicPopup := Popup("https://ko.dict.naver.com/", "국어사전")
+naverEnDicPopup := Popup("https://en.dict.naver.com/", "영어사전")
+naverEnDicSearchPopup := Popup.copy(naverEnDicPopup, naverEnDicPopup.url "#/search?query=")
+SpotifyPopup := Popup("https://open.spotify.com/", "Spotify")
 
 ; Command
 commandMap := Map()
@@ -82,14 +82,13 @@ config()
 alarm()
 
 class Popup {
-	__New(uuidKey, url, needle) {
-		this.uuidKey := uuidKey
+	__New(url, needle) {
 		this.url := url
 		this.needle := needle
 	}
 
-	static copy(popupObject, uuidKey := "", url := "", needle := "") {
-		return Popup(uuidKey? uuidKey : popupObject.uuidKey, url? url : popupObject.url, needle? needle : popupObject.needle)
+	static copy(popupObject, url := "", needle := "") {
+		return Popup(url? url : popupObject.url, needle? needle : popupObject.needle)
 	}
 }
 
@@ -115,7 +114,6 @@ config() {
 
 	; 스포티파이 팝업으로 실행 시 config 초기화
 	if (findValue(spotifyPopupList, A_ComputerName)) {
-		Spotify.setUUIDTitle(getConfigMap().Get(SpotifyPopup.uuidKey))
 		Spotify.isBrowser := true
 	}
 }
