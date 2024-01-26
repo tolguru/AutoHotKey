@@ -27,8 +27,8 @@ naverEnDicPopup := Popup("https://en.dict.naver.com/", "영어사전")
 naverEnDicSearchPopup := Popup.copy(naverEnDicPopup, naverEnDicPopup.url "#/search?query=")
 SpotifyPopup := Popup("https://open.spotify.com/", "Spotify")
 
-; Command
-commandMap := Map()
+; Guide
+guideMap := Map()
 
 ; PC 목록
 mainPC := "PAY-331"
@@ -96,8 +96,8 @@ config() {
 	; File Config 불러오기
 	configLoad()
 
-	; Command Guide 불러오기
-	commandGuideLoad()
+	; Guide 불러오기
+	guideLoad()
 
 	; 특정 PC만 울리게 설정
 	if (findValue(waterAlarmList, A_ComputerName)) {
@@ -123,27 +123,27 @@ getConfigMap() {
 }
 
 /*
-commandMap 스태틱 변수 return
+guideMap 스태틱 변수 return
 */
-getCommandMap() {
-	return commandMap
+getGuideMap() {
+	return guideMap
 }
 
 /* 
-commandMap 초기화
+guideMap 초기화
 */
-commandGuideLoad() {
+guideLoad() {
 	ahkFile := FileOpen(".\" A_ScriptName, "r", "UTF-8") 
 	groupName := ""
-	commandList := ""
+	guideList := ""
 
 	; 줄바꿈 문자로 config 구분 후 ":" 문자로 Key, Value 구분
 	Loop Parse, ahkFile.Read(), "`n" {
 		if (InStr(A_LoopField, "# @")) {
-			if (commandList != "" && groupName != "") {
-				getCommandMap().Set(SubStr(groupName, 1, StrLen(groupName) - 1), groupName "`n" commandList)
+			if (guideList != "" && groupName != "") {
+				getGuideMap().Set(SubStr(groupName, 1, StrLen(groupName) - 1), groupName "`n" guideList)
 
-				commandList := ""
+				guideList := ""
 			}
 
 			groupName := StrSplit(A_LoopField, "# @",, 2)[2]
@@ -156,7 +156,7 @@ commandGuideLoad() {
 			valueArr := StrSplit(hotkeyArr[2], ";#",, 2)
 
 			if (valueArr.Length = 2) {
-				commandList := commandList "`n" (StrLen(hotkeyArr[1]) = 0 ? valueArr[2] : hotkeyArr[1] "  -->  " valueArr[2])
+				guideList := guideList "`n" (StrLen(hotkeyArr[1]) = 0 ? valueArr[2] : hotkeyArr[1] "  -->  " valueArr[2])
 			}			
 		}
 	}
@@ -220,7 +220,7 @@ alarm() {
 ## @Common
 ########################################
 */
-!/::MsgBox(getCommandMap().Get("Common"))
+!/::MsgBox(getGuideMap().Get("Common"))
 
 *XButton2::SendInput("{XButton2}") Sleep(100) ; 마우스 사이드 버튼 중복 입력 방지
 *XButton1::SendInput("{XButton1}") Sleep(100) ; 마우스 사이드 버튼 중복 입력 방지
@@ -783,7 +783,7 @@ blockAllInput(time := 0.1) {
 ########################################
 */
 #HotIf WinActive("ahk_exe Obsidian.exe")
-!/::MsgBox(getCommandMap().Get("Obsidian"))
+!/::MsgBox(getGuideMap().Get("Obsidian"))
 
 +Enter::SendInput("{End}`n") ;# 다음 줄로 이동
 ^Enter::SendInput("{Home}`n{Up}") ;# 윗 줄 추가
@@ -821,7 +821,7 @@ blockAllInput(time := 0.1) {
 ########################################
 */
 #HotIf WinActive("ahk_exe idea64.exe")
-!/::MsgBox(getCommandMap().Get("IntelliJ"))
+!/::MsgBox(getGuideMap().Get("IntelliJ"))
 
 ;~ CapsLock::SendInput("^y")
 ; ^+w::SendInput("^{F4}") ;# 창 닫기
@@ -873,7 +873,7 @@ blockAllInput(time := 0.1) {
 ########################################
 */
 #HotIf WinActive("ahk_exe chrome.exe")
-!/::MsgBox(getCommandMap().Get("Chrome"))
+!/::MsgBox(getGuideMap().Get("Chrome"))
 
 ^q::SendInput("!+d") ;# 창 복사(확장 프로그램 : Duplicate Tab Shortcut)
 !q::SendInput("{F10}{Left 2}{Space}") ;# 사이드 패널 열기
@@ -901,7 +901,7 @@ translate() {
 ########################################
 */
 #HotIf WinActive("ahk_exe dbeaver.exe")
-!/::MsgBox(getCommandMap().Get("DBeaver"))
+!/::MsgBox(getGuideMap().Get("DBeaver"))
 
 !q::SendInput("SELECT *`nFROM   ")
 !w::SendInput("WHERE  1 = 1`nAND    ")
@@ -941,7 +941,7 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 ########################################
 */
 #HotIf WinActive("ahk_exe azuredatastudio.exe")
-!/::MsgBox(getCommandMap().Get("Azure Data Studio"))
+!/::MsgBox(getGuideMap().Get("Azure Data Studio"))
 
 !`::SendInput("^+k") ;# 라인 지우기
 ; !`::SendInput("``") ;# 백틱 입력
@@ -956,7 +956,7 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 ########################################
 */
 #HotIf WinActive("ahk_exe Code.exe")
-!/::MsgBox(getCommandMap().Get("VSCode"))
+!/::MsgBox(getGuideMap().Get("VSCode"))
 
 ; `::SendInput("^+k") ;# 라인 지우기
 ; !`::SendInput("``") ;# 백틱 입력
@@ -971,7 +971,7 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 ########################################
 */
 #HotIf WinActive("ahk_exe slack.exe")
-!/::MsgBox(getCommandMap().Get("Slack"))
+!/::MsgBox(getGuideMap().Get("Slack"))
 
 !q::copyImage() ;# 이미지 복사
 
@@ -1009,7 +1009,7 @@ copyImage() {
 ########################################
 */
 #HotIf WinActive("ahk_exe millie.exe")
-!/::MsgBox(getCommandMap().Get("Millie"))
+!/::MsgBox(getGuideMap().Get("Millie"))
 
 ^x::copyText() ;# 내용 복사 후 뒤에 잡소리 제거
 
@@ -1034,7 +1034,7 @@ copyText() {
 ########################################
 */
 #HotIf WinActive("ahk_exe Lightroom.exe")
-!/::MsgBox(getCommandMap().Get("Lightroom"))
+!/::MsgBox(getGuideMap().Get("Lightroom"))
 
 !z::SendInput("^y") ;# 되돌리기 취소
 
@@ -1045,7 +1045,7 @@ copyText() {
 ########################################
 */
 #HotIf WinActive("ahk_exe Photoshop.exe")
-!/::MsgBox(getCommandMap().Get("Photoshop"))
+!/::MsgBox(getGuideMap().Get("Photoshop"))
 
 !z::SendInput("^+z") ;# 되돌리기 취소
 
@@ -1055,7 +1055,7 @@ copyText() {
 ########################################
 */
 #HotIf WinActive("ahk_exe trello.exe")
-!/::MsgBox(getCommandMap().Get("Trello"))
+!/::MsgBox(getGuideMap().Get("Trello"))
 
 ^+1::SendInput("^!1") ;# 폰트 헤더 1
 ^+2::SendInput("^!2") ;# 폰트 헤더 2
