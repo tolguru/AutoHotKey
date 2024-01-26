@@ -30,9 +30,6 @@ SpotifyPopup := Popup("https://open.spotify.com/", "Spotify")
 ; Command
 commandMap := Map()
 
-; 에러 코드
-ERROR_PATH_NOT_FOUND := 3
-
 ; PC 목록
 mainPC := "PAY-331"
 subPC  := "DESKTOP-2SVBCIT"
@@ -79,7 +76,7 @@ SetControlDelay -1
 UIA.AutoSetFocus := False ; UIA 기능 실행 시 포커스되는 것을 방지
 
 config()
-alarm()
+; alarm()
 
 class Popup {
 	__New(url, needle) {
