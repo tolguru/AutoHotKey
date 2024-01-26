@@ -89,7 +89,7 @@ class Popup {
 */
 config() {
 	; File Config 불러오기
-	configLoad()
+	; configLoad()
 
 	; Guide 불러오기
 	guideLoad()
@@ -160,6 +160,7 @@ guideLoad() {
 }
 
 /*
+(미사용)
 config 파일의 데이터를 key, value로 나눈 후 configMap 초기화
 */
 configLoad() {
@@ -179,6 +180,7 @@ configLoad() {
 }
 
 /*
+(미사용)
 현재 configMap 객체에 있는 데이터를 파일로 저장
 */
 configSave() {
@@ -192,6 +194,7 @@ configSave() {
 }
 
 /*
+(미사용)
 화면 비율에 맞춰 좌표 문자열 생성 (format = "x좌표 y좌표")
 */
 screenRatioSet(x := 0, y := 0) {
@@ -199,6 +202,7 @@ screenRatioSet(x := 0, y := 0) {
 }
 
 /*
+(미사용)
 1분마다 반복되는 재귀함수
 타이머 용도로 사용하고 있음
 */
@@ -244,10 +248,6 @@ alarm() {
 !+c::encryptClipboard() ;# 클립보드 암호화
 !+x::decryptClipboard() ;# 클립보드 복호화
 
-; 현재 온메모리 상태의 config의 특정 map값을 NULL로 수정(파일 수정 X) -> 팝업 UUID 잘못됐을 때 refresh용으로 사용
-; ^+XButton1::getConfigMap().Set(GOOGLE_TRANSLATE_UUID_KEY, "NULL") ;# 구글 번역 config 초기화
-; ^+XButton2::getConfigMap().Set(NAVER_EN_DIC_UUID_KEY, "NULL") ;# 네이버 영어사전 config 초기화
-
 Pause:: {
 	ToolTip("Reload")
 	Reload
@@ -256,10 +256,6 @@ Pause:: {
 F1::runPopup(naverKoDicPopup) ;# 네이버 국어사전 열기
 F3::runPopup(naverEnDicPopup) ;# 네이버 영어사전 열기
 F4::runPopup(googleTranslatePopup) ;# 구글 번역 열기
-
-; #F1::setUUID(naverKoDicPopup.uuidKey) ;# 네이버 국어사전 config 지정
-; #F3::setUUID(naverEnDicPopup.uuidKey) ;# 네이버 영어사전 config 지정
-; #F4::setUUID(googleTranslatePopup.uuidKey) ;# 구글 번역 config 지정
 
 VK19 & F1::Spotify.popupRun() ;# 스포티파이 팝업으로 실행
 ; VK19 & F2::setUUID(SpotifyPopup.uuidKey) ;# 스포티파이 팝업에 UUID 지정
@@ -349,10 +345,11 @@ class Spotify {
 	*/
 	static popupRun() {
 		runPopup(spotifyPopup)
-		Spotify.setUUIDTitle(getConfigMap().Get(spotifyPopup.uuidKey))
+		; Spotify.setUUIDTitle(getConfigMap().Get(spotifyPopup.uuidKey))
 	}
 
 	/*
+	(미사용)
 	Spotify 브라우저 팝업으로 실행
 	*/
 	static setUUIDTitle(uuid) {
@@ -593,6 +590,7 @@ runPopup(popupObject, dataFlag := false, enterFlag := false) {
 }
 
 /*
+(미사용)
 해당 창의 UUID를 직접 지정
 #param String uuidKey : config에 저장할 UUID의 key name
 */
