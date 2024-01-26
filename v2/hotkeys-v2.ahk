@@ -884,8 +884,14 @@ copyImage() {
 	SendInput("{Down}{Enter}")
 }
 
-:*:/s::is:saved `
-:*:/f::from:@
+:*:/s::
+{
+	SendText("is:saved ")
+}
+:*:/f::
+{
+	SendText("from:@")
+}
 
 /*
 ^g::;# 검색
