@@ -12,11 +12,6 @@
 ## 전역변수 선언
 ########################################
 */
-global isStop  := false
-global isFirst := true
-global gX      := ""
-global gY      := ""
-
 ; Config
 configMap := Map()
 
