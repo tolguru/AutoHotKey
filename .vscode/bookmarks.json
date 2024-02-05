@@ -14,22 +14,22 @@
 					"label": "Obsidian"
 				},
 				{
-					"line": 779,
+					"line": 795,
 					"column": 12,
 					"label": "IntelliJ"
 				},
 				{
-					"line": 833,
+					"line": 849,
 					"column": 10,
 					"label": "Chrome"
 				},
 				{
-					"line": 861,
+					"line": 877,
 					"column": 0,
 					"label": "Azure Data Studio"
 				},
 				{
-					"line": 876,
+					"line": 892,
 					"column": 10,
 					"label": "VSCode"
 				}

@@ -246,9 +246,6 @@ alarm() {
 +XButton1::runPopupBlockedInput(googleTranslatePopup,, "{Blind}{Shift Up}") ;# 구글 번역 팝업
 +XButton2::runPopupBlockedInput(naverEnDicSearchPopup, true, "{Blind}{Shift Up}") ;# 네이버 영어사전 팝업
 
-!+c::encryptClipboard() ;# 클립보드 암호화
-!+x::decryptClipboard() ;# 클립보드 복호화
-
 Pause:: {
 	ToolTip("Reload")
 	Reload
@@ -264,6 +261,9 @@ VK19 & Up::setMultiHotkey(, () => Spotify.like(false), () => Spotify.like(true))
 VK19 & Down::Spotify.replay() ;# 스포티파이 곡 반복
 VK19 & Right::Spotify.playBarClick(5) ;# 스포티파이 다음 곡
 VK19 & Left::Spotify.playBarClick(3) ;# 스포티파이 이전 곡
+
+VK19 & c::encryptClipboard() ;# 클립보드 암호화
+VK19 & x::decryptClipboard() ;# 클립보드 복호화
 
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
@@ -764,15 +764,31 @@ blockAllInput(time := 0.1) {
 /* 
 기본 단축키들 도움말 출력용
 ::;#
-^+i::;# 개발자 도구
+^+i:: ;# 개발자 도구
+::;#
+^g:: ;# 그룹화
+^+g:: ;# 그룹화 해제
+::;#
+스페이스바 드래그:: ;# 화면 이동
+::;#
+!+c:: ;# png로 복사
+::;#
+^!c:: ;# 스타일 복사
+^!v:: ;# 스타일 붙여넣기
 ::;#
 ::;# ---- 키 지정 라인 ----
 ::;#
 ^Tab:: ;# 저장하고 다른 작업공간 레이아웃 불러오기
+::;#
 !q:: ;# Connect elements
 !w:: ;# Normalize Selected Arrows
 !e:: ;# Elbow connectors
 !r:: ;# Reverse arrows
+::;#
+!a:: ;# Change font color
+!s:: ;# Toggle highlight
+::;#
+!z:: ;# Clear formatting
 */
 
 /*
