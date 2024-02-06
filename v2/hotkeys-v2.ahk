@@ -780,13 +780,12 @@ blockAllInput(time := 0.1) {
 ::;#
 ^Tab:: ;# 저장하고 다른 작업공간 레이아웃 불러오기
 ::;#
-!q:: ;# Connect elements
-!w:: ;# Normalize Selected Arrows
+; !w:: ;# Normalize Selected Arrows
+!q:: ;# 하이라이트
 !e:: ;# Elbow connectors
 !r:: ;# Reverse arrows
 ::;#
-!a:: ;# Change font color
-!s:: ;# Toggle highlight
+!a:: ;# Toggle grid
 ::;#
 !z:: ;# Clear formatting
 */
