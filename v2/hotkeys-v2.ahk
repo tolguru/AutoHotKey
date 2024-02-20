@@ -749,15 +749,15 @@ blockAllInput(time := 0.1) {
 ^Enter::SendInput("{Home}`n{Up}") ;# 윗 줄 추가
 
 ;# 콜아웃
-::/cat::> [{!}TIP] TIP
-::/caq::> [{!}QUESTION] QUESTION
-::/cae::> [{!}EXAMPLE] EXAMPLE
-::/caw::> [{!}WARNING] WARNING
+:*:/cat::> [{!}TIP] TIP`n> `
+:*:/caq::> [{!}QUESTION] QUESTION`n> `
+:*:/cae::> [{!}EXAMPLE] EXAMPLE`n> `
+:*:/caw::> [{!}WARNING] WARNING`n> `
 
 ; 체크박스
-::/-::- [ ] 
-::/?::- [?] 
-::/>::- [>] 
+:*:/-::- [ ] `
+:*:/?::- [?] `
+:*:/>::- [>] `
 
 /* 
 기본 단축키들 도움말 출력용
