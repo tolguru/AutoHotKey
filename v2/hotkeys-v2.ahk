@@ -747,8 +747,6 @@ blockAllInput(time := 0.1) {
 
 +Enter::SendInput("{End}`n") ;# 다음 줄로 이동
 ^Enter::SendInput("{Home}`n{Up}") ;# 윗 줄 추가
-!Enter::SendText("<br>`n`n") ;# 줄바꿈(<br>)
-^+Enter::SendInput("{Home}`n{Up}") ;# 윗 줄 추가
 
 ;# 콜아웃
 ::/cat::> [{!}TIP] TIP
@@ -794,11 +792,8 @@ s or g:: ;# 선 or 채우기 색 선택(팔레트 창 켜져있을 때)
 ::;# ---- 일반 ----
 ::;#
 ^Tab:: ;# 저장하고 다른 작업공간 레이아웃 불러오기
-::;#
 ^h:: ;# 하이라이트
-::;#
 !z:: ;# Clear formatting
-::;#
 ^+d:: ;# omnisearch
 */
 
