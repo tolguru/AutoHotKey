@@ -7,6 +7,65 @@
 ########################################
 */
 
+; url, 쿠키 모두 입력받게 구현
+F9:: {
+	plainUrl := InputBox("URL 입력",).Value
+	url := SubStr(plainUrl, 1, StrLen(plainUrl) - 13)
+	risingCount := Number(SubStr(plainUrl, StrLen(url) + 1))
+	cookie := InputBox("쿠키 입력").Value
+
+	httpObj := ComObject("WinHTTP.WinHTTPRequest.5.1")
+
+	Loop {
+		++risingCount
+		httpObj.Open("GET", url risingCount)
+
+		httpObj.SetRequestHeader("Cookie", cookie)
+
+		httpObj.Send()
+		httpObj.WaitForResponse
+
+		; 응답 데이터 분석해서 좌석 개수 체크
+		responseData := httpObj.ResponseText
+		timeList := StrSplit(SubStr(responseData, InStr(responseData, 'time_list')), "{") ; time_list 배열 만들기(2부터 써야 함)
+
+		Loop timeList.Length - 1 {
+			timeData := StrSplit(timeList[A_Index + 1], ",")
+
+			endCnt := StrSplit(timeData[3], ":")[2]
+			othersCnt := StrSplit(timeData[6], ":")[2]
+			totCnt := SubStr(StrSplit(timeData[7], ":")[2], 1, 2)
+
+			if (endCnt + othersCnt != totCnt) {
+				MsgBox("있다")
+
+				return
+			}
+		}
+
+		Sleep(Random(1000, 2000))
+	}
+}
+
+F10:: {
+	str := '{"tennisVO":{"auth_yn":"","birth_date":"","captcha":"","chk_seq":"","court_array":[],"court_no":"","end_date":"","end_t":"","end_t_array":[],"firstIndex":1,"from":"","group_name":"","group_name2":"","group_name3":"","in_date":"","in_man":"","item_code":"","lastIndex":1,"light_yn":"","member_gubun":"","member_no":"","member_seq":"","pageIndex":1,"pageSize":10,"pageUnit":10,"recordCountPerPage":12,"remark":"","reserve_d_seq":"","reserve_m_seq":"","sc_id":"","search_before_day":"","search_before_month":"","search_before_year":"","search_checks":[],"search_date":"20240225","search_dateA":"","search_day":"","search_gubun":"date","search_keyword":"","search_keyword2":"","search_keyword3":"","search_keyword4":"","search_keyword5":"","search_keyword6":"","search_lngtratnlc":"","search_month":"","search_place":"","search_time":"","search_type":"","search_type2":"","search_type3":"","search_type4":"","search_type5":"","search_type6":"","search_year":"","seq_no":"","st_tag_code":"","start_date":"","start_t":"","start_t_array":[],"tel_no1":"","tel_no2":"","tel_no3":"","tennis_seq":"","to":"","up_code":"","up_date":"","up_man":"","use_tb":"","use_yn":"","user_id":"rnjsehdgks01","user_nm":"","weekday":""},"ss_check":1,"time_list":[{"startT":"06:00","endT":"07:00","endCnt":11,"progCnt":0,"myProgCnt":0,"othersCnt":8,"totCnt":19},{"startT":"07:00","endT":"08:00","endCnt":11,"progCnt":0,"myProgCnt":0,"othersCnt":8,"totCnt":19},{"startT":"08:00","endT":"09:00","endCnt":13,"progCnt":0,"myProgCnt":0,"othersCnt":6,"totCnt":19},{"startT":"09:00","endT":"10:00","endCnt":14,"progCnt":0,"myProgCnt":0,"othersCnt":5,"totCnt":19},{"startT":"10:00","endT":"11:00","endCnt":14,"progCnt":0,"myProgCnt":0,"othersCnt":5,"totCnt":19},{"startT":"11:00","endT":"12:00","endCnt":14,"progCnt":0,"myProgCnt":0,"othersCnt":5,"totCnt":19},{"startT":"12:00","endT":"13:00","endCnt":14,"progCnt":0,"myProgCnt":0,"othersCnt":5,"totCnt":19},{"startT":"13:00","endT":"14:00","endCnt":15,"progCnt":0,"myProgCnt":0,"othersCnt":4,"totCnt":19},{"startT":"14:00","endT":"15:00","endCnt":15,"progCnt":0,"myProgCnt":0,"othersCnt":4,"totCnt":19},{"startT":"15:00","endT":"16:00","endCnt":15,"progCnt":0,"myProgCnt":0,"othersCnt":4,"totCnt":19},{"startT":"16:00","endT":"17:00","endCnt":15,"progCnt":0,"myProgCnt":0,"othersCnt":4,"totCnt":19},{"startT":"17:00","endT":"18:00","endCnt":12,"progCnt":0,"myProgCnt":0,"othersCnt":7,"totCnt":19},{"startT":"18:00","endT":"19:00","endCnt":12,"progCnt":0,"myProgCnt":0,"othersCnt":7,"totCnt":19},{"startT":"19:00","endT":"20:00","endCnt":12,"progCnt":0,"myProgCnt":0,"othersCnt":7,"totCnt":19},{"startT":"20:00","endT":"21:00","endCnt":12,"progCnt":0,"myProgCnt":0,"othersCnt":7,"totCnt":19},{"startT":"21:00","endT":"22:00","endCnt":10,"progCnt":0,"myProgCnt":0,"othersCnt":11,"totCnt":21}]}'
+	timeList := StrSplit(SubStr(str, InStr(str, 'time_list')), "{") ; time_list 배열 만들기(2부터 써야 함)
+
+	Loop timeList.Length - 1 {
+		timeData := StrSplit(timeList[A_Index + 1], ",")
+
+		endCnt := StrSplit(timeData[3], ":")[2]
+		othersCnt := StrSplit(timeData[6], ":")[2]
+		totCnt := SubStr(StrSplit(timeData[7], ":")[2], 1, 2)
+
+		if (endCnt + othersCnt != totCnt) {
+			MsgBox("있다")
+		}
+	}
+
+	MsgBox("끝")
+}
+
 /*
 ########################################
 ## 전역변수 선언
