@@ -7,15 +7,6 @@
 ########################################
 */
 
-; 슬랙 임시 기능. 재접속 시 되는지 테스트 해봐야 함
-F8:: {
-	httpObj := ComObject("WinHTTP.WinHTTPRequest.5.1")
-	httpObj.Open("GET", "https://w1666144998-jxs393006.slack.com/docs/T047TLC218Q/F06M86P5HUY")
-	httpObj.SetRequestHeader("Cookie", 'b=87d60a430ac9a40c96c2b2c94a5ab7d2; OptanonAlertBoxClosed=2024-02-13T07:55:08.975Z; lc=1707810967; shown_ssb_redirect_page=1; ssb_instance_id=02aef290-60fe-4095-9ea8-b6d957fbebd9; d-s=1707873995; utm=%7B%22utm_source%22%3A%22in-prod%22%2C%22utm_medium%22%3A%22inprod-get_more_app_actions-message_action_dialog-click%22%7D; x=87d60a430ac9a40c96c2b2c94a5ab7d2.1708931996; OptanonConsent=isGpcEnabled=0&datestamp=Mon+Feb+26+2024+16%3A31%3A00+GMT%2B0900+(%ED%95%9C%EA%B5%AD+%ED%91%9C%EC%A4%80%EC%8B%9C)&version=202401.2.0&isIABGlobal=false&hosts=&consentId=eda2c9b4-9aed-42fc-8723-3ce09f2b5dd7&interactionCount=2&landingPath=NotLandingPage&groups=1%3A1%2C2%3A1%2C3%3A1%2C4%3A1&AwaitingReconsent=false&geolocation=KR%3B45&browserGpcFlag=0; d=xoxd-tExEjiGs7%2F2dDcZ9r5k5oGvKNdnSPAK%2FlNJZ9g6hlUqjzJZ3kKaCMwzKNMZI8pOWm81t1UrhT3PGDZRjD1ZYQgsB7rvXNk6ihxLJ1dayk6K74WdOLB2U%2B016aGH69DbJ7E9ah2Avin8312D7EQ0AnS9YTwBy6H0MuiSHHMI4EQfIewa3A7cehGIBfRB3j9kii3aqAAfbyQc%3D')
-	httpObj.Send()
-	httpObj.WaitForResponse
-}
-
 ; url, 쿠키 모두 입력받게 구현
 F9:: {
 	plainUrl := InputBox("URL 입력",).Value
@@ -336,6 +327,35 @@ VK19 & x::decryptClipboard() ;# 클립보드 복호화
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
 Hotstring(":*:123.", PHONE_NUM)
+
+/*
+HTTP 요청 후 HTTP Object 반환
+#param String method : HTTP Method
+#param String url : Request URL
+#param String[][] headers : [["key1", "value1"]["key2", "value2"]]
+*/
+httpSend(method, url, headers := []) {
+	httpObj := ComObject("WinHTTP.WinHTTPRequest.5.1")
+	httpObj.Open(method, url)
+	
+	httpSetHeaders(httpObj, headers)
+
+	httpObj.Send()
+	httpObj.WaitForResponse
+
+	return httpObj
+}
+
+/*
+Http Object에 request header 지정
+#param Object httpObj : HTTP Object
+#param String[][] headers : [["key1", "value1"]["key2", "value2"]]
+*/
+httpSetHeaders(httpObj, headers := []) {
+	Loop headers.Length {
+		httpObj.SetRequestHeader(headers[A_Index][A_Index], headers[A_Index][A_Index + 1])
+	}
+}
 
 /*
 왼쪽/오른쪽 화면으로 창 이동 후 전체화면
@@ -980,19 +1000,34 @@ translate() {
 ## @Slack
 ########################################
 */
+/*
+브라우저를 통해 Slcak에 접근할 때 필요한 쿠키
+*/
+SLACK_AUTH_COOKIE := EnvGet("aaSlackAuthCookie")
+
+/*
+Canvas URL을 저장하는 Map object
+KEY : 현재 Slack 창의 Needle
+VALUE : Canvas URL
+*/
+slackCanvasMap := Map()
+slackCanvasMap["bpmg"] := "https://w1666144998-jxs393006.slack.com/docs/T047TLC218Q/F069J6ULU6S"
+slackCanvasMap["colorstreet_api"] := "https://w1666144998-jxs393006.slack.com/docs/T047TLC218Q/F06M86P5HUY"
+slackCanvasMap["colorstreet_batch"] := "https://w1666144998-jxs393006.slack.com/docs/T047TLC218Q/F06MF2ER34Y"
+
 #HotIf WinActive("ahk_exe slack.exe")
 !/::MsgBox(getGuideMap().Get("Slack"))
 
-!q::copyImage() ;# 이미지 복사
+!`::openCanvas(slackCanvasMap)
 
-/*
-이미지 클릭된 상태일 때 이미지 복사
-*/
-copyImage() {
-	WinGetPos(,, &x, &y, "A")
-	ControlClick("x" (x / 2) " y" (y / 2), "A",, "Right")
-	Sleep(50)
-	SendInput("{Down}{Enter}")
+openCanvas(map) {
+	presentTitle := WinGetTitle("A")
+
+	For key, url in map {
+		if (InStr(presentTitle, key)) {
+			httpSend("GET", url, [["Cookie", SLACK_AUTH_COOKIE]])
+		}
+	}
 }
 
 :*:/s::
