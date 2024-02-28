@@ -7,65 +7,6 @@
 ########################################
 */
 
-; url, 쿠키 모두 입력받게 구현
-F9:: {
-	plainUrl := InputBox("URL 입력",).Value
-	url := SubStr(plainUrl, 1, StrLen(plainUrl) - 13)
-	risingCount := Number(SubStr(plainUrl, StrLen(url) + 1))
-	cookie := InputBox("쿠키 입력").Value
-
-	httpObj := ComObject("WinHTTP.WinHTTPRequest.5.1")
-
-	Loop {
-		++risingCount
-		httpObj.Open("GET", url risingCount)
-
-		httpObj.SetRequestHeader("Cookie", cookie)
-
-		httpObj.Send()
-		httpObj.WaitForResponse
-
-		; 응답 데이터 분석해서 좌석 개수 체크
-		responseData := httpObj.ResponseText
-		timeList := StrSplit(SubStr(responseData, InStr(responseData, 'time_list')), "{") ; time_list 배열 만들기(2부터 써야 함)
-
-		Loop timeList.Length - 1 {
-			timeData := StrSplit(timeList[A_Index + 1], ",")
-
-			endCnt := StrSplit(timeData[3], ":")[2]
-			othersCnt := StrSplit(timeData[6], ":")[2]
-			totCnt := SubStr(StrSplit(timeData[7], ":")[2], 1, 2)
-
-			if (endCnt + othersCnt != totCnt) {
-				MsgBox("있다")
-
-				return
-			}
-		}
-
-		Sleep(Random(1000, 2000))
-	}
-}
-
-F10:: {
-	str := '{"tennisVO":{"auth_yn":"","birth_date":"","captcha":"","chk_seq":"","court_array":[],"court_no":"","end_date":"","end_t":"","end_t_array":[],"firstIndex":1,"from":"","group_name":"","group_name2":"","group_name3":"","in_date":"","in_man":"","item_code":"","lastIndex":1,"light_yn":"","member_gubun":"","member_no":"","member_seq":"","pageIndex":1,"pageSize":10,"pageUnit":10,"recordCountPerPage":12,"remark":"","reserve_d_seq":"","reserve_m_seq":"","sc_id":"","search_before_day":"","search_before_month":"","search_before_year":"","search_checks":[],"search_date":"20240225","search_dateA":"","search_day":"","search_gubun":"date","search_keyword":"","search_keyword2":"","search_keyword3":"","search_keyword4":"","search_keyword5":"","search_keyword6":"","search_lngtratnlc":"","search_month":"","search_place":"","search_time":"","search_type":"","search_type2":"","search_type3":"","search_type4":"","search_type5":"","search_type6":"","search_year":"","seq_no":"","st_tag_code":"","start_date":"","start_t":"","start_t_array":[],"tel_no1":"","tel_no2":"","tel_no3":"","tennis_seq":"","to":"","up_code":"","up_date":"","up_man":"","use_tb":"","use_yn":"","user_id":"rnjsehdgks01","user_nm":"","weekday":""},"ss_check":1,"time_list":[{"startT":"06:00","endT":"07:00","endCnt":11,"progCnt":0,"myProgCnt":0,"othersCnt":8,"totCnt":19},{"startT":"07:00","endT":"08:00","endCnt":11,"progCnt":0,"myProgCnt":0,"othersCnt":8,"totCnt":19},{"startT":"08:00","endT":"09:00","endCnt":13,"progCnt":0,"myProgCnt":0,"othersCnt":6,"totCnt":19},{"startT":"09:00","endT":"10:00","endCnt":14,"progCnt":0,"myProgCnt":0,"othersCnt":5,"totCnt":19},{"startT":"10:00","endT":"11:00","endCnt":14,"progCnt":0,"myProgCnt":0,"othersCnt":5,"totCnt":19},{"startT":"11:00","endT":"12:00","endCnt":14,"progCnt":0,"myProgCnt":0,"othersCnt":5,"totCnt":19},{"startT":"12:00","endT":"13:00","endCnt":14,"progCnt":0,"myProgCnt":0,"othersCnt":5,"totCnt":19},{"startT":"13:00","endT":"14:00","endCnt":15,"progCnt":0,"myProgCnt":0,"othersCnt":4,"totCnt":19},{"startT":"14:00","endT":"15:00","endCnt":15,"progCnt":0,"myProgCnt":0,"othersCnt":4,"totCnt":19},{"startT":"15:00","endT":"16:00","endCnt":15,"progCnt":0,"myProgCnt":0,"othersCnt":4,"totCnt":19},{"startT":"16:00","endT":"17:00","endCnt":15,"progCnt":0,"myProgCnt":0,"othersCnt":4,"totCnt":19},{"startT":"17:00","endT":"18:00","endCnt":12,"progCnt":0,"myProgCnt":0,"othersCnt":7,"totCnt":19},{"startT":"18:00","endT":"19:00","endCnt":12,"progCnt":0,"myProgCnt":0,"othersCnt":7,"totCnt":19},{"startT":"19:00","endT":"20:00","endCnt":12,"progCnt":0,"myProgCnt":0,"othersCnt":7,"totCnt":19},{"startT":"20:00","endT":"21:00","endCnt":12,"progCnt":0,"myProgCnt":0,"othersCnt":7,"totCnt":19},{"startT":"21:00","endT":"22:00","endCnt":10,"progCnt":0,"myProgCnt":0,"othersCnt":11,"totCnt":21}]}'
-	timeList := StrSplit(SubStr(str, InStr(str, 'time_list')), "{") ; time_list 배열 만들기(2부터 써야 함)
-
-	Loop timeList.Length - 1 {
-		timeData := StrSplit(timeList[A_Index + 1], ",")
-
-		endCnt := StrSplit(timeData[3], ":")[2]
-		othersCnt := StrSplit(timeData[6], ":")[2]
-		totCnt := SubStr(StrSplit(timeData[7], ":")[2], 1, 2)
-
-		if (endCnt + othersCnt != totCnt) {
-			MsgBox("있다")
-		}
-	}
-
-	MsgBox("끝")
-}
-
 /*
 ########################################
 ## 전역변수 선언
@@ -279,7 +220,7 @@ alarm() {
 ## @Common
 ########################################
 */
-!/::MsgBox(getGuideMap().Get("Common"))
+#/::MsgBox(getGuideMap().Get("Common"))
 
 *XButton2::SendInput("{XButton2}") Sleep(100) ; 마우스 사이드 버튼 중복 입력 방지
 *XButton1::SendInput("{XButton1}") Sleep(100) ; 마우스 사이드 버튼 중복 입력 방지
@@ -329,6 +270,34 @@ VK19 & x::decryptClipboard() ;# 클립보드 복호화
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
 Hotstring(":*:123.", PHONE_NUM)
+
+/*
+Guide 출력을 위해 GUI를 초기화 후 반환
+#param String fileName : 출력할 파일명
+*/
+createGuideGui(fileName) {
+	guiObj := Gui("-MinimizeBox")
+	guiObj.BackColor := 0xFFFFFF
+	guiObj.SetFont("s12 q5", "Noto Sans KR")
+	guiObj.OnEvent("Escape", guiObj.Hide)
+
+	setGuiTextFromFile(guiObj, fileName)
+
+	return guiObj
+}
+
+/*
+Guide 파일 오픈 후 GUI Object에 텍스트 추가
+#param Object guiObj : GUI Object
+#param String fileName : 출력할 파일명
+*/
+setGuiTextFromFile(guiObj, fileName) {
+	guideFile := FileOpen("./guide/shortcut/" fileName, "r", "UTF-8")
+	
+	guiObj.AddText(, guideFile.Read())
+
+	guideFile.Close()
+}
 
 /*
 HTTP 요청 후 HTTP Object 반환
@@ -833,10 +802,10 @@ blockAllInput(time := 0.1) {
 ########################################
 */
 #HotIf WinActive("ahk_exe Obsidian.exe")
-!/::MsgBox(getGuideMap().Get("Obsidian"))
+#/::MsgBox(getGuideMap().Get("Obsidian"))
 
 +Enter::SendInput("{End}`n") ;# 다음 줄로 이동
-^Enter::SendInput("{Home}`n{Up}") ;# 윗 줄 추가
+; ^Enter::SendInput("{Home}`n{Up}") ;# 윗 줄 추가
 
 ;# 콜아웃
 :*:/cat::> [{!}TIP] TIP`n> `
@@ -892,8 +861,10 @@ s or g:: ;# 선 or 채우기 색 선택(팔레트 창 켜져있을 때)
 ## @IntelliJ
 ########################################
 */
+intelliJGuideGui := createGuideGui("IntelliJ.md")
+
 #HotIf WinActive("ahk_exe idea64.exe")
-!/::MsgBox(getGuideMap().Get("IntelliJ"))
+#/::intelliJGuideGui.Show()
 
 ^.::SendInput("/**`n") ;# 주석 달기(IntelliJ 설정에 따라 Doc 자동 생성됨)
 
@@ -928,7 +899,7 @@ s or g:: ;# 선 or 채우기 색 선택(팔레트 창 켜져있을 때)
 ########################################
 */
 #HotIf WinActive("ahk_exe vivaldi.exe")
-!/::MsgBox(getGuideMap().Get("Vivaldi"))
+#/::MsgBox(getGuideMap().Get("Vivaldi"))
 
 !`::SendInput("!0") ;# Window Workspaces로 변경
 
@@ -949,7 +920,7 @@ Alt + W:: ;# 탭 더미 해제
 ########################################
 */
 #HotIf WinActive("ahk_exe chrome.exe")
-!/::MsgBox(getGuideMap().Get("Chrome"))
+#/::MsgBox(getGuideMap().Get("Chrome"))
 
 ^q::SendInput("!+d") ;# 창 복사(확장 프로그램 : Duplicate Tab Shortcut)
 !q::SendInput("{F10}{Left 2}{Space}") ;# 사이드 패널 열기
@@ -977,7 +948,7 @@ translate() {
 ########################################
 */
 #HotIf WinActive("ahk_exe azuredatastudio.exe")
-!/::MsgBox(getGuideMap().Get("Azure Data Studio"))
+#/::MsgBox(getGuideMap().Get("Azure Data Studio"))
 
 !`::SendInput("^+k") ;# 라인 지우기
 ; !`::SendInput("``") ;# 백틱 입력
@@ -992,7 +963,7 @@ translate() {
 ########################################
 */
 #HotIf WinActive("ahk_exe Code.exe")
-!/::MsgBox(getGuideMap().Get("VSCode"))
+#/::MsgBox(getGuideMap().Get("VSCode"))
 
 !c::SendInput("console.log(){Left}") ;# js 콘솔 자동입력
 ^+/::SendInput("!+a") ;# 블록 주석 토글
@@ -1018,7 +989,7 @@ slackCanvasMap["colorstreet_api"] := "https://w1666144998-jxs393006.slack.com/do
 slackCanvasMap["colorstreet_batch"] := "https://w1666144998-jxs393006.slack.com/docs/T047TLC218Q/F06MF2ER34Y"
 
 #HotIf WinActive("ahk_exe slack.exe")
-!/::MsgBox(getGuideMap().Get("Slack"))
+#/::MsgBox(getGuideMap().Get("Slack"))
 
 !`::openCanvas(slackCanvasMap) ;# 캔버스 열기
 
@@ -1062,7 +1033,7 @@ openCanvas(map) {
 ########################################
 */
 #HotIf WinActive("ahk_exe millie.exe")
-!/::MsgBox(getGuideMap().Get("Millie"))
+#/::MsgBox(getGuideMap().Get("Millie"))
 
 ^x::copyText() ;# 내용 복사 후 뒤에 잡소리 제거
 
@@ -1087,7 +1058,7 @@ copyText() {
 ########################################
 */
 #HotIf WinActive("ahk_exe Lightroom.exe")
-!/::MsgBox(getGuideMap().Get("Lightroom"))
+#/::MsgBox(getGuideMap().Get("Lightroom"))
 
 !z::SendInput("^y") ;# 되돌리기 취소
 
@@ -1097,7 +1068,7 @@ copyText() {
 ########################################
 */
 #HotIf WinActive("ahk_exe Photoshop.exe")
-!/::MsgBox(getGuideMap().Get("Photoshop"))
+#/::MsgBox(getGuideMap().Get("Photoshop"))
 
 !z::SendInput("^+z") ;# 되돌리기 취소
 
@@ -1107,7 +1078,7 @@ copyText() {
 ########################################
 */
 #HotIf WinActive("ahk_exe trello.exe")
-!/::MsgBox(getGuideMap().Get("Trello"))
+#/::MsgBox(getGuideMap().Get("Trello"))
 
 ^+1::SendInput("^!1") ;# 폰트 헤더 1
 ^+2::SendInput("^!2") ;# 폰트 헤더 2
@@ -1119,7 +1090,7 @@ copyText() {
 ########################################
 */
 #HotIf WinActive("ahk_exe dbeaver.exe")
-!/::MsgBox(getGuideMap().Get("DBeaver"))
+#/::MsgBox(getGuideMap().Get("DBeaver"))
 
 !q::SendInput("SELECT *`nFROM   ")
 !w::SendInput("WHERE  1 = 1`nAND    ")
