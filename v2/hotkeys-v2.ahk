@@ -1020,7 +1020,7 @@ slackCanvasMap["colorstreet_batch"] := "https://w1666144998-jxs393006.slack.com/
 #HotIf WinActive("ahk_exe slack.exe")
 !/::MsgBox(getGuideMap().Get("Slack"))
 
-!`::openCanvas(slackCanvasMap)
+!`::openCanvas(slackCanvasMap) ;# 캔버스 열기
 
 openCanvas(map) {
 	presentTitle := WinGetTitle("A")
