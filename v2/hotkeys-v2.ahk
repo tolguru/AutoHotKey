@@ -253,9 +253,9 @@ Pause:: {
 	Reload
 }
 
-F1::runPopup(naverKoDicPopup) ;# 네이버 국어사전 열기
-F3::runPopup(naverEnDicPopup) ;# 네이버 영어사전 열기
-F4::runPopup(googleTranslatePopup) ;# 구글 번역 열기
+#F1::runPopup(naverKoDicPopup) ;# 네이버 국어사전 열기
+#F2::runPopup(naverEnDicPopup) ;# 네이버 영어사전 열기
+#F3::runPopup(googleTranslatePopup) ;# 구글 번역 열기
 
 VK19 & F1::Spotify.popupRun() ;# 스포티파이 팝업으로 실행
 ; VK19 & F2::setUUID(SpotifyPopup.uuidKey) ;# 스포티파이 팝업에 UUID 지정
@@ -278,7 +278,7 @@ Guide 출력을 위해 GUI를 초기화 후 반환
 createGuideGui(fileName) {
 	guiObj := Gui("-MinimizeBox")
 	guiObj.BackColor := 0xFFFFFF
-	guiObj.SetFont("s12 q5", "Noto Sans KR")
+	guiObj.SetFont("s11 q5", "Noto Sans KR")
 	guiObj.OnEvent("Escape", guiObj.Hide)
 
 	setGuiTextFromFile(guiObj, fileName)
