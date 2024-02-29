@@ -866,7 +866,7 @@ intelliJGuideGui := createGuideGui("IntelliJ.md")
 #HotIf WinActive("ahk_exe idea64.exe")
 #/::intelliJGuideGui.Show()
 
-^.::SendInput("/**`n") ;# 주석 달기(IntelliJ 설정에 따라 Doc 자동 생성됨)
+; ^.::SendInput("/**`n") ;# 주석 달기(IntelliJ 설정에 따라 Doc 자동 생성됨)
 
 /* 
 기본 단축키들 도움말 출력용
