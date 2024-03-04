@@ -16,7 +16,8 @@ Alt + Ins    코드 생성
 Ctrl + U    부모 클래스 / 메서드로 이동
 F2    다음 / 이전(Shift) 오류
 Alt + Home    탐색 표시줄에서 패키지 탐색
-
+Alt + /    문구들 싸이클 돌려서 가져오기( + Shift)
+F5    현재 파일 복사
 
 # 이미 적응한 단축키(유용도순)
 
@@ -34,9 +35,7 @@ Ctrl + Shift + Alt + ↑↓    GIT - 수정된 부분 보기
 Ctrl + Alt + Z    GIT - 현재 커서 부분 롤백
 Alt + 0-9    도구 창 열기
 Ctrl + Shift + A    액션 찾기
-
-Shift + F6    이름 리팩토링
----                                                                                                                         
+---                                                                                                                                          
 @ 디버깅
 
 Ctrl + (Shift) + F8    중단점 토글/보기
@@ -61,12 +60,13 @@ Ctrl + Alt + Shift + T    리팩토링 메뉴
 Ctrl + Alt + O    import 정리
 Ctrl + Alt + I    들여쓰기 정리
 Ctrl + Alt + L    코드 리포맷팅(흠..)
+Shift + F6    이름 리팩토링
 
 
 @ Run/Debug
 
 Shift + F10/F9    최근 설정대로 Run/Debug
-Alt + Shift + F10/F9    최근 Run/Debug 목록
+Alt + Shift + F10    최근 Run/Debug 목록(Shift 누르면 Debug)
 Ctrl + Shift + F10    현재 에디터 커서의 모듈 Run
 
 
