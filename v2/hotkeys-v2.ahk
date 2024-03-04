@@ -288,15 +288,37 @@ createGuideGui(fileName) {
 
 /*
 Guide 파일 오픈 후 GUI Object에 텍스트 추가
+"---"가 구분자(Column) 역할을 함
 #param Object guiObj : GUI Object
 #param String fileName : 출력할 파일명
 */
 setGuiTextFromFile(guiObj, fileName) {
-	guideFile := FileOpen("./guide/shortcut/" fileName, "r", "UTF-8")
+	guideText := readTextFromFile("./guide/shortcut/" fileName)
+	guideContext := splitGuideText(guideText)
 	
-	guiObj.AddText(, guideFile.Read())
+	addContextToGuideGui(guiObj, guideContext)
+}
+
+addContextToGuideGui(guiObj, guideContext) {
+	guiObj.Add("Text", "Section")
+
+	Loop guideContext.Length {
+		guiObj.Add("Text", "ys", guideContext[A_Index])
+	}
+}
+
+readTextFromFile(path, decode := "UTF-8") {
+	guideFile := FileOpen(path, "r", decode)
+	
+	text := guideFile.Read()
 
 	guideFile.Close()
+
+	return text
+}
+
+splitGuideText(guideText) {
+	return StrSplit(guideText, "---")
 }
 
 /*
