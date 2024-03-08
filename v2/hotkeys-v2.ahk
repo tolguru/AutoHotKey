@@ -612,10 +612,10 @@ urlEncode(originData, re := "[0-9A-Za-z]") {
 runPopup 함수 실행 중 Input Block, 추가 입력(호출 핫키를 Release해서 입력간 오류 방지용)
 */
 runPopupBlockedInput(popupObject, enterFlag := false, input := "") {
-	BlockInput True
-	SendInput(input)
+	; BlockInput True
+	; SendInput(input)
 	runPopup(popupObject, true, enterFlag)
-	BlockInput False
+	; BlockInput False
 }
 
 /*
