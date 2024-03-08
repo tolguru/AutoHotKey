@@ -10,6 +10,8 @@ Shift + Esc    툴 창 숨기기
 Ctrl + F12    현재 클래스 메서드 검색(Structure)
 Ctrl + Shift + F12    에디터 창만 표시
 Alt + (Shift) + J    매칭 항목 멀티커서
+Ctrl + Alt + Shift + J    매칭 전체 멀티커서
+Ctrl * 2 + ↑↓    멀티커서 추가
 Ctrl + .    블록 접고 펴기
 Ctrl + Shift -+    블록 전체 접고 펴기
 Alt + Ins    코드 생성
@@ -18,6 +20,7 @@ F2    다음 / 이전(Shift) 오류
 Alt + Home    탐색 표시줄에서 패키지 탐색
 Alt + /    문구들 싸이클 돌려서 가져오기( + Shift)
 F5    현재 파일 복사
+Ctrl + Alt + Insert    뭐든 추가
 
 # 이미 적응한 단축키(유용도순)
 
