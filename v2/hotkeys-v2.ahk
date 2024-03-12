@@ -256,8 +256,8 @@ Pause:: {
 #F9::runPopup(naverKoDicPopup) ;# 네이버 국어사전 열기
 #F10::runPopup(naverEnDicPopup) ;# 네이버 영어사전 열기
 #F11::runPopup(googleTranslatePopup) ;# 구글 번역 열기
-^#F11::runPopupBlockedInput(googleTranslatePopup,, "{Blind}{Shift Up}") ;# 구글 번역 팝업
-^#F10::runPopupBlockedInput(naverEnDicSearchPopup, true, "{Blind}{Shift Up}") ;# 네이버 영어사전 팝업
+^#F11::runPopupBlockedInput(googleTranslatePopup,, "{Blind}{LWin Up}{LCtrl Up}") ;# 구글 번역 팝업
+^#F10::runPopupBlockedInput(naverEnDicSearchPopup, true, "{Blind}{LWin Up}{LCtrl Up}") ;# 네이버 영어사전 팝업
 
 VK19 & F1::Spotify.popupRun() ;# 스포티파이 팝업으로 실행
 ; VK19 & F2::setUUID(SpotifyPopup.uuidKey) ;# 스포티파이 팝업에 UUID 지정
@@ -612,10 +612,10 @@ urlEncode(originData, re := "[0-9A-Za-z]") {
 runPopup 함수 실행 중 Input Block, 추가 입력(호출 핫키를 Release해서 입력간 오류 방지용)
 */
 runPopupBlockedInput(popupObject, enterFlag := false, input := "") {
-	; BlockInput True
-	; SendInput(input)
+	BlockInput True
+	SendInput(input)
 	runPopup(popupObject, true, enterFlag)
-	; BlockInput False
+	BlockInput False
 }
 
 /*
