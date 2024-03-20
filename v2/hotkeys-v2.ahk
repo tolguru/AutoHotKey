@@ -689,16 +689,11 @@ runParamUrl(url, text) {
 	beforeProcessID := WinGetID("A")
 	Run(runAppBrowser " --app=" url urlEncode(text))
 
-	; 오류를 줄이고자 실행 시 입력 방지
-	BlockInput True
-
-	if (WinWaitNotActive("ahk_id " beforeProcessID,, 3)) {
+	if (WinWaitNotActive("ahk_id " beforeProcessID,, 5)) {
 		WinRestore("A")
 	} else {
 		msg("실행시간 타임아웃")
 	}
-
-	BlockInput False
 }
 
 /*
