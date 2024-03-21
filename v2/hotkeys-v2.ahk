@@ -6,6 +6,26 @@
 ## 임시 기능 선언
 ########################################
 */
+; F1::clipboardSave()
+
+; ERROR_PATH_NOT_FOUND := 3
+
+; /*
+; 클립보드 데이터를 .\resources에 파일로 저장
+; */
+; clipboardSave() {
+; 	try {
+; 		FileAppend(ClipboardAll(), ".\resources\" A_Now)
+; 	} catch {
+; 		if (A_LastError = ERROR_PATH_NOT_FOUND) {
+; 			; 경로가 없을 시 경로 생성
+; 			DirCreate(".\resources")
+; 			MsgBox("경로 생성 완료.`n함수 재실행 필요")
+; 		} else {
+; 			MsgBox("알 수 없는 OSError 발생, 에러 코드 : " A_LastError)
+; 		}
+; 	}
+; }
 
 /*
 ########################################
@@ -221,6 +241,8 @@ alarm() {
 ########################################
 */
 #/::MsgBox(getGuideMap().Get("Common"))
+
+#f::activateTitle("Everything") ;# Everything 열기
 
 *XButton2::SendInput("{XButton2}") Sleep(100) ; 마우스 사이드 버튼 중복 입력 방지
 *XButton1::SendInput("{XButton1}") Sleep(100) ; 마우스 사이드 버튼 중복 입력 방지
