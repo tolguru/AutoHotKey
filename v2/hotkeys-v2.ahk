@@ -257,9 +257,9 @@ alarm() {
 #Right::maxSizeMove(false) ;# 현재 포커싱된 창 오른쪽 모니터의 전체 화면으로 전환
 #XButton2::maxSizeMove() ;# 현재 포커싱된 창 왼쪽 모니터의 전체 화면으로 전환
 #XButton1::maxSizeMove(false) ;# 현재 포커싱된 창 오른쪽 모니터의 전체 화면으로 전환
-#WheelUp::SoundSetVolume("+10") ;# 볼륨 업
-#WheelDown::SoundSetVolume("-10") ;# 볼륨 다운
-#MButton::SoundSetMute(-1) ;# 사운드 토글
+#WheelUp::SoundSetVolume("+10") msg(Ceil(SoundGetVolume())) ;# 볼륨 업
+#WheelDown::SoundSetVolume("-10") msg(Ceil(SoundGetVolume())) ;# 볼륨 다운
+#MButton::SoundSetMute(-1) msg(SoundGetMute() ? "Mute On" : "Mute Off") ;# 사운드 토글
 
 ; #XButton2::SendInput("^#{Left}") ;# 왼쪽 가상 데스크탑
 ; #XButton1::SendInput("^#{Right}") ;# 오른쪽 가상 데스크탑
