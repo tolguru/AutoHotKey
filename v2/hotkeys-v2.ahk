@@ -261,7 +261,6 @@ alarm() {
 #WheelDown::SoundSetVolume("-10") ;# 볼륨 다운
 #MButton::SoundSetMute(-1) ;# 사운드 토글
 
-
 ; #XButton2::SendInput("^#{Left}") ;# 왼쪽 가상 데스크탑
 ; #XButton1::SendInput("^#{Right}") ;# 오른쪽 가상 데스크탑
 
