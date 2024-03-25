@@ -991,12 +991,12 @@ translate() {
 #HotIf WinActive("ahk_exe azuredatastudio.exe")
 #/::MsgBox(getGuideMap().Get("Azure Data Studio"))
 
-!`::SendInput("^+k") ;# 라인 지우기
+; !`::SendInput("^+k") ;# 라인 지우기
 ; !`::SendInput("``") ;# 백틱 입력
-^+c::SendInput("^+h") ;# Header 복사
-+Enter::SendInput("^{Enter}") ;# 다음 줄 추가
-^Enter::SendInput("{Home}{Enter}{Up}") ;# 윗 줄 추가 후 이동
-^+/::SendInput("!+a") ;# 블록 주석 토글
+; ^+c::SendInput("^+h") ;# Header 복사
+; +Enter::SendInput("^{Enter}") ;# 다음 줄 추가
+; ^Enter::SendInput("{Home}{Enter}{Up}") ;# 윗 줄 추가 후 이동
+; ^+/::SendInput("!+a") ;# 블록 주석 토글
 
 /*
 ########################################
