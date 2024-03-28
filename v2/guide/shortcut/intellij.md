@@ -9,6 +9,7 @@ Ctrl + P    매개변수 보기  |  Ctrl + Shift + P    리턴 타입 보기(편
 Ctrl + Q    정의 보기
 Ctrl + U    부모 클래스 / 메서드로 이동
 Ctrl + Alt + ←→    이전/다음 위치
+Ctrl + Shift + Backspace    이전 수정 위치
 Alt + Shift + ↑↓    라인 옮기기  |  Ctrl + Shift + ↑↓   라인 위치 바꾸기
 Ctrl + Shift + Enter    문장 완성
 Ctrl + Shift + Space    스마트 자동 완성
@@ -83,8 +84,8 @@ F5    현재 파일 복사
 @ 북마크
 
 F11    북마크
-Ctrl + F11    기호 북마크
 Ctrl + 0-9    숫자 북마크 빠른 이동
+Ctrl + Shift + 0-9    숫자 북마크 지정
 Shift + F11    북마크 목록
 
 
