@@ -41,7 +41,9 @@ Ctrl + Alt + Shift + T    리팩토링 메뉴
 Ctrl + Alt + V    변수로 추출
 Ctrl + Alt + O    import 정리
 Ctrl + Alt + I    들여쓰기 정리
-Ctrl + Alt + L    코드 리포맷팅(흠..)
+Ctrl + Alt + (Shift) + L    코드 리포맷팅
+Ctrl + Alt + T    코드 서라운딩
+Ctrl + Shift + Delete    Unwrap
 Shift + F6    이름 리팩토링
 
 
