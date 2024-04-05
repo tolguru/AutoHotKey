@@ -63,6 +63,7 @@ Ctrl + Alt + F7    사용되고 있는 항목 리스트 보기
 
 Ctrl + N    클래스 검색
 Ctrl + Shift + N    파일 검색(Shift 2번도 괜찮을 듯)
+Ctrl + Alt + Shift + E    텍스트 검색
 F2    다음 / 이전(Shift) 오류
 
 
