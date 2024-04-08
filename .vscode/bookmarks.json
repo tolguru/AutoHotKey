@@ -24,12 +24,12 @@
 					"label": "Vivaldi"
 				},
 				{
-					"line": 998,
+					"line": 1002,
 					"column": 0,
 					"label": "Azure Data Studio"
 				},
 				{
-					"line": 1013,
+					"line": 1017,
 					"column": 10,
 					"label": "VSCode"
 				}

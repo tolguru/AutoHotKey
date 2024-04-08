@@ -955,6 +955,10 @@ intelliJGuideGui := createGuideGui("IntelliJ.md")
 
 !`::SendInput("!0") ;# Window Workspaces로 변경
 
+:*:/af::
+{
+	SendText("after:2024-01-01")
+}
 /* 
 기본 단축키들 도움말 출력용
 ::;#
