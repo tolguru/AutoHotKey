@@ -6,10 +6,11 @@ Ctrl + Y    라인 지우기
 Ctrl + D    라인 복제
 Ctrl + B    정의로 이동  |  Ctrl + Alt + B    구현체로 이동
 Ctrl + P    매개변수 보기  |  Ctrl + Shift + P    리턴 타입 보기(편함)
-Ctrl + Q    정의 보기
+Ctrl + Q    Doc 보기
 Ctrl + U    부모 클래스 / 메서드로 이동
+Ctrl + Shift + I    빠른 정의 보기
 Ctrl + Alt + ←→    이전/다음 위치
-Ctrl + Shift + Backspace    이전 수정 위치
+Ctrl + Shift + Backspace/\    이전/다음 수정 위치
 Alt + Shift + ↑↓    라인 옮기기  |  Ctrl + Shift + ↑↓   라인 위치 바꾸기
 Ctrl + Shift + Enter    문장 완성
 Ctrl + Shift + Space    스마트 자동 완성
