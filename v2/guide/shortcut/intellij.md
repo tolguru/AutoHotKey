@@ -99,3 +99,11 @@ Ctrl + Shift + A    액션 찾기
 Alt + Ins    코드 생성
 Ctrl + .    블록 접고 펴기
 Ctrl + Shift + -+    블록 전체 접고 펴기
+
+
+@ Database
+
+Ctrl + B    테이블 스키마 보기
+Alt + Shift + B    Database Tool에서 보기
+F4    데이터 보기
+Ctrl + Alt + F7    사용되는 곳 보기
