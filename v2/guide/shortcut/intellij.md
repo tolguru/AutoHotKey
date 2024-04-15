@@ -75,6 +75,8 @@ Alt + Home    탐색 표시줄에서 패키지 탐색
 ---                                                                                                                                          
 @ GIT
 
+Alt + ~    VCS 기능 팝업
+Ctrl + Shift + ~    Branch 보기
 Ctrl + Shift + Alt + ↑↓    GIT - 수정된 부분 보기
 Ctrl + Alt + Z    GIT - 현재 커서 부분 롤백
 
