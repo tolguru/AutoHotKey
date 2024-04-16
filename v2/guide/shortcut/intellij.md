@@ -33,6 +33,7 @@ Ctrl + Shift + F12    에디터 창만 표시
 
 @ Run/Debug
 
+Ctrl + (Shift) + F8    Set BreakPoint / 설정
 Shift + F10/F9    최근 설정대로 Run/Debug
 Alt + Shift + F10    최근 Run/Debug 목록(Shift 누르면 Debug)
 Ctrl + Shift + F10    현재 에디터 커서의 모듈 Run
