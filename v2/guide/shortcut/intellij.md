@@ -20,6 +20,7 @@ Alt + (Shift) + J    매칭 항목 멀티커서
 Ctrl + Alt + Shift + J    매칭 전체 멀티커서
 Alt + (Shift) + /    문구들 싸이클 돌려서 가져오기
 Ctrl * 2 + ↑↓    멀티커서 추가
+Ctrl + Shift + U    Upper/Lower
 
 
 @ 윈도우
