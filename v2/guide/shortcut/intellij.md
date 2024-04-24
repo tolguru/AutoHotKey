@@ -108,6 +108,13 @@ Ctrl + Shift + -+    블록 전체 접고 펴기
 @ Database
 
 Ctrl + B    테이블 스키마 보기
+Ctrl + Alt + Home    데이터 뷰에서 테이블 스키마 보기
 Alt + Shift + B    Database Tool에서 보기
 F4    데이터 보기
 Ctrl + Alt + F7    사용되는 곳 보기
+---                                                                                                                                          
+@ Copilot
+
+Alt + \    자동 완성
+Alt + ]    자동 완성 다음 추천
+Alt + [    자동 완성 이전 추천
