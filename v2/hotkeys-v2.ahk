@@ -913,7 +913,7 @@ s or g:: ;# 선 or 채우기 색 선택(팔레트 창 켜져있을 때)
 ## @IntelliJ
 ########################################
 */
-intelliJGuideGui := createGuideGui("IntelliJ.md")
+intelliJGuideGui := createGuideGui("IntelliJ.txt")
 
 #HotIf WinActive("ahk_exe idea64.exe")
 #/::intelliJGuideGui.Show()
