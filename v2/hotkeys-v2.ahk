@@ -294,15 +294,6 @@ Pause:: {
 VK19 & Right::Spotify.next() ;# 스포티파이 다음곡
 VK19 & Left::Spotify.previous() ;# 스포티파이 이전곡
 VK19 & Down::setMultiHotkey(, () => Spotify.repeatTrack(), () => Spotify.repeatOff()) ;# 스포티파이 다음곡
-VK19 & F4::Spotify.repeatContext() ;# 스포티파이 다음곡
-VK19 & F5::Spotify.repeatOff() ;# 스포티파이 다음곡
-VK19 & F6::Spotify.shuffleOn() ;# 스포티파이 다음곡
-VK19 & F7::Spotify.shuffleOff() ;# 스포티파이 다음곡
-; VK19 & F2::setUUID(SpotifyPopup.uuidKey) ;# 스포티파이 팝업에 UUID 지정
-; VK19 & Up::setMultiHotkey(, () => Spotify.like(false), () => Spotify.like(true)) ;# 스포티파이 좋아요(2번 입력 시 좋아요 취소)
-; VK19 & Down::Spotify.replay() ;# 스포티파이 곡 반복
-; VK19 & Right::Spotify.playBarClick(5) ;# 스포티파이 다음 곡
-; VK19 & Left::Spotify.playBarClick(3) ;# 스포티파이 이전 곡
 
 VK19 & c::encryptClipboard() ;# 클립보드 암호화
 VK19 & x::decryptClipboard() ;# 클립보드 복호화
@@ -421,6 +412,8 @@ class Spotify {
 	static CONTROL_REPEAT_OFF := "repeat?state=off"
 	static CONTROL_SHUFFLE_ON := "shuffle?state=true"
 	static CONTROL_SHUFFLE_OFF := "shuffle?state=false"
+	
+	static PLAYLIST_ID := "0thPzS6Bb5bsjJnTIuqqsm"
 
 	static clientId := EnvGet("aaSpotifyClientId")
 	static clientSecret := EnvGet("aaSpotifyClientSecret")
