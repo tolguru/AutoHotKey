@@ -1,5 +1,5 @@
 ﻿#Include "./library/Class_CNG.ahk"
-#include "./library/UIA.ahk"
+#Include "./library/StringToBase64.ahk"
 
 /*
 ########################################
@@ -88,7 +88,6 @@ global spotifyLikeIndex := 5
 ++++++++++++++++++++++++++++++++++++++++
 */
 SetControlDelay -1
-UIA.AutoSetFocus := False ; UIA 기능 실행 시 포커스되는 것을 방지
 
 config()
 ; alarm()
@@ -292,12 +291,18 @@ Pause:: {
 ^#F11::runPopupBlockedInput(googleTranslatePopup,, "{Blind}{LWin Up}{LCtrl Up}") ;# 구글 번역 팝업
 ^#F10::runPopupBlockedInput(naverEnDicSearchPopup, true, "{Blind}{LWin Up}{LCtrl Up}") ;# 네이버 영어사전 팝업
 
-VK19 & F1::Spotify.popupRun() ;# 스포티파이 팝업으로 실행
+VK19 & Right::Spotify.next() ;# 스포티파이 다음곡
+VK19 & Left::Spotify.previous() ;# 스포티파이 이전곡
+VK19 & Down::setMultiHotkey(, () => Spotify.repeatTrack(), () => Spotify.repeatOff()) ;# 스포티파이 다음곡
+VK19 & F4::Spotify.repeatContext() ;# 스포티파이 다음곡
+VK19 & F5::Spotify.repeatOff() ;# 스포티파이 다음곡
+VK19 & F6::Spotify.shuffleOn() ;# 스포티파이 다음곡
+VK19 & F7::Spotify.shuffleOff() ;# 스포티파이 다음곡
 ; VK19 & F2::setUUID(SpotifyPopup.uuidKey) ;# 스포티파이 팝업에 UUID 지정
-VK19 & Up::setMultiHotkey(, () => Spotify.like(false), () => Spotify.like(true)) ;# 스포티파이 좋아요(2번 입력 시 좋아요 취소)
-VK19 & Down::Spotify.replay() ;# 스포티파이 곡 반복
-VK19 & Right::Spotify.playBarClick(5) ;# 스포티파이 다음 곡
-VK19 & Left::Spotify.playBarClick(3) ;# 스포티파이 이전 곡
+; VK19 & Up::setMultiHotkey(, () => Spotify.like(false), () => Spotify.like(true)) ;# 스포티파이 좋아요(2번 입력 시 좋아요 취소)
+; VK19 & Down::Spotify.replay() ;# 스포티파이 곡 반복
+; VK19 & Right::Spotify.playBarClick(5) ;# 스포티파이 다음 곡
+; VK19 & Left::Spotify.playBarClick(3) ;# 스포티파이 이전 곡
 
 VK19 & c::encryptClipboard() ;# 클립보드 암호화
 VK19 & x::decryptClipboard() ;# 클립보드 복호화
@@ -409,118 +414,234 @@ maxSizeMove(isLeft := true) {
 }
 
 class Spotify {
-	static title     := "ahk_exe Spotify.exe"
-	static isBrowser := false
-	
-	/*
-	핸들 가져오기
-	*/
-	static getHandle() {
-		try {
-			return UIA.ElementFromHandle(Spotify.title)
-	} catch {
-			msg("핸들 가져오기 실패")
-		}
+	static CONTROL_NEXT := "next"
+	static CONTROL_PREVIOUS := "previous"
+	static CONTROL_REPEAT_TRACK := "repeat?state=track"
+	static CONTROL_REPEAT_CONTEXT := "repeat?state=context"
+	static CONTROL_REPEAT_OFF := "repeat?state=off"
+	static CONTROL_SHUFFLE_ON := "shuffle?state=true"
+	static CONTROL_SHUFFLE_OFF := "shuffle?state=false"
+
+	static clientId := EnvGet("aaSpotifyClientId")
+	static clientSecret := EnvGet("aaSpotifyClientSecret")
+	static basicKey := StringToBase64(this.clientId ":" this.clientSecret)
+	static refreshToken := EnvGet("aaSpotifyRefreshToken")
+	static userAccessToken := ""
+
+	static next() {
+		this.control(this.CONTROL_NEXT)
 	}
 
-	/*
-	Elements 가져오기
-	*/
-	static getPlayingElement() {
-		try {
-			return Spotify.getHandle().FindElement([{Type:"Group", LocalizedType:"내용 정보"}])
-		} catch {
-			msg("Elements 가져오기 실패")
-		}
+	static previous() {
+		this.control(this.CONTROL_PREVIOUS)
 	}
 	
-	/*
-	UIA를 통한 작업이 실행될 수 있게 스포티파이를 세팅
-	*/
-	static run() {
-		; Spotify가 최소화돼있을 시 or 브라우저일 시 활성화
-		if (WinGetMinMax(Spotify.title) = -1 || Spotify.isBrowser) {
-			WinActivate(Spotify.title)
+	static repeatTrack() {
+		this.control(this.CONTROL_REPEAT_TRACK, "PUT")
+	}
+	
+	static repeatContext() {
+		this.control(this.CONTROL_REPEAT_CONTEXT, "PUT")
+	}
+	
+	static repeatOff() {
+		this.control(this.CONTROL_REPEAT_OFF, "PUT")
+	}
+	
+	static shuffleOn() {
+		this.control(this.CONTROL_SHUFFLE_ON, "PUT")
+	}
+	
+	static shuffleOff() {
+		this.control(this.CONTROL_SHUFFLE_OFF, "PUT")
+	}
 
-			if (WinWaitActive(Spotify.title,, 3)) {
-				WinMoveBottom(Spotify.title)
-
-				if (Spotify.isBrowser) {
-					if (WinGetTransparent(Spotify.title) != 0) {
-						WinSetTransparent(0, Spotify.title)
-					}
-				} else {
-					; 화면 바깥으로 보내기
-					WinMove(6000, 6000,,, Spotify.title)
-				}
+	static control(type, method := "POST") {
+		try {
+			if (!this.userAccessToken) {
+				this.refreshUserAccessToken()
+				this.control(type)
+				
+				return
 			}
+	
+			this.requestControlAPI(type, method)
+		} catch Any as e {
+			MsgBox(e)
 		}
 	}
 
-	/*
-	Spotify 브라우저 팝업으로 실행
-	*/
-	static popupRun() {
-		runPopup(spotifyPopup)
-		; Spotify.setUUIDTitle(getConfigMap().Get(spotifyPopup.uuidKey))
+	static requestControlAPI(type, method) {
+		url := "https://api.spotify.com/v1/me/player/" type
+	
+		httpObj := ComObject("WinHTTP.WinHTTPRequest.5.1")
+	
+		httpObj.Open(method, url)
+
+		httpObj.SetRequestHeader("Authorization", "Bearer " this.userAccessToken)
+
+		httpObj.Send()
+
+		httpObj.WaitForResponse
+
+		if (httpObj.Status != 204) {
+			throw("컨트롤 실패, Status : " httpObj.Status ", Status Text : " httpObj.StatusText ", Body : " httpObj.ResponseText)
+		}
+	}
+	
+	static refreshUserAccessToken() {
+		try {
+			responseBody := this.requestAccessTokenAPI(this.getUserAccessTokenAPIRequestBody())
+			this.userAccessToken := this.parseUserAccessTokenResponseBody(responseBody)
+		} catch Any as e {
+			throw("refresh 실패`n" e)
+		}
 	}
 
-	/*
-	(미사용)
-	Spotify 브라우저 팝업으로 실행
-	*/
-	static setUUIDTitle(uuid) {
-		Spotify.title := "ahk_id " uuid
+	static getUserAccessTokenAPIRequestBody() {
+		return "grant_type=refresh_token&refresh_token=" this.refreshToken
 	}
 
-	/*
-	현재 재생 상태 바의 버튼 클릭
-	*/
-	static playBarClick(index) {
-		Spotify.run()
-		Spotify.getPlayingElement()[index].Click()
+	static requestAccessTokenAPI(requestBody) {
+		url := "https://accounts.spotify.com/api/token"
+	
+		httpObj := ComObject("WinHTTP.WinHTTPRequest.5.1")
+	
+		httpObj.Open("POST", url)
+
+		httpObj.SetRequestHeader("content-type", "application/x-www-form-urlencoded")
+		httpObj.SetRequestHeader("Authorization", "Basic " this.basicKey)
+
+		httpObj.Send(requestBody)
+
+		httpObj.WaitForResponse
+
+		if (httpObj.Status = 200) {
+			return httpObj.ResponseText
+		} else {
+			throw("HTTP Status : " httpObj.Status "`nResponse Body : " httpObj.ResponseText)
+		}
 	}
 
-	/*
-	현재 재생 상태 바의 버튼 클릭
-	*/
-	static replay() {
-		Spotify.run()
+	static parseUserAccessTokenResponseBody(responseBody) {
+		needlePosition := RegExMatch(responseBody, "access_token`":`"(.*?)`"", &accessToken)
 
-		playingBarEl := Spotify.getPlayingElement()[6]
-		clickCount := 1
-		isReplay := true
+		if (needlePosition = 0) {
+			throw("성공 응답에서 토큰을 찾지 못했음")
+		} else {
+			return accessToken[1]
+		}
+	}
+
+	; /*
+	; 핸들 가져오기
+	; */
+	; static getHandle() {
+	; 	try {
+	; 		return UIA.ElementFromHandle(Spotify.title)
+	; } catch {
+	; 		msg("핸들 가져오기 실패")
+	; 	}
+	; }
+
+	; /*
+	; Elements 가져오기
+	; */
+	; static getPlayingElement() {
+	; 	try {
+	; 		return Spotify.getHandle().FindElement([{Type:"Group", LocalizedType:"내용 정보"}])
+	; 	} catch {
+	; 		msg("Elements 가져오기 실패")
+	; 	}
+	; }
+	
+	; /*
+	; UIA를 통한 작업이 실행될 수 있게 스포티파이를 세팅
+	; */
+	; static run() {
+	; 	; Spotify가 최소화돼있을 시 or 브라우저일 시 활성화
+	; 	if (WinGetMinMax(Spotify.title) = -1 || Spotify.isBrowser) {
+	; 		WinActivate(Spotify.title)
+
+	; 		if (WinWaitActive(Spotify.title,, 3)) {
+	; 			WinMoveBottom(Spotify.title)
+
+	; 			if (Spotify.isBrowser) {
+	; 				if (WinGetTransparent(Spotify.title) != 0) {
+	; 					WinSetTransparent(0, Spotify.title)
+	; 				}
+	; 			} else {
+	; 				; 화면 바깥으로 보내기
+	; 				WinMove(6000, 6000,,, Spotify.title)
+	; 			}
+	; 		}
+	; 	}
+	; }
+
+	; /*
+	; Spotify 브라우저 팝업으로 실행
+	; */
+	; static popupRun() {
+	; 	runPopup(spotifyPopup)
+	; 	; Spotify.setUUIDTitle(getConfigMap().Get(spotifyPopup.uuidKey))
+	; }
+
+	; /*
+	; (미사용)
+	; Spotify 브라우저 팝업으로 실행
+	; */
+	; static setUUIDTitle(uuid) {
+	; 	Spotify.title := "ahk_id " uuid
+	; }
+
+	; /*
+	; 현재 재생 상태 바의 버튼 클릭
+	; */
+	; static playBarClick(index) {
+	; 	Spotify.run()
+	; 	Spotify.getPlayingElement()[index].Click()
+	; }
+
+	; /*
+	; 현재 재생 상태 바의 버튼 클릭
+	; */
+	; static replay() {
+	; 	Spotify.run()
+
+	; 	playingBarEl := Spotify.getPlayingElement()[6]
+	; 	clickCount := 1
+	; 	isReplay := true
 		
-		if (playingBarEl.name = "반복 비활성화하기") {
-			isReplay := false
-		} else if (playingBarEl.name = "반복 활성화하기"){
-			clickCount := 2
-		}
+	; 	if (playingBarEl.name = "반복 비활성화하기") {
+	; 		isReplay := false
+	; 	} else if (playingBarEl.name = "반복 활성화하기"){
+	; 		clickCount := 2
+	; 	}
 
-		msg(isReplay ? "반복 활성화" : "반복 종료")
+	; 	msg(isReplay ? "반복 활성화" : "반복 종료")
 
-		Loop clickCount {
-			playingBarEl.Click()
-			Sleep(1000)
-		}
-	}
+	; 	Loop clickCount {
+	; 		playingBarEl.Click()
+	; 		Sleep(1000)
+	; 	}
+	; }
 
-	/*
-	좋아요/삭제 처리
-	*/
-	static like(unlike := false) {
-		Spotify.run()
+	; /*
+	; 좋아요/삭제 처리
+	; */
+	; static like(unlike := false) {
+	; 	Spotify.run()
 
-		; 현재 재생 목록의 1번째 자식 요소 중 N번째 자식 요소(좋아요 버튼)
-		likeButton := Spotify.getPlayingElement()[1][spotifyLikeIndex]
+	; 	; 현재 재생 목록의 1번째 자식 요소 중 N번째 자식 요소(좋아요 버튼)
+	; 	likeButton := Spotify.getPlayingElement()[1][spotifyLikeIndex]
 
-		; 저장 가능한 상태고 삭제 요청이 아니라면 저장
-		if (InStr(likeButton.name, "저장") && !unlike || InStr(likeButton.name, "삭제") && unlike) {
-			likeButton.Click()
-		}
+	; 	; 저장 가능한 상태고 삭제 요청이 아니라면 저장
+	; 	if (InStr(likeButton.name, "저장") && !unlike || InStr(likeButton.name, "삭제") && unlike) {
+	; 		likeButton.Click()
+	; 	}
 
-		msg(unlike ? "삭제됨" : "저장됨")
-	}
+	; 	msg(unlike ? "삭제됨" : "저장됨")
+	; }
 }
 
 /*
