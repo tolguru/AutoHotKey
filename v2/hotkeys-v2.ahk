@@ -1,5 +1,6 @@
 ﻿#Include "./library/Class_CNG.ahk"
 #Include "./library/StringToBase64.ahk"
+#Include "./library/JSON.ahk"
 
 /*
 ########################################
@@ -61,7 +62,6 @@ global runAppBrowser := A_AppData "/../Local/Vivaldi/Application/vivaldi.exe"
 laptopList       := [subPC]
 desktopList      := [mainPC, homePC]
 ratio25List      := [subPC]
-spotifyPopupList := [mainPC]
 
 ; 좌표 비율
 global ratioNow := 1
@@ -110,6 +110,9 @@ config() {
 	; File Config 불러오기
 	; configLoad()
 
+	; 스포티파이 User Aceess Token 획득
+	; Spotify.refreshUserAccessToken()
+
 	; Guide 불러오기
 	guideLoad()
 
@@ -121,11 +124,6 @@ config() {
 	; 화면 비율 설정(좌표 초기화용)
 	if (findValue(ratio25List, A_ComputerName)) {
 		global ratioNow := RATIO_X25
-	}
-
-	; 스포티파이 팝업으로 실행 시 config 초기화
-	if (findValue(spotifyPopupList, A_ComputerName)) {
-		Spotify.isBrowser := true
 	}
 }
 
@@ -404,6 +402,9 @@ maxSizeMove(isLeft := true) {
 	WinMaximize("A")
 }
 
+class SpotifyAuthError extends Error {
+}
+
 class Spotify {
 	static CONTROL_NEXT := "next"
 	static CONTROL_PREVIOUS := "previous"
@@ -451,14 +452,10 @@ class Spotify {
 
 	static control(type, method := "POST") {
 		try {
-			if (!this.userAccessToken) {
-				this.refreshUserAccessToken()
-				this.control(type)
-				
-				return
-			}
-	
 			this.requestControlAPI(type, method)
+		} catch SpotifyAuthError as e {
+			this.refreshUserAccessToken()
+			this.control(type, method)
 		} catch Any as e {
 			MsgBox(e)
 		}
@@ -477,13 +474,16 @@ class Spotify {
 
 		httpObj.WaitForResponse
 
-		if (httpObj.Status != 204) {
+		if (httpObj.Status = 400 || httpObj.Status = 401) {
+			throw SpotifyAuthError(httpObj.ResponseText)
+		} else if (httpObj.Status != 204) {
 			throw("컨트롤 실패, Status : " httpObj.Status ", Status Text : " httpObj.StatusText ", Body : " httpObj.ResponseText)
 		}
 	}
 	
 	static refreshUserAccessToken() {
 		try {
+			msg("Spotify 토큰 재발급 진행")
 			responseBody := this.requestAccessTokenAPI(this.getUserAccessTokenAPIRequestBody())
 			this.userAccessToken := this.parseUserAccessTokenResponseBody(responseBody)
 		} catch Any as e {
@@ -525,116 +525,6 @@ class Spotify {
 			return accessToken[1]
 		}
 	}
-
-	; /*
-	; 핸들 가져오기
-	; */
-	; static getHandle() {
-	; 	try {
-	; 		return UIA.ElementFromHandle(Spotify.title)
-	; } catch {
-	; 		msg("핸들 가져오기 실패")
-	; 	}
-	; }
-
-	; /*
-	; Elements 가져오기
-	; */
-	; static getPlayingElement() {
-	; 	try {
-	; 		return Spotify.getHandle().FindElement([{Type:"Group", LocalizedType:"내용 정보"}])
-	; 	} catch {
-	; 		msg("Elements 가져오기 실패")
-	; 	}
-	; }
-	
-	; /*
-	; UIA를 통한 작업이 실행될 수 있게 스포티파이를 세팅
-	; */
-	; static run() {
-	; 	; Spotify가 최소화돼있을 시 or 브라우저일 시 활성화
-	; 	if (WinGetMinMax(Spotify.title) = -1 || Spotify.isBrowser) {
-	; 		WinActivate(Spotify.title)
-
-	; 		if (WinWaitActive(Spotify.title,, 3)) {
-	; 			WinMoveBottom(Spotify.title)
-
-	; 			if (Spotify.isBrowser) {
-	; 				if (WinGetTransparent(Spotify.title) != 0) {
-	; 					WinSetTransparent(0, Spotify.title)
-	; 				}
-	; 			} else {
-	; 				; 화면 바깥으로 보내기
-	; 				WinMove(6000, 6000,,, Spotify.title)
-	; 			}
-	; 		}
-	; 	}
-	; }
-
-	; /*
-	; Spotify 브라우저 팝업으로 실행
-	; */
-	; static popupRun() {
-	; 	runPopup(spotifyPopup)
-	; 	; Spotify.setUUIDTitle(getConfigMap().Get(spotifyPopup.uuidKey))
-	; }
-
-	; /*
-	; (미사용)
-	; Spotify 브라우저 팝업으로 실행
-	; */
-	; static setUUIDTitle(uuid) {
-	; 	Spotify.title := "ahk_id " uuid
-	; }
-
-	; /*
-	; 현재 재생 상태 바의 버튼 클릭
-	; */
-	; static playBarClick(index) {
-	; 	Spotify.run()
-	; 	Spotify.getPlayingElement()[index].Click()
-	; }
-
-	; /*
-	; 현재 재생 상태 바의 버튼 클릭
-	; */
-	; static replay() {
-	; 	Spotify.run()
-
-	; 	playingBarEl := Spotify.getPlayingElement()[6]
-	; 	clickCount := 1
-	; 	isReplay := true
-		
-	; 	if (playingBarEl.name = "반복 비활성화하기") {
-	; 		isReplay := false
-	; 	} else if (playingBarEl.name = "반복 활성화하기"){
-	; 		clickCount := 2
-	; 	}
-
-	; 	msg(isReplay ? "반복 활성화" : "반복 종료")
-
-	; 	Loop clickCount {
-	; 		playingBarEl.Click()
-	; 		Sleep(1000)
-	; 	}
-	; }
-
-	; /*
-	; 좋아요/삭제 처리
-	; */
-	; static like(unlike := false) {
-	; 	Spotify.run()
-
-	; 	; 현재 재생 목록의 1번째 자식 요소 중 N번째 자식 요소(좋아요 버튼)
-	; 	likeButton := Spotify.getPlayingElement()[1][spotifyLikeIndex]
-
-	; 	; 저장 가능한 상태고 삭제 요청이 아니라면 저장
-	; 	if (InStr(likeButton.name, "저장") && !unlike || InStr(likeButton.name, "삭제") && unlike) {
-	; 		likeButton.Click()
-	; 	}
-
-	; 	msg(unlike ? "삭제됨" : "저장됨")
-	; }
 }
 
 /*
