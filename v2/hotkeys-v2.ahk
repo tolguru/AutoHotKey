@@ -7,26 +7,6 @@
 ## 임시 기능 선언
 ########################################
 */
-; F1::clipboardSave()
-
-; ERROR_PATH_NOT_FOUND := 3
-
-; /*
-; 클립보드 데이터를 .\resources에 파일로 저장
-; */
-; clipboardSave() {
-; 	try {
-; 		FileAppend(ClipboardAll(), ".\resources\" A_Now)
-; 	} catch {
-; 		if (A_LastError = ERROR_PATH_NOT_FOUND) {
-; 			; 경로가 없을 시 경로 생성
-; 			DirCreate(".\resources")
-; 			MsgBox("경로 생성 완료.`n함수 재실행 필요")
-; 		} else {
-; 			MsgBox("알 수 없는 OSError 발생, 에러 코드 : " A_LastError)
-; 		}
-; 	}
-; }
 
 /*
 ########################################
@@ -454,8 +434,12 @@ class Spotify {
 		try {
 			this.requestControlAPI(type, method)
 		} catch SpotifyAuthError as e {
+			this.deleteOldUserAccessKey()
 			this.refreshUserAccessToken()
-			this.control(type, method)
+
+			if (this.userAccessToken) {
+				this.control(type, method)
+			}
 		} catch Any as e {
 			MsgBox(e)
 		}
@@ -463,67 +447,75 @@ class Spotify {
 
 	static requestControlAPI(type, method) {
 		url := "https://api.spotify.com/v1/me/player/" type
+
+		headers := Map()
+		headers.Set("Authorization", "Bearer " this.userAccessToken)
+
+		response := this.request(method, url, headers)
 	
+		if (response.Status = 400 || response.Status = 401) {
+			throw SpotifyAuthError(response.ResponseText)
+		} else if (response.Status != 204) {
+			throw("컨트롤 실패, Status : " response.Status ", Status Text : " response.StatusText ", Body : " response.ResponseText)
+		}
+	}
+	
+	static deleteOldUserAccessKey() {
+		this.userAccessToken := ""
+	}
+
+	static refreshUserAccessToken() {
+		try {
+			msg("Spotify 토큰 재발급 진행")
+
+			responseBody := this.requestAccessTokenAPI()
+			this.userAccessToken := this.parseUserAccessTokenResponseBody(responseBody)
+		} catch Any as e {
+			MsgBox("refresh 실패`n" e)
+		}
+	}
+
+	static requestAccessTokenAPI() {
+		url := "https://accounts.spotify.com/api/token"
+		requestBody := "grant_type=refresh_token&refresh_token=" this.refreshToken
+
+		headers := Map()
+		headers.Set("content-type", "application/x-www-form-urlencoded")
+		headers.Set("Authorization", "Basic " this.basicKey)
+
+		response := this.request("POST", url, headers, requestBody)
+
+		if (response.Status = 200) {
+			return response.ResponseText
+		} else {
+			throw("HTTP Status : " response.Status "`nResponse Body : " response.ResponseText)
+		}
+	}
+
+	static parseUserAccessTokenResponseBody(responseBody) {
+		try {
+			parsedResponseBody := JSON.parse(responseBody)
+
+			return parsedResponseBody["access_token"]
+		} catch UnsetItemError {
+			throw("성공 응답에서 토큰을 찾지 못했음")
+		}
+	}
+
+	static request(method, url, headers := Map(), requestBody := "") {
 		httpObj := ComObject("WinHTTP.WinHTTPRequest.5.1")
 	
 		httpObj.Open(method, url)
 
-		httpObj.SetRequestHeader("Authorization", "Bearer " this.userAccessToken)
-
-		httpObj.Send()
-
-		httpObj.WaitForResponse
-
-		if (httpObj.Status = 400 || httpObj.Status = 401) {
-			throw SpotifyAuthError(httpObj.ResponseText)
-		} else if (httpObj.Status != 204) {
-			throw("컨트롤 실패, Status : " httpObj.Status ", Status Text : " httpObj.StatusText ", Body : " httpObj.ResponseText)
+		For key, value in headers {
+			httpObj.SetRequestHeader(key, value)
 		}
-	}
-	
-	static refreshUserAccessToken() {
-		try {
-			msg("Spotify 토큰 재발급 진행")
-			responseBody := this.requestAccessTokenAPI(this.getUserAccessTokenAPIRequestBody())
-			this.userAccessToken := this.parseUserAccessTokenResponseBody(responseBody)
-		} catch Any as e {
-			throw("refresh 실패`n" e)
-		}
-	}
-
-	static getUserAccessTokenAPIRequestBody() {
-		return "grant_type=refresh_token&refresh_token=" this.refreshToken
-	}
-
-	static requestAccessTokenAPI(requestBody) {
-		url := "https://accounts.spotify.com/api/token"
-	
-		httpObj := ComObject("WinHTTP.WinHTTPRequest.5.1")
-	
-		httpObj.Open("POST", url)
-
-		httpObj.SetRequestHeader("content-type", "application/x-www-form-urlencoded")
-		httpObj.SetRequestHeader("Authorization", "Basic " this.basicKey)
 
 		httpObj.Send(requestBody)
 
 		httpObj.WaitForResponse
 
-		if (httpObj.Status = 200) {
-			return httpObj.ResponseText
-		} else {
-			throw("HTTP Status : " httpObj.Status "`nResponse Body : " httpObj.ResponseText)
-		}
-	}
-
-	static parseUserAccessTokenResponseBody(responseBody) {
-		needlePosition := RegExMatch(responseBody, "access_token`":`"(.*?)`"", &accessToken)
-
-		if (needlePosition = 0) {
-			throw("성공 응답에서 토큰을 찾지 못했음")
-		} else {
-			return accessToken[1]
-		}
+		return httpObj
 	}
 }
 
