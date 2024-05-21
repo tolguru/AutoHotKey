@@ -271,7 +271,8 @@ Pause:: {
 
 VK19 & Right::Spotify.next() ;# 스포티파이 다음곡
 VK19 & Left::Spotify.previous() ;# 스포티파이 이전곡
-VK19 & Down::setMultiHotkey(, () => Spotify.repeatTrack(), () => Spotify.repeatOff()) ;# 스포티파이 다음곡
+VK19 & Down::setMultiHotkey(, () => Spotify.repeatTrack(), () => Spotify.repeatOff()) ;# 스포티파이 한 곡 반복/취소
+VK19 & Up::setMultiHotkey(, () => Spotify.addToPlaylist(), () => Spotify.removeFromPlaylist()) ;# 스포티파이 플레이리스트 저장/삭제
 
 VK19 & c::encryptClipboard() ;# 클립보드 암호화
 VK19 & x::decryptClipboard() ;# 클립보드 복호화
@@ -386,6 +387,9 @@ class SpotifyAuthError extends Error {
 }
 
 class Spotify {
+	static SPOTIFY_API_HOST := "https://api.spotify.com/v1"
+	static CONTROL_BASE_URL := this.SPOTIFY_API_HOST "/me/player/"
+	static CONTROL_PLAYLIST_BASE_URL := this.SPOTIFY_API_HOST "/playlists/"
 	static CONTROL_NEXT := "next"
 	static CONTROL_PREVIOUS := "previous"
 	static CONTROL_REPEAT_TRACK := "repeat?state=track"
@@ -393,8 +397,13 @@ class Spotify {
 	static CONTROL_REPEAT_OFF := "repeat?state=off"
 	static CONTROL_SHUFFLE_ON := "shuffle?state=true"
 	static CONTROL_SHUFFLE_OFF := "shuffle?state=false"
-	
+	static CONTROL_CURRENTLY_PLAYING_TRACK := "currently-playing"
+	static CONTROL_PLAYLIST := "/tracks"
+
 	static PLAYLIST_ID := "0thPzS6Bb5bsjJnTIuqqsm"
+	
+	static PLAYLIST_CONTROL_TYPE_ADD := "add"
+	static PLAYLIST_CONTROL_TYPE_REMOVE := "remove"
 
 	static clientId := EnvGet("aaSpotifyClientId")
 	static clientSecret := EnvGet("aaSpotifyClientSecret")
@@ -430,33 +439,67 @@ class Spotify {
 		this.control(this.CONTROL_SHUFFLE_OFF, "PUT")
 	}
 
-	static control(type, method := "POST") {
+	static addToPlaylist() {
+		this.controlPlaylist(this.AddToPlaylistRequestDTO, "POST")
+		msg("플레이리스트에 등록")
+	}
+
+	static removeFromPlaylist() {
+		this.controlPlaylist(this.RemoveFromPlaylistRequestDTO, "DELETE")
+		msg("플레이리스트에서 삭제")
+	}
+
+	static controlPlaylist(requestDtoClass, method) {
 		try {
-			this.requestControlAPI(type, method)
+			response := this.control(this.CONTROL_CURRENTLY_PLAYING_TRACK, "GET")
+			trackUri := this.parseCurrentPlayingTrackResponseBody(response.ResponseText)
+			requestBody := JSON.stringify(requestDtoClass(trackUri))
+
+			this.control(this.CONTROL_PLAYLIST, method, this.CONTROL_PLAYLIST_BASE_URL this.PLAYLIST_ID, requestBody)
+		} catch Any as e {
+			MsgBox("Playlist 컨트롤 실패, message : " e)
+		}
+	}
+
+	static control(controlType, method := "POST", baseUrl := this.CONTROL_BASE_URL, requestBody := "") {
+		try {
+			return this.requestControlAPI(controlType, method, baseUrl, requestBody)
 		} catch SpotifyAuthError as e {
 			this.deleteOldUserAccessKey()
 			this.refreshUserAccessToken()
 
 			if (this.userAccessToken) {
-				this.control(type, method)
+				return this.control(controlType, method, baseUrl)
 			}
 		} catch Any as e {
 			MsgBox(e)
 		}
 	}
 
-	static requestControlAPI(type, method) {
-		url := "https://api.spotify.com/v1/me/player/" type
+	static parseCurrentPlayingTrackResponseBody(responseBody) {
+		try {
+			playingInfo := JSON.parse(responseBody)
+
+			return playingInfo["item"]["uri"]
+		} catch UnsetItemError {
+			throw("성공 응답에서 트랙 URI를 찾지 못했음")
+		}
+	}
+
+	static requestControlAPI(controlType, method, baseUrl, requestBody) {
+		url := baseUrl controlType
 
 		headers := Map()
 		headers.Set("Authorization", "Bearer " this.userAccessToken)
 
-		response := this.request(method, url, headers)
+		response := this.request(method, url, headers, requestBody)
 	
 		if (response.Status = 400 || response.Status = 401) {
 			throw SpotifyAuthError(response.ResponseText)
-		} else if (response.Status != 204) {
+		} else if (response.Status != 200 && response.Status != 204) {
 			throw("컨트롤 실패, Status : " response.Status ", Status Text : " response.StatusText ", Body : " response.ResponseText)
+		} else {
+			return response
 		}
 	}
 	
@@ -516,6 +559,19 @@ class Spotify {
 		httpObj.WaitForResponse
 
 		return httpObj
+	}
+
+	class AddToPlaylistRequestDTO {
+		__New(trackUri) {
+			this.uris := Array(trackUri)
+			this.position := 0
+		}
+	}
+
+	class RemoveFromPlaylistRequestDTO {
+		__New(trackUri) {
+			this.tracks := Array(Map("uri", (trackUri)))
+		}
 	}
 }
 
