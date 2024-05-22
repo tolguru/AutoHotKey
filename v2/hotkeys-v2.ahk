@@ -59,8 +59,7 @@ GMAIL      := EnvGet("aaGmail")
 NAVER_MAIL := EnvGet("aaNmail")
 PHONE_NUM  := EnvGet("aaPhone")
 
-; UIA
-global spotifyLikeIndex := 5
+global spotifyActivateFlag := false
 
 /*
 ++++++++++++++++++++++++++++++++++++++++
@@ -269,10 +268,7 @@ Pause:: {
 ^#F11::runPopupBlockedInput(googleTranslatePopup,, "{Blind}{LWin Up}{LCtrl Up}") ;# 구글 번역 팝업
 ^#F10::runPopupBlockedInput(naverEnDicSearchPopup, true, "{Blind}{LWin Up}{LCtrl Up}") ;# 네이버 영어사전 팝업
 
-VK19 & Right::Spotify.next() ;# 스포티파이 다음곡
-VK19 & Left::Spotify.previous() ;# 스포티파이 이전곡
-VK19 & Down::setMultiHotkey(, () => Spotify.repeatTrack(), () => Spotify.repeatOff()) ;# 스포티파이 한 곡 반복/취소
-VK19 & Up::setMultiHotkey(, () => Spotify.addToPlaylist(), () => Spotify.removeFromPlaylist()) ;# 스포티파이 플레이리스트 저장/삭제
+VK19 & F1::global spotifyActivateFlag := !spotifyActivateFlag msg(!spotifyActivateFlag ? "온" : "오프") ;# 스포티파이 단축키 온/오프 플래그 토글
 
 VK19 & c::encryptClipboard() ;# 클립보드 암호화
 VK19 & x::decryptClipboard() ;# 클립보드 복호화
@@ -592,41 +588,41 @@ setMultiHotkey(time := 400, func*) {
 	SetTimer(run, -time)
 
 	run() {
-		runMultiHotkey(set, clear, func)
+		runMultiHotkey(getPressCount, clearPressCount, func)
 	}
 
-	set() {
+	getPressCount() {
 		return pressCount
 	}
 
-	clear() {
+	clearPressCount() {
 		pressCount := 0
 	}
 }
 
 /*
 멀티 핫키 실행
-#param Function set       : return static 변수값
-#param Function clear     : static 변수값 0으로 초기화
+#param Function getPressCount : return static 변수값
+#param Function clearPressCount : static 변수값 0으로 초기화
 #param Function[] funcArr : function 배열
 */
-runMultiHotkey(getCount, clear, funcArr) {
-	count := getCount()
+runMultiHotkey(getPressCount, clearPressCount, funcArr) {
+	count := getPressCount()
 
 	if (count > funcArr.Length) {
 		msg("키 입력 개수 초과")
-		clear()
+		clearPressCount()
 		return
 	}
 
 	; 에러가 발생해도 메세지박스 출력 후 무조건 clear되게 처리
 	try {
 		funcArr[count]()
-	} catch Error {
+	} catch Error as e {
 		MsgBox("멀티 핫키 처리 중 에러 발생")
 	}
 	
-	clear()
+	clearPressCount()
 }
 
 /*
@@ -899,6 +895,13 @@ blockAllInput(time := 0.1) {
 
 	BlockInput False
 }
+
+#HotIf spotifyActivateFlag
+
+VK19 & Right::Spotify.next() ;# 스포티파이 다음곡
+VK19 & Left::Spotify.previous() ;# 스포티파이 이전곡
+VK19 & Down::setMultiHotkey(, () => Spotify.repeatTrack(), () => Spotify.repeatOff()) ;# 스포티파이 한 곡 반복/취소
+VK19 & Up::setMultiHotkey(, () => Spotify.addToPlaylist(), () => Spotify.removeFromPlaylist()) ;# 스포티파이 플레이리스트 저장/삭제
 
 /*
 ########################################
