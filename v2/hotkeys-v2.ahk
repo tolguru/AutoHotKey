@@ -1,12 +1,60 @@
 ﻿#Include "./library/Class_CNG.ahk"
 #Include "./library/StringToBase64.ahk"
 #Include "./library/JSON.ahk"
+#Include "./library/Gdip_All.ahk"
+#Include "./library/Gdip_ImageSearch.ahk"
 
 /*
 ########################################
 ## 임시 기능 선언
 ########################################
 */
+
+F2:: {
+	hOpencv := DllCall("LoadLibrary", "str", ".\dll\opencv_world470.dll", "ptr")
+	hOpencvCom := DllCall("LoadLibrary", "str", ".\dll\autoit_opencv_com470.dll", "ptr")
+	DllCall(".\dll\autoit_opencv_com470.dll\DllInstall", "int", 1, "wstr", A_IsAdmin = 0 ? "user" : "", "cdecl")
+
+	cv := ComObject("OpenCV.cv")
+
+	cv.matchTemplate()
+
+	img := cv.imread("C:\Users\dhkwon\Pictures\ahk_capture\test.png", 1)
+	cv.imshow("Image", img)
+	cv.imwrite
+	cv.waitKey()
+	cv.destroyAllWindows()
+}
+
+F1:: {
+	gdipToken := Gdip_Startup()
+
+	pHaystack := Gdip_BitmapFromHWND(WinExist("인공지능"))
+	; pHaystack := Gdip_BitmapFromHWND(WinExist("hotkeys"))
+	; pHaystack := Gdip_BitmapFromScreen()
+
+	Gdip_SetBitmapToClipboard(pHaystack)
+	; pHaystack := Gdip_BitmapFromHWND(WinExist("디지털 트랜스"))
+	pNeedle := Gdip_CreateBitmapFromFile("C:\Users\dhkwon\Pictures\ahk_capture\test.png")
+
+	result := Gdip_ImageSearch(pHaystack, pNeedle, &position,,,,, 30)
+
+	msg("result : " result ", position : " position)
+
+	Gdip_Shutdown(gdipToken)
+	; auto()
+}
+
+auto() {
+	; if (ImageSearch(&x, &y, 1268, 674, 1334, 1000, "C:\Users\dhkwon\Pictures\ahk capture\a1.png")) {
+	; 	ControlClick("x" x " y" y, "개인정보",,,, "NA")
+	; }
+	Loop 10 {
+		ControlClick("x1340 y" 720 + (A_Index * 20), "개인정보",,,, "NA")
+	}
+	
+	SetTimer(() => auto(), 5000)
+}
 
 /*
 ########################################
