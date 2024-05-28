@@ -1,12 +1,38 @@
 ﻿#Include "./library/Class_CNG.ahk"
 #Include "./library/StringToBase64.ahk"
 #Include "./library/JSON.ahk"
+#Include "./library/CLR.ahk"
 
 /*
 ########################################
 ## 임시 기능 선언
 ########################################
 */
+
+UTILS_DLL_PAYH := "C:\00.project\00.study\Autohotkey-Utils\Autohotkey-Utils\bin\Debug\Autohotkey_Utils.dll"
+
+F1:: {
+	lib := CLR_LoadLibrary(UTILS_DLL_PAYH)
+	global utilObject := CLR_CreateObject(lib, "Autohotkey_Utils.ImageUtils")
+}
+
+F2:: {
+	hwnd := WinGetID("A")
+	utilObject.SaveScreenToClipboard(hwnd)
+}
+
+F3:: {
+	hwnd := WinGetID("A")
+	
+	utilObject.SearchImageFromWindow(&x, &y, hwnd, "testPath")
+
+	MsgBox(x ", " y)
+}
+
+
+F12:: {
+	WinKill("PC 일별 예약 검사")
+}
 
 /*
 ########################################
