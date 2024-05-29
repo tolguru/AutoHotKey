@@ -10,25 +10,23 @@
 */
 
 UTILS_DLL_PAYH := "C:\00.project\00.study\Autohotkey-Utils\Autohotkey-Utils\bin\Debug\Autohotkey_Utils.dll"
+NEEDLE_IMAGE_PAYH := "C:\Users\dhkwon\Pictures\ahk_capture\test.png"
+global utilObject := false
 
 F1:: {
-	lib := CLR_LoadLibrary(UTILS_DLL_PAYH)
-	global utilObject := CLR_CreateObject(lib, "Autohotkey_Utils.ImageUtils")
+	setupUtilObject()
+	hwnd := WinGetID("까르륵")
+	utilObject.SearchImageFromArea(&x, &y, hwnd, NEEDLE_IMAGE_PAYH, 140, 1000, 200, 1040, 99)
+
+	msg(x ", " y)
 }
 
-F2:: {
-	hwnd := WinGetID("A")
-	utilObject.SaveScreenToClipboard(hwnd)
+setupUtilObject() {
+	if (!utilObject) {
+		lib := CLR_LoadLibrary(UTILS_DLL_PAYH)
+		global utilObject := CLR_CreateObject(lib, "Autohotkey_Utils.utils.image.ImageUtils")
+	}
 }
-
-F3:: {
-	hwnd := WinGetID("A")
-	
-	utilObject.SearchImageFromWindow(&x, &y, hwnd, "testPath")
-
-	MsgBox(x ", " y)
-}
-
 
 F12:: {
 	WinKill("PC 일별 예약 검사")

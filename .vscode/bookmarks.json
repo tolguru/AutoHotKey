@@ -4,32 +4,32 @@
 			"path": "v2/hotkeys-v2.ahk",
 			"bookmarks": [
 				{
-					"line": 241,
+					"line": 239,
 					"column": 11,
 					"label": "Common"
 				},
 				{
-					"line": 933,
+					"line": 931,
 					"column": 12,
 					"label": "Obsidian"
 				},
 				{
-					"line": 993,
+					"line": 991,
 					"column": 12,
 					"label": "IntelliJ"
 				},
 				{
-					"line": 1030,
+					"line": 1028,
 					"column": 0,
 					"label": "Vivaldi"
 				},
 				{
-					"line": 1083,
+					"line": 1081,
 					"column": 0,
 					"label": "Azure Data Studio"
 				},
 				{
-					"line": 1098,
+					"line": 1096,
 					"column": 10,
 					"label": "VSCode"
 				}
