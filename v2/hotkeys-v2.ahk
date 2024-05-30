@@ -9,21 +9,25 @@
 ########################################
 */
 
-UTILS_DLL_PAYH := "C:\00.project\00.study\Autohotkey-Utils\Autohotkey-Utils\bin\Debug\Autohotkey_Utils.dll"
+UTILS_DLL_COPY_PAYH := "./dll/Autohotkey-Utils/Autohotkey_Utils_copy.dll"
+UTILS_DLL_COMPILED_PAYH := "./dll/Autohotkey-Utils/Autohotkey_Utils.dll"
 NEEDLE_IMAGE_PAYH := "C:\Users\dhkwon\Pictures\ahk_capture\test.png"
 global utilObject := false
 
 F1:: {
-	setupUtilObject()
-	hwnd := WinGetID("까르륵")
+	hwnd := WinGetID("Vivaldi")
 	utilObject.SearchImageFromArea(&x, &y, hwnd, NEEDLE_IMAGE_PAYH, 140, 1000, 200, 1040, 99)
 
 	msg(x ", " y)
 }
 
 setupUtilObject() {
+	if (FileExist(UTILS_DLL_COMPILED_PAYH)) {
+		FileMove(UTILS_DLL_COMPILED_PAYH, UTILS_DLL_COPY_PAYH, true)
+	}
+
 	if (!utilObject) {
-		lib := CLR_LoadLibrary(UTILS_DLL_PAYH)
+		lib := CLR_LoadLibrary(UTILS_DLL_COPY_PAYH)
 		global utilObject := CLR_CreateObject(lib, "Autohotkey_Utils.utils.image.ImageUtils")
 	}
 }
@@ -118,6 +122,9 @@ config() {
 
 	; Guide 불러오기
 	guideLoad()
+
+	; DLL 로드
+	setupUtilObject()
 
 	; 특정 PC만 울리게 설정
 	if (findValue(waterAlarmList, A_ComputerName)) {
