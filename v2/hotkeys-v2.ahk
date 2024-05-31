@@ -9,30 +9,87 @@
 ########################################
 */
 
-UTILS_DLL_COPY_PAYH := "./dll/Autohotkey-Utils/Autohotkey_Utils_copy.dll"
-UTILS_DLL_COMPILED_PAYH := "./dll/Autohotkey-Utils/Autohotkey_Utils.dll"
-NEEDLE_IMAGE_PAYH := "C:\Users\dhkwon\Pictures\ahk_capture\test.png"
-global utilObject := false
+UTIL_COMPILED_FILE_NAME := "Autohotkey_Utils_Background_App"
+UTIL_COMPILED_PAYH := "./utils/net8.0-windows/" UTIL_COMPILED_FILE_NAME ".exe"
+NEEDLE_IMAGE_PAYH := "C:/Users/dhkwon/Pictures/ahk_capture/test.png"
+; global utilObject := false
 
-F1:: {
+OnMessage(0x3000, setupUtilHwnd)
+OnMessage(0x3101, searchImageFromWindow)
+
+runUtil() {
+	Run(UTIL_COMPILED_PAYH " " A_ScriptHwnd)
+}
+
+setupUtilHwnd(wParam, lParam, message, hwnd) {
+	global utilHwnd := wParam
+	
+	msg("HWND 세팅 완료")
+}
+
+^F12:: {
+	runUtil()
+}
+
+^F1:: {
+	SendMessage(0x4000, A_ScriptHwnd,,, Number(utilHwnd))
+}
+
+^F2:: {
 	hwnd := WinGetID("Vivaldi")
-	utilObject.SearchImageFromArea(&x, &y, hwnd, NEEDLE_IMAGE_PAYH, 140, 1000, 200, 1040, 99)
-
-	msg(x ", " y)
+	SendMessage(0x4101, hwnd,,, Number(utilHwnd))
 }
 
-setupUtilObject() {
-	if (FileExist(UTILS_DLL_COMPILED_PAYH)) {
-		FileMove(UTILS_DLL_COMPILED_PAYH, UTILS_DLL_COPY_PAYH, true)
-	}
-
-	if (!utilObject) {
-		lib := CLR_LoadLibrary(UTILS_DLL_COPY_PAYH)
-		global utilObject := CLR_CreateObject(lib, "Autohotkey_Utils.utils.image.ImageUtils")
-	}
+^F3:: {
+	PostMessage(0x4444,,,, Number(utilHwnd))
 }
 
-F12:: {
+^F4:: {
+	MsgBox(Number(utilHwnd))
+}
+
+
+searchImageFromWindow(wParam, lParam, message, hwnd) {
+	; utilObject.SearchImageFromArea(&x, &y, hwnd, NEEDLE_IMAGE_PAYH, 140, 1000, 200, 1040, 99)
+	msg(wParam ", " lParam)
+	; msg(x ", " y)
+}
+
+
+; F1:: {
+; 	hwnd := WinGetID("Vivaldi")
+; 	utilObject.SearchImageFromArea(&x, &y, hwnd, NEEDLE_IMAGE_PAYH, 140, 1000, 200, 1040, 99)
+; 	msg(x ", " y)
+; }
+
+; F2:: {
+; 	utilObject.SaveScreenToClipboard(WinGetID("A"))
+; }
+
+; F3:: {
+	; MyGui := Gui(, "Example Window")
+	; MyGui.Add("Text",, "Click anywhere in this window.")
+	; MyGui.Add("Edit", "w200")
+	; MyGui.Show
+	
+	; msg("흠")
+; }
+
+; setupUtilObject() {
+; 	if (FileExist(UTILS_DLL_COMPILED_PAYH ".dll")) {
+; 		FileMove(UTILS_DLL_COMPILED_PAYH ".dll", UTILS_DLL_COPY_PAYH ".dll", true)
+; 		FileMove(UTILS_DLL_COMPILED_PAYH ".dll.config", UTILS_DLL_COPY_PAYH ".dll.config", true)
+; 		FileMove(UTILS_DLL_COMPILED_PAYH ".pdb", UTILS_DLL_COPY_PAYH ".pdb", true)
+; 	}
+
+; 	if (!utilObject) {
+; 		lib := CLR_LoadLibrary(UTILS_DLL_COPY_PAYH ".dll")
+; 		; lib := CLR_LoadLibrary(UTILS_DLL_COMPILED_PAYH ".dll")
+; 		global utilObject := CLR_CreateObject(lib, "Autohotkey_Utils.utils.image.ImageUtils")
+; 	}
+; }
+
+F11:: {
 	WinKill("PC 일별 예약 검사")
 }
 
@@ -122,9 +179,6 @@ config() {
 
 	; Guide 불러오기
 	guideLoad()
-
-	; DLL 로드
-	setupUtilObject()
 
 	; 특정 PC만 울리게 설정
 	if (findValue(waterAlarmList, A_ComputerName)) {
@@ -293,6 +347,10 @@ Pause:: {
 	Reload
 }
 
+VK19 & Delete:: {
+	KillApps("Autohotkey_Utils_Background_App") ;# 백그라운드 유틸 강제 종료
+}
+
 #F9::runPopup(naverKoDicPopup) ;# 네이버 국어사전 열기
 #F10::runPopup(naverEnDicPopup) ;# 네이버 영어사전 열기
 #F11::runPopup(googleTranslatePopup) ;# 구글 번역 열기
@@ -307,6 +365,17 @@ VK19 & x::decryptClipboard() ;# 클립보드 복호화
 Hotstring(":*:gm.", GMAIL)
 Hotstring(":*:na.", NAVER_MAIL)
 Hotstring(":*:123.", PHONE_NUM)
+
+KillApps(appTitle) {
+    wmi := ComObjGet("winmgmts:")
+    cmd := "*RunAs taskkill.exe /F"
+
+	for app in wmi.ExecQuery("SELECT * FROM Win32_Process WHERE Name = '" appTitle ".exe'") {
+		cmd := cmd " /PID " app.ProcessId
+	}
+		
+    Run(cmd,, "Hide")
+}
 
 /*
 Guide 출력을 위해 GUI를 초기화 후 반환
