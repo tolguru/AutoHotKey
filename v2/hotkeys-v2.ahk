@@ -14,8 +14,33 @@ UTIL_COMPILED_PAYH := "./utils/net8.0-windows/" UTIL_COMPILED_FILE_NAME ".exe"
 NEEDLE_IMAGE_PAYH := "C:/Users/dhkwon/Pictures/ahk_capture/test.png"
 ; global utilObject := false
 
+RECIEVE_HWND_FROM_UTIL := 0x3000
+RECIEVE_SEARCH_IMAGE_FROM_WINDOW := 0x3101
+
+SEND_AHK_HWND := 0x4000
+SEND_APPLICATION_CLOSE := 0x4099
+SEND_SEARCH_IMAGE_FROM_WINDOW := 0x4101
+
 OnMessage(0x3000, setupUtilHwnd)
 OnMessage(0x3101, searchImageFromWindow)
+
+runUtilWithSetup() {
+	try {
+		sendAhkHwnd()
+	} catch Error as e {
+		if (InStr(e.Message, "Target window not found.")) {
+			runUtil()
+		} else {
+			MsgBox("Unknown Error occured, " e.Message)
+		}
+	}
+}
+
+sendAhkHwnd() {
+	currentHwnd := RegRead("HKEY_CURRENT_USER\SOFTWARE\Autohotkey_Utils_App", "CurrentHwnd")
+	global utilHwnd := Number(currentHwnd)
+	SendMessage(SEND_AHK_HWND, A_ScriptHwnd,,, utilHwnd)
+}
 
 runUtil() {
 	Run(UTIL_COMPILED_PAYH " " A_ScriptHwnd)
@@ -27,29 +52,30 @@ setupUtilHwnd(wParam, lParam, message, hwnd) {
 	msg("HWND 세팅 완료")
 }
 
-^F12:: {
-	runUtil()
+!F1:: {
+	runUtilWithSetup()
 }
 
-^F1:: {
-	SendMessage(0x4000, A_ScriptHwnd,,, Number(utilHwnd))
-}
-
-^F2:: {
+!F2:: {
 	hwnd := WinGetID("Vivaldi")
-	SendMessage(0x4101, hwnd,,, Number(utilHwnd))
+	SendMessage(SEND_SEARCH_IMAGE_FROM_WINDOW, hwnd,,, utilHwnd)
 }
 
-^F3:: {
-	PostMessage(0x4444,,,, Number(utilHwnd))
+!F3:: {
+	PostMessage(0x4444,,,, utilHwnd)
 }
 
-^F4:: {
-	MsgBox(Number(utilHwnd))
+!F4:: {
+	MsgBox(utilHwnd)
+}
+
+!F12:: {
+	SendMessage(SEND_APPLICATION_CLOSE,,,, utilHwnd)
 }
 
 
 searchImageFromWindow(wParam, lParam, message, hwnd) {
+	msg("흠")
 	; utilObject.SearchImageFromArea(&x, &y, hwnd, NEEDLE_IMAGE_PAYH, 140, 1000, 200, 1040, 99)
 	msg(wParam ", " lParam)
 	; msg(x ", " y)
