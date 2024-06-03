@@ -22,6 +22,7 @@ SEND_APPLICATION_CLOSE := 0x4099
 SEND_SEARCH_IMAGE_FROM_WINDOW := 0x4101
 
 OnMessage(0x3000, setupUtilHwnd)
+OnMessage(0x3001, errorCallback)
 OnMessage(0x3101, searchImageFromWindow)
 
 runUtilWithSetup() {
@@ -50,6 +51,10 @@ setupUtilHwnd(wParam, lParam, message, hwnd) {
 	global utilHwnd := wParam
 	
 	msg("HWND 세팅 완료")
+}
+
+errorCallback(wParam, lParam, message, hwnd) {
+	msg("Util 처리 중 에러 발생`n전송한 WM : " Format("0x{:X}", wParam))
 }
 
 !F1:: {

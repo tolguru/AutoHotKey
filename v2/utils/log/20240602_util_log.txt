@@ -1,0 +1,1139 @@
+2024-06-02 16:13:28 Info - Called API, 36
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 129
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 131
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 1
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 128
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 128
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 14
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 13
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 124
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 125
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 127
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 124
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 125
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 70
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 131
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 71
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 24
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 144
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 2
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 36
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 14
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 13
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 130
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 36
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 129
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 131
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 1
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 128
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 128
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 14
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 13
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 124
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 125
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 127
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 124
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 125
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 70
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 131
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 71
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 14
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 13
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 799
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:28 Info - Called API, 49500
+2024-06-02 16:13:28 Info - Unknown Message.
+2024-06-02 16:13:29 Info - Called API, 16641
+2024-06-02 16:13:29 Error - Window Message 처리 중 에러 발생, WM : 16641, Exception occurred, Message : File .\resources\image\temp.png does not exist   at Emgu.CV.Image`2..ctor(String fileName)
+   at Autohotkey_Utils_App.util.image.ImageMatcher..ctor(Bitmap captureImage, String imagePath, Int32 x1, Int32 y1, Int32 x2, Int32 y2, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\image\ImageMatcher.cs:line 24
+   at Autohotkey_Utils_App.util.image.ImageMatcher.MatchWithWindow(Bitmap captureImage, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\image\ImageMatcher.cs:line 41
+   at Autohotkey_Utils_App.util.ImageUtil.SearchImageFromWindow(IntPtr windowId, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\ImageUtil.cs:line 70   at Autohotkey_Utils_App.util.ImageUtil.SearchImageFromWindow(IntPtr windowId, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\ImageUtil.cs:line 79
+   at Autohotkey_Utils_App.handler.MessageHandler.HandleMessage(Message& m) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\handler\MessageHandler.cs:line 27
+2024-06-02 16:17:42 Info - Called API, 16537
+2024-06-02 16:17:42 Info - Called API, 144
+2024-06-02 16:17:42 Info - Unknown Message.
+2024-06-02 16:17:42 Info - Called API, 2
+2024-06-02 16:17:42 Info - Unknown Message.
+2024-06-02 16:17:42 Info - Called API, 130
+2024-06-02 16:17:42 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 36
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 129
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 131
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 1
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 128
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 128
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 14
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 13
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 124
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 125
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 127
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 124
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 125
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 70
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 131
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 71
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 24
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 144
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 2
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 36
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 14
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 13
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 130
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 36
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 129
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 131
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 1
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 128
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 128
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 14
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 13
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 124
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 125
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 127
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 124
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 125
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 70
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 131
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 71
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 14
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 13
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 799
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:45 Info - Called API, 49500
+2024-06-02 16:17:45 Info - Unknown Message.
+2024-06-02 16:17:46 Info - Called API, 16641
+2024-06-02 16:17:46 Error - Window Message 처리 중 에러 발생, WM : 0x16641, Exception occurred, Message : File .\resources\image\temp.png does not exist   at Emgu.CV.Image`2..ctor(String fileName)
+   at Autohotkey_Utils_App.util.image.ImageMatcher..ctor(Bitmap captureImage, String imagePath, Int32 x1, Int32 y1, Int32 x2, Int32 y2, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\image\ImageMatcher.cs:line 24
+   at Autohotkey_Utils_App.util.image.ImageMatcher.MatchWithWindow(Bitmap captureImage, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\image\ImageMatcher.cs:line 41
+   at Autohotkey_Utils_App.util.ImageUtil.SearchImageFromWindow(IntPtr windowId, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\ImageUtil.cs:line 70   at Autohotkey_Utils_App.util.ImageUtil.SearchImageFromWindow(IntPtr windowId, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\ImageUtil.cs:line 79
+   at Autohotkey_Utils_App.handler.MessageHandler.HandleMessage(Message& m) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\handler\MessageHandler.cs:line 27
+2024-06-02 16:19:43 Info - Called API, 16537
+2024-06-02 16:19:43 Info - Called API, 144
+2024-06-02 16:19:43 Info - Unknown Message.
+2024-06-02 16:19:43 Info - Called API, 2
+2024-06-02 16:19:43 Info - Unknown Message.
+2024-06-02 16:19:43 Info - Called API, 130
+2024-06-02 16:19:43 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 36
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 129
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 131
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 1
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 128
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 128
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 14
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 13
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 124
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 125
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 127
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 124
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 125
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 70
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 131
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 71
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 24
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 144
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 2
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 36
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 14
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 13
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 130
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 36
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 129
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 131
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 1
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 128
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 128
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 14
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 13
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 124
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 125
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 127
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 124
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 125
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 70
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 131
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 71
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 14
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 13
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 799
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 49500
+2024-06-02 16:19:46 Info - Unknown Message.
+2024-06-02 16:19:46 Info - Called API, 16641
+2024-06-02 16:19:46 Error - Window Message 처리 중 에러 발생, WM : 0x91713, Exception occurred, Message : File .\resources\image\temp.png does not exist   at Emgu.CV.Image`2..ctor(String fileName)
+   at Autohotkey_Utils_App.util.image.ImageMatcher..ctor(Bitmap captureImage, String imagePath, Int32 x1, Int32 y1, Int32 x2, Int32 y2, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\image\ImageMatcher.cs:line 24
+   at Autohotkey_Utils_App.util.image.ImageMatcher.MatchWithWindow(Bitmap captureImage, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\image\ImageMatcher.cs:line 41
+   at Autohotkey_Utils_App.util.ImageUtil.SearchImageFromWindow(IntPtr windowId, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\ImageUtil.cs:line 70   at Autohotkey_Utils_App.util.ImageUtil.SearchImageFromWindow(IntPtr windowId, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\ImageUtil.cs:line 79
+   at Autohotkey_Utils_App.handler.MessageHandler.HandleMessage(Message& m) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\handler\MessageHandler.cs:line 27
+2024-06-02 16:20:15 Info - Called API, 16537
+2024-06-02 16:20:15 Info - Called API, 144
+2024-06-02 16:20:15 Info - Unknown Message.
+2024-06-02 16:20:15 Info - Called API, 2
+2024-06-02 16:20:15 Info - Unknown Message.
+2024-06-02 16:20:15 Info - Called API, 130
+2024-06-02 16:20:15 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 24
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 81
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 83
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 1
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 80
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 80
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, e
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, d
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 7c
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 7d
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 7f
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 7c
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 7d
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 46
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 83
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 47
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 18
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 90
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 2
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 24
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, e
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, d
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 82
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 24
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 81
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 83
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 1
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 80
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 80
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, e
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, d
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 7c
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 7d
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 7f
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 7c
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 7d
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 46
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 83
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 47
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, e
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, d
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, 31f
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:49 Info - Called API, c15c
+2024-06-02 16:23:49 Info - Unknown Message.
+2024-06-02 16:23:50 Info - Called API, 4101
+2024-06-02 16:23:50 Error - Window Message 처리 중 에러 발생, WM : 0x4101, Exception occurred, Message : File .\resources\image\temp.png does not exist   at Emgu.CV.Image`2..ctor(String fileName)
+   at Autohotkey_Utils_App.util.image.ImageMatcher..ctor(Bitmap captureImage, String imagePath, Int32 x1, Int32 y1, Int32 x2, Int32 y2, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\image\ImageMatcher.cs:line 24
+   at Autohotkey_Utils_App.util.image.ImageMatcher.MatchWithWindow(Bitmap captureImage, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\image\ImageMatcher.cs:line 41
+   at Autohotkey_Utils_App.util.ImageUtil.SearchImageFromWindow(IntPtr windowId, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\ImageUtil.cs:line 70   at Autohotkey_Utils_App.util.ImageUtil.SearchImageFromWindow(IntPtr windowId, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\ImageUtil.cs:line 79
+   at Autohotkey_Utils_App.handler.MessageHandler.HandleMessage(Message& m) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\handler\MessageHandler.cs:line 27
+2024-06-02 16:28:21 Info - Called API, 4099
+2024-06-02 16:28:21 Info - Called API, 90
+2024-06-02 16:28:21 Info - Unknown Message.
+2024-06-02 16:28:21 Info - Called API, 2
+2024-06-02 16:28:21 Info - Unknown Message.
+2024-06-02 16:28:21 Info - Called API, 82
+2024-06-02 16:28:21 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x24
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x81
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x83
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x1
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x80
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x80
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0xe
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0xd
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x7c
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x7d
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x7f
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x7c
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x7d
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x46
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x83
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x47
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x18
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x90
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x2
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x24
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0xe
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0xd
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x82
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x24
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x81
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x83
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x1
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x80
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x80
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0xe
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0xd
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x7c
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x7d
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x7f
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x7c
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x7d
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x46
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x83
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x47
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0xe
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0xd
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0x31f
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:28:50 Info - Called API, Received WM : 0xc15c
+2024-06-02 16:28:50 Info - Unknown Message.
+2024-06-02 16:29:00 Info - Called API, Received WM : 0x4101
+2024-06-02 16:29:00 Error - Window Message 처리 중 에러 발생, Exception occurred, Message : File .\resources\image\temp.png does not exist   at Emgu.CV.Image`2..ctor(String fileName)
+   at Autohotkey_Utils_App.util.image.ImageMatcher..ctor(Bitmap captureImage, String imagePath, Int32 x1, Int32 y1, Int32 x2, Int32 y2, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\image\ImageMatcher.cs:line 24
+   at Autohotkey_Utils_App.util.image.ImageMatcher.MatchWithWindow(Bitmap captureImage, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\image\ImageMatcher.cs:line 41
+   at Autohotkey_Utils_App.util.ImageUtil.SearchImageFromWindow(IntPtr windowId, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\ImageUtil.cs:line 70   at Autohotkey_Utils_App.util.ImageUtil.SearchImageFromWindow(IntPtr windowId, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\ImageUtil.cs:line 79
+   at Autohotkey_Utils_App.handler.MessageHandler.HandleMessage(Message& m) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\handler\MessageHandler.cs:line 27
+2024-06-02 16:33:22 Info - Called API, Received WM : 0x4099
+2024-06-02 16:33:22 Info - Called API, Received WM : 0x90
+2024-06-02 16:33:22 Info - Unknown Message.
+2024-06-02 16:33:22 Info - Called API, Received WM : 0x2
+2024-06-02 16:33:22 Info - Unknown Message.
+2024-06-02 16:33:22 Info - Called API, Received WM : 0x82
+2024-06-02 16:33:22 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x24
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x81
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x83
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x1
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x80
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x80
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0xe
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0xd
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x7c
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x7d
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x7f
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x7c
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x7d
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x46
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x83
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x47
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x18
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x90
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x2
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x24
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0xe
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0xd
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x82
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x24
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x81
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x83
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x1
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x80
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x80
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0xe
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0xd
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x7c
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x7d
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x7f
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x7c
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x7d
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x46
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x83
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x47
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0xe
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0xd
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x31f
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0xc15c
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x4101
+2024-06-02 16:38:37 Info - Called API, Received WM : 0x1c
+2024-06-02 16:38:37 Info - Unknown Message.
+2024-06-02 16:39:01 Info - Called API, Received WM : 0x1c
+2024-06-02 16:39:01 Info - Unknown Message.
+2024-06-02 16:39:21 Info - Called API, Received WM : 0x1c
+2024-06-02 16:39:21 Info - Unknown Message.
+2024-06-02 16:39:21 Info - Called API, Received WM : 0x1c
+2024-06-02 16:39:21 Info - Unknown Message.
+2024-06-02 16:39:21 Info - Called API, Received WM : 0x90
+2024-06-02 16:39:21 Info - Unknown Message.
+2024-06-02 16:39:21 Info - Called API, Received WM : 0x2
+2024-06-02 16:39:21 Info - Unknown Message.
+2024-06-02 16:39:21 Info - Called API, Received WM : 0x82
+2024-06-02 16:39:21 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x24
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x81
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x83
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x1
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x80
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x80
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0xe
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0xd
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x7c
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x7d
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x7f
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x7c
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x7d
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x46
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x83
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x47
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x18
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x90
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x2
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x24
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0xe
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0xd
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x82
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x24
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x81
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x83
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x1
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x80
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x80
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0xe
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0xd
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x7c
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x7d
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x7f
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x7c
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x7d
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x46
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x83
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x47
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0xe
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0xd
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x31f
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0xc15c
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x4101
+2024-06-02 16:47:28 Info - Called API, Received WM : 0x1c
+2024-06-02 16:47:28 Info - Unknown Message.
+2024-06-02 16:47:31 Info - Called API, Received WM : 0x1c
+2024-06-02 16:47:31 Info - Unknown Message.
+2024-06-02 16:47:36 Info - Called API, Received WM : 0x1c
+2024-06-02 16:47:36 Info - Unknown Message.
+2024-06-02 16:47:36 Info - Called API, Received WM : 0x1c
+2024-06-02 16:47:36 Info - Unknown Message.
+2024-06-02 16:47:36 Info - Called API, Received WM : 0x90
+2024-06-02 16:47:36 Info - Unknown Message.
+2024-06-02 16:47:36 Info - Called API, Received WM : 0x2
+2024-06-02 16:47:36 Info - Unknown Message.
+2024-06-02 16:47:36 Info - Called API, Received WM : 0x82
+2024-06-02 16:47:36 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x24
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x81
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x83
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x1
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x80
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x80
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0xe
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0xd
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x7c
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x7d
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x7f
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x7c
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x7d
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x46
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x83
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x47
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x18
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x90
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x2
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x24
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0xe
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0xd
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x82
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x24
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x81
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x83
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x1
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x80
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x80
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0xe
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0xd
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x7c
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x7d
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x7f
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x7c
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x7d
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x46
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x83
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x47
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0xe
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0xd
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x31f
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0xc15c
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x4101
+2024-06-02 16:50:22 Info - Called API, Received WM : 0x1c
+2024-06-02 16:50:22 Info - Unknown Message.
+2024-06-02 16:50:23 Info - Called API, Received WM : 0x1c
+2024-06-02 16:50:23 Info - Unknown Message.
+2024-06-02 16:56:10 Info - Called API, Received WM : 0x1c
+2024-06-02 16:56:10 Info - Unknown Message.
+2024-06-02 16:56:10 Info - Called API, Received WM : 0x1c
+2024-06-02 16:56:10 Info - Unknown Message.
+2024-06-02 16:56:10 Info - Called API, Received WM : 0x90
+2024-06-02 16:56:10 Info - Unknown Message.
+2024-06-02 16:56:10 Info - Called API, Received WM : 0x2
+2024-06-02 16:56:10 Info - Unknown Message.
+2024-06-02 16:56:10 Info - Called API, Received WM : 0x82
+2024-06-02 16:56:10 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x24
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x81
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x83
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x1
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x80
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x80
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0xe
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0xd
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x7c
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x7d
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x7f
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x7c
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x7d
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x46
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x83
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x47
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x18
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x90
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x2
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x24
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0xe
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0xd
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x82
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x24
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x81
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x83
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x1
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x80
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x80
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0xe
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0xd
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x7c
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x7d
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x7f
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x7c
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x7d
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x46
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x83
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x47
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0xe
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0xd
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0x31f
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:19 Info - Called API, Received WM : 0xc15c
+2024-06-02 17:05:19 Info - Unknown Message.
+2024-06-02 17:05:20 Info - Called API, Received WM : 0x4101
+2024-06-02 17:05:20 Info - Called API, Received WM : 0x1c
+2024-06-02 17:05:20 Info - Unknown Message.
+2024-06-02 17:05:22 Error - Image Util 처리 중 에러 발생, Exception occurred, Message : File .\resources\image\temp.png does not exist   at Emgu.CV.Image`2..ctor(String fileName)
+   at Autohotkey_Utils_App.util.image.ImageMatcher..ctor(Bitmap captureImage, String imagePath, Int32 x1, Int32 y1, Int32 x2, Int32 y2, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\image\ImageMatcher.cs:line 24
+   at Autohotkey_Utils_App.util.image.ImageMatcher.MatchWithWindow(Bitmap captureImage, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\image\ImageMatcher.cs:line 41
+   at Autohotkey_Utils_App.util.ImageUtil.SearchImageFromWindow(IntPtr windowId, String imagePath, Single threshold) in D:\project\Autohotkey-Utils-App\Autohotkey-Utils-App\util\ImageUtil.cs:line 70
+2024-06-02 17:05:36 Info - Called API, Received WM : 0x1c
+2024-06-02 17:05:36 Info - Unknown Message.
+2024-06-02 17:06:23 Info - Called API, Received WM : 0x1c
+2024-06-02 17:06:23 Info - Unknown Message.
+2024-06-02 17:06:35 Info - Called API, Received WM : 0x1c
+2024-06-02 17:06:35 Info - Unknown Message.
+2024-06-02 17:17:35 Info - Called API, Received WM : 0x1c
+2024-06-02 17:17:35 Info - Unknown Message.
+2024-06-02 17:17:36 Info - Called API, Received WM : 0x1c
+2024-06-02 17:17:36 Info - Unknown Message.
+2024-06-02 17:17:38 Info - Called API, Received WM : 0x1c
+2024-06-02 17:17:38 Info - Unknown Message.
+2024-06-02 17:17:39 Info - Called API, Received WM : 0x1c
+2024-06-02 17:17:39 Info - Unknown Message.
+2024-06-02 17:17:41 Info - Called API, Received WM : 0x1c
+2024-06-02 17:17:41 Info - Unknown Message.
+2024-06-02 17:17:41 Info - Called API, Received WM : 0x1c
+2024-06-02 17:17:41 Info - Unknown Message.
+2024-06-02 17:17:44 Info - Called API, Received WM : 0x1c
+2024-06-02 17:17:44 Info - Unknown Message.
+2024-06-02 17:17:45 Info - Called API, Received WM : 0x90
+2024-06-02 17:17:45 Info - Unknown Message.
+2024-06-02 17:17:45 Info - Called API, Received WM : 0x2
+2024-06-02 17:17:45 Info - Unknown Message.
+2024-06-02 17:17:45 Info - Called API, Received WM : 0x82
+2024-06-02 17:17:45 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x24
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x81
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x83
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x1
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x80
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x80
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0xe
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0xd
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x7c
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x7d
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x7f
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x7c
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x7d
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x46
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x83
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x47
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x18
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x90
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x2
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x24
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0xe
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0xd
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x82
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x24
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x81
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x83
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x1
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x80
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x80
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0xe
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0xd
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x7c
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x7d
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x7f
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x7c
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x7d
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x46
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x83
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x47
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0xe
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0xd
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0x31f
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:51 Info - Called API, Received WM : 0xc15c
+2024-06-02 17:17:51 Info - Unknown Message.
+2024-06-02 17:17:53 Info - Called API, Received WM : 0x4101
+2024-06-02 17:17:53 Info - Called API, Received WM : 0x1c
+2024-06-02 17:17:53 Info - Unknown Message.
+2024-06-02 17:18:01 Info - Called API, Received WM : 0x1c
+2024-06-02 17:18:01 Info - Unknown Message.
+2024-06-02 17:18:07 Info - Called API, Received WM : 0x1c
+2024-06-02 17:18:07 Info - Unknown Message.
+2024-06-02 17:18:15 Info - Called API, Received WM : 0x1c
+2024-06-02 17:18:15 Info - Unknown Message.
+2024-06-02 17:18:20 Info - Called API, Received WM : 0x1c
+2024-06-02 17:18:20 Info - Unknown Message.
+2024-06-02 17:18:21 Info - Called API, Received WM : 0x1c
+2024-06-02 17:18:21 Info - Unknown Message.
+2024-06-02 17:18:21 Info - Called API, Received WM : 0x90
+2024-06-02 17:18:21 Info - Unknown Message.
+2024-06-02 17:18:21 Info - Called API, Received WM : 0x2
+2024-06-02 17:18:21 Info - Unknown Message.
+2024-06-02 17:18:21 Info - Called API, Received WM : 0x82
+2024-06-02 17:18:21 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x24
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x81
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x83
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x1
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x80
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x80
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0xe
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0xd
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x7c
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x7d
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x7f
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x7c
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x7d
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x46
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x83
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x47
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x18
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x90
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x2
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x24
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0xe
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0xd
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x82
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x24
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x81
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x83
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x1
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x80
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x80
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0xe
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0xd
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x7c
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x7d
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x7f
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x7c
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x7d
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x46
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x83
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x47
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0xe
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0xd
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0x31f
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:13 Info - Called API, Received WM : 0xc15c
+2024-06-02 18:08:13 Info - Unknown Message.
+2024-06-02 18:08:15 Info - Called API, Received WM : 0x4101
+2024-06-02 18:08:15 Info - Called API, Received WM : 0x1c
+2024-06-02 18:08:15 Info - Unknown Message.
+2024-06-02 18:08:23 Info - Called API, Received WM : 0x1c
+2024-06-02 18:08:23 Info - Unknown Message.
+2024-06-02 18:08:23 Info - Called API, Received WM : 0x1c
+2024-06-02 18:08:23 Info - Unknown Message.
+2024-06-02 18:08:23 Info - Called API, Received WM : 0x1c
+2024-06-02 18:08:23 Info - Unknown Message.
+2024-06-02 18:08:26 Info - Called API, Received WM : 0x1c
+2024-06-02 18:08:26 Info - Unknown Message.
+2024-06-02 18:08:27 Info - Called API, Received WM : 0x1c
+2024-06-02 18:08:27 Info - Unknown Message.
+2024-06-02 18:08:28 Info - Called API, Received WM : 0x1c
+2024-06-02 18:08:28 Info - Unknown Message.
+2024-06-02 18:08:29 Info - Called API, Received WM : 0x1c
+2024-06-02 18:08:29 Info - Unknown Message.
+2024-06-02 18:08:37 Info - Called API, Received WM : 0x1c
+2024-06-02 18:08:37 Info - Unknown Message.
+2024-06-02 18:08:39 Info - Called API, Received WM : 0x1c
+2024-06-02 18:08:39 Info - Unknown Message.
+2024-06-02 18:08:52 Info - Called API, Received WM : 0x1c
+2024-06-02 18:08:52 Info - Unknown Message.
+2024-06-02 18:08:53 Info - Called API, Received WM : 0x1c
+2024-06-02 18:08:53 Info - Unknown Message.
+2024-06-02 18:08:53 Info - Called API, Received WM : 0x90
+2024-06-02 18:08:53 Info - Unknown Message.
+2024-06-02 18:08:53 Info - Called API, Received WM : 0x2
+2024-06-02 18:08:53 Info - Unknown Message.
+2024-06-02 18:08:53 Info - Called API, Received WM : 0x82
+2024-06-02 18:08:53 Info - Unknown Message.
