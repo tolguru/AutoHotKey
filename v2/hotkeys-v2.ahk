@@ -8,22 +8,24 @@
 ## 임시 기능 선언
 ########################################
 */
-
-UTIL_COMPILED_FILE_NAME := "Autohotkey_Utils_Background_App"
-UTIL_COMPILED_PAYH := "./utils/net8.0-windows/" UTIL_COMPILED_FILE_NAME ".exe"
+UTIL_COMPILED_FILE_NAME := "AHK-Image-Util"
+UTIL_COMPILED_PAYH := "./utils/net9.0-windows/" UTIL_COMPILED_FILE_NAME ".exe"
 NEEDLE_IMAGE_PAYH := "C:/Users/dhkwon/Pictures/ahk_capture/test.png"
 ; global utilObject := false
 
 RECIEVE_HWND_FROM_UTIL := 0x3000
-RECIEVE_SEARCH_IMAGE_FROM_WINDOW := 0x3101
+RECIEVE_ERROR_NOTIFICATION_TO_AHK := 0x3001
+RECIEVE_TARGET_WINDOW_HWND := 0x3101
+RECIEVE_CLICK_REQUEST := 0x3102
 
 SEND_AHK_HWND := 0x4000
 SEND_APPLICATION_CLOSE := 0x4099
-SEND_SEARCH_IMAGE_FROM_WINDOW := 0x4101
+SEND_RUN_IMAGE_SEARCH_TOOL := 0x4101
 
-OnMessage(0x3000, setupUtilHwnd)
-OnMessage(0x3001, errorCallback)
-OnMessage(0x3101, searchImageFromWindow)
+OnMessage(RECIEVE_HWND_FROM_UTIL, setupUtilHwnd)
+OnMessage(RECIEVE_ERROR_NOTIFICATION_TO_AHK, errorCallback)
+OnMessage(RECIEVE_TARGET_WINDOW_HWND, setupTargetWindowHwnd)
+OnMessage(RECIEVE_CLICK_REQUEST, inactiveClick)
 
 runUtilWithSetup() {
 	try {
@@ -38,7 +40,7 @@ runUtilWithSetup() {
 }
 
 sendAhkHwnd() {
-	currentHwnd := RegRead("HKEY_CURRENT_USER\SOFTWARE\Autohotkey_Utils_App", "CurrentHwnd")
+	currentHwnd := RegRead("HKEY_CURRENT_USER\SOFTWARE\Autohotkey_Image_Util", "CurrentHwnd")
 	global utilHwnd := Number(currentHwnd)
 	SendMessage(SEND_AHK_HWND, A_ScriptHwnd,,, utilHwnd)
 }
@@ -53,6 +55,16 @@ setupUtilHwnd(wParam, lParam, message, hwnd) {
 	msg("HWND 세팅 완료")
 }
 
+setupTargetWindowHwnd(wParam, lParam, message, hwnd) {
+	global targetWindowHwnd := wParam
+	
+	msg("Target Window HWND 세팅 완료")
+}
+
+inactiveClick(wParam, lParam, message, hwnd) {
+	ControlClick("x" wParam " y" lParam, targetWindowHwnd,,,, "NA")
+}
+
 errorCallback(wParam, lParam, message, hwnd) {
 	msg("Util 처리 중 에러 발생`n전송한 WM : " Format("0x{:X}", wParam))
 }
@@ -63,16 +75,16 @@ errorCallback(wParam, lParam, message, hwnd) {
 
 !F2:: {
 	hwnd := WinGetID("Vivaldi")
-	SendMessage(SEND_SEARCH_IMAGE_FROM_WINDOW, hwnd,,, utilHwnd)
+	SendMessage(SEND_RUN_IMAGE_SEARCH_TOOL, hwnd,,, utilHwnd)
 }
 
-!F3:: {
-	PostMessage(0x4444,,,, utilHwnd)
-}
+; !F3:: {
+; 	PostMessage(0x4444,,,, utilHwnd)
+; }
 
-!F4:: {
-	MsgBox(utilHwnd)
-}
+; !F4:: {
+; 	MsgBox(utilHwnd)
+; }
 
 !F12:: {
 	SendMessage(SEND_APPLICATION_CLOSE,,,, utilHwnd)
