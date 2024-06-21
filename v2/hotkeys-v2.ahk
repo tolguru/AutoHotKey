@@ -17,6 +17,7 @@ RECIEVE_HWND_FROM_UTIL := 0x3000
 RECIEVE_ERROR_NOTIFICATION_TO_AHK := 0x3001
 RECIEVE_TARGET_WINDOW_HWND := 0x3101
 RECIEVE_CLICK_REQUEST := 0x3102
+RECIEVE_TEST_REQUEST := 0x6001
 
 SEND_AHK_HWND := 0x4000
 SEND_APPLICATION_CLOSE := 0x4099
@@ -26,6 +27,11 @@ OnMessage(RECIEVE_HWND_FROM_UTIL, setupUtilHwnd)
 OnMessage(RECIEVE_ERROR_NOTIFICATION_TO_AHK, errorCallback)
 OnMessage(RECIEVE_TARGET_WINDOW_HWND, setupTargetWindowHwnd)
 OnMessage(RECIEVE_CLICK_REQUEST, inactiveClick)
+OnMessage(RECIEVE_TEST_REQUEST, testtest)
+
+testtest(wParam, lParam, message, hwnd) {
+	msg("굿굿")
+}
 
 runUtilWithSetup() {
 	try {
@@ -62,7 +68,17 @@ setupTargetWindowHwnd(wParam, lParam, message, hwnd) {
 }
 
 inactiveClick(wParam, lParam, message, hwnd) {
-	ControlClick("x" wParam " y" lParam, targetWindowHwnd,,,, "NA")
+	ControlClick(formatImageUtilLocationProtocol(lParam), wParam,,,, "NA")
+}
+
+formatImageUtilLocationProtocol(lengthWithxy) {
+	length := Number(SubStr(lengthWithxy, 1, 1))
+	xEndLength := 2 + length
+
+	x := "x" SubStr(lengthWithxy, 2, length)
+	xy := x " y" SubStr(lengthWithxy, xEndLength, StrLen(lengthWithxy) - length - 1)
+
+	return xy
 }
 
 errorCallback(wParam, lParam, message, hwnd) {
