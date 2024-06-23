@@ -1,6 +1,6 @@
 [
   {
-    "NeedleImagePath": "C:\\Users\\rnjse\\Desktop\\Utils\\AutoHotKey\\v2\\resources\\image\\2024-06-22 14 51 01.png",
+    "NeedleImagePath": null,
     "NeedleBitmap": null,
     "Threshold": 95,
     "IsSearchOnlyArea": false,
@@ -20,10 +20,10 @@
     "IsEnabled": true,
     "IsAvailable": true,
     "IsActivate": false,
-    "Uid": "c2e67631-15e6-4fa5-a4e7-ffa4526bc7c3",
+    "Uid": "2e5a7081-b0c2-4288-8e3a-592d20522d53",
     "Depth": 0,
     "WaitingMsAfterAction": 0,
-    "Title": "새 이미지 작업2",
+    "Title": "새 이미지 작업",
     "ParentJob": null,
     "IsRepeatSection": false,
     "IsEnableSendMessageWhenSuccess": false,

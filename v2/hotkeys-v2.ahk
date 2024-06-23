@@ -10,14 +10,12 @@
 */
 UTIL_COMPILED_FILE_NAME := "AHK-Image-Util"
 UTIL_COMPILED_PAYH := "./utils/net9.0-windows/" UTIL_COMPILED_FILE_NAME ".exe"
-NEEDLE_IMAGE_PAYH := "C:/Users/dhkwon/Pictures/ahk_capture/test.png"
-; global utilObject := false
 
 RECIEVE_HWND_FROM_UTIL := 0x3000
 RECIEVE_ERROR_NOTIFICATION_TO_AHK := 0x3001
-RECIEVE_TARGET_WINDOW_HWND := 0x3101
 RECIEVE_CLICK_REQUEST := 0x3102
 RECIEVE_TEST_REQUEST := 0x6001
+RECIEVE_F5_REQUEST := 0x6002
 
 SEND_AHK_HWND := 0x4000
 SEND_APPLICATION_CLOSE := 0x4099
@@ -25,9 +23,13 @@ SEND_RUN_IMAGE_SEARCH_TOOL := 0x4101
 
 OnMessage(RECIEVE_HWND_FROM_UTIL, setupUtilHwnd)
 OnMessage(RECIEVE_ERROR_NOTIFICATION_TO_AHK, errorCallback)
-OnMessage(RECIEVE_TARGET_WINDOW_HWND, setupTargetWindowHwnd)
 OnMessage(RECIEVE_CLICK_REQUEST, inactiveClick)
 OnMessage(RECIEVE_TEST_REQUEST, testtest)
+OnMessage(RECIEVE_F5_REQUEST, refresh)
+
+refresh(wParam, lParam, message, hwnd) {
+	Send("{F5}")
+}
 
 testtest(wParam, lParam, message, hwnd) {
 	msg("굿굿")
@@ -61,12 +63,6 @@ setupUtilHwnd(wParam, lParam, message, hwnd) {
 	msg("HWND 세팅 완료")
 }
 
-setupTargetWindowHwnd(wParam, lParam, message, hwnd) {
-	global targetWindowHwnd := wParam
-	
-	msg("Target Window HWND 세팅 완료")
-}
-
 inactiveClick(wParam, lParam, message, hwnd) {
 	ControlClick(formatImageUtilLocationProtocol(lParam), wParam,,,, "NA")
 }
@@ -90,8 +86,7 @@ errorCallback(wParam, lParam, message, hwnd) {
 }
 
 !F2:: {
-	hwnd := WinGetID("Vivaldi")
-	SendMessage(SEND_RUN_IMAGE_SEARCH_TOOL, hwnd,,, utilHwnd)
+	SendMessage(SEND_RUN_IMAGE_SEARCH_TOOL,,,, utilHwnd)
 }
 
 ; !F3:: {
