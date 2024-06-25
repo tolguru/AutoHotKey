@@ -1248,15 +1248,15 @@ Canvas URL을 저장하는 Map object
 KEY : 현재 Slack 창의 Needle
 VALUE : Canvas URL
 */
-slackCanvasMap := Map()
-slackCanvasMap["bpmg"] := "https://w1666144998-jxs393006.slack.com/docs/T047TLC218Q/F069J6ULU6S"
-slackCanvasMap["colorstreet_api"] := "https://w1666144998-jxs393006.slack.com/docs/T047TLC218Q/F06M86P5HUY"
-slackCanvasMap["colorstreet_batch"] := "https://w1666144998-jxs393006.slack.com/docs/T047TLC218Q/F06MF2ER34Y"
+slackLinkMap := Map()
+slackLinkMap["bpmg"] := "https://w1666144998-jxs393006.slack.com/lists/T047TLC218Q/F079Y9KM0M7"
+slackLinkMap["colorstreet_api"] := "https://w1666144998-jxs393006.slack.com/lists/T047TLC218Q/F079Y6ZQPQ9"
+slackLinkMap["colorstreet_batch"] := "https://w1666144998-jxs393006.slack.com/lists/T047TLC218Q/F079Y6ZQPQ9"
 
 #HotIf WinActive("ahk_exe slack.exe")
 #/::MsgBox(getGuideMap().Get("Slack"))
 
-!`::openCanvas(slackCanvasMap) ;# 캔버스 열기
+!`::openCanvas(slackLinkMap) ;# 캔버스 열기
 
 openCanvas(map) {
 	presentTitle := WinGetTitle("A")
