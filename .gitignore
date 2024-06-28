@@ -1,6 +1,7 @@
 ﻿Autohotkey Source
 오토핫키 라이브러리
 오토핫키 우회
+net9.0-windows
 *.bak
 *log.txt
 test.ahk
