@@ -4,11 +4,11 @@
     "frameworks": [
       {
         "name": "Microsoft.NETCore.App",
-        "version": "9.0.0-preview.3.24172.9"
+        "version": "9.0.0-preview.1.24080.9"
       },
       {
         "name": "Microsoft.WindowsDesktop.App",
-        "version": "9.0.0-preview.3.24175.3"
+        "version": "9.0.0-preview.1.24081.3"
       }
     ],
     "configProperties": {
