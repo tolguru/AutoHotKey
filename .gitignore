@@ -1,14 +1,6 @@
 ﻿Autohotkey Source
-오토핫키 라이브러리
-오토핫키 우회
-net9.0-windows
-*.bak
-*log.txt
-test.ahk
-220812 access dev server.ahk
-AutoHotKey 기존/Util/KeyChanger.ahk
-AutoHotKey 기존/Incremental_E_H_2/Upgrade_Auto.ahk
-.idea
+log
+utils
 v2/config.txt
 v2/alwaysOn.ahk
 *.local*
