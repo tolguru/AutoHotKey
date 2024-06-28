@@ -14,8 +14,7 @@ UTIL_COMPILED_PAYH := "./utils/net9.0-windows/" UTIL_COMPILED_FILE_NAME ".exe"
 RECIEVE_HWND_FROM_UTIL := 0x3000
 RECIEVE_ERROR_NOTIFICATION_TO_AHK := 0x3001
 RECIEVE_CLICK_REQUEST := 0x3102
-RECIEVE_TEST_REQUEST := 0x6001
-RECIEVE_F5_REQUEST := 0x6002
+RECIEVE_SHOW_MESSAGE_REQUEST := 0x6900
 
 SEND_AHK_HWND := 0x4000
 SEND_APPLICATION_CLOSE := 0x4099
@@ -24,15 +23,10 @@ SEND_RUN_IMAGE_SEARCH_TOOL := 0x4101
 OnMessage(RECIEVE_HWND_FROM_UTIL, setupUtilHwnd)
 OnMessage(RECIEVE_ERROR_NOTIFICATION_TO_AHK, errorCallback)
 OnMessage(RECIEVE_CLICK_REQUEST, inactiveClick)
-OnMessage(RECIEVE_TEST_REQUEST, testtest)
-OnMessage(RECIEVE_F5_REQUEST, refresh)
+OnMessage(RECIEVE_SHOW_MESSAGE_REQUEST, showEndMessageBox)
 
-refresh(wParam, lParam, message, hwnd) {
-	Send("{F5}")
-}
-
-testtest(wParam, lParam, message, hwnd) {
-	msg("굿굿")
+showEndMessageBox(wParam, lParam, message, hwnd) {
+	MsgBox("이미지 유틸 작업 종료")
 }
 
 runUtilWithSetup() {
