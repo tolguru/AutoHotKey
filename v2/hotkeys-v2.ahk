@@ -1,32 +1,41 @@
 ﻿#Include "./library/Class_CNG.ahk"
 #Include "./library/StringToBase64.ahk"
 #Include "./library/JSON.ahk"
-#Include "./library/CLR.ahk"
 
 /*
 ########################################
 ## 임시 기능 선언
 ########################################
 */
+F11:: {
+	WinKill("PC 일별 예약 검사")
+}
+
+/*
+++++++++++++++++++++++++++++++++++++++++
+++ Window Message 설정
+++++++++++++++++++++++++++++++++++++++++
+*/
+RegWrite(A_ScriptHwnd, "REG_SZ", "HKEY_CURRENT_USER\SOFTWARE\Autohotkey_Image_Util", "CurrentAhkHwnd")
+
 UTIL_COMPILED_FILE_NAME := "AHK-Image-Util"
 UTIL_COMPILED_PAYH := "./utils/net9.0-windows/" UTIL_COMPILED_FILE_NAME ".exe"
 
-RECIEVE_HWND_FROM_UTIL := 0x3000
+RECIEVE_SUCCESSFUL_RUN_MESSAGE_FROM_UTIL := 0x3000
 RECIEVE_ERROR_NOTIFICATION_TO_AHK := 0x3001
 RECIEVE_CLICK_REQUEST := 0x3102
 RECIEVE_SHOW_MESSAGE_REQUEST := 0x6900
 
 SEND_AHK_HWND := 0x4000
 SEND_APPLICATION_CLOSE := 0x4099
-SEND_RUN_IMAGE_SEARCH_TOOL := 0x4101
 
-OnMessage(RECIEVE_HWND_FROM_UTIL, setupUtilHwnd)
+OnMessage(RECIEVE_SUCCESSFUL_RUN_MESSAGE_FROM_UTIL, showSuccessfulRunMessage)
 OnMessage(RECIEVE_ERROR_NOTIFICATION_TO_AHK, errorCallback)
 OnMessage(RECIEVE_CLICK_REQUEST, inactiveClick)
 OnMessage(RECIEVE_SHOW_MESSAGE_REQUEST, showEndMessageBox)
 
 showEndMessageBox(wParam, lParam, message, hwnd) {
-	MsgBox("이미지 유틸 작업 종료")
+	MsgBox("이미지 유틸 작업 종료`n" WinGetTitle(wParam))
 }
 
 runUtilWithSetup() {
@@ -42,19 +51,17 @@ runUtilWithSetup() {
 }
 
 sendAhkHwnd() {
-	currentHwnd := RegRead("HKEY_CURRENT_USER\SOFTWARE\Autohotkey_Image_Util", "CurrentHwnd")
+	currentHwnd := RegRead("HKEY_CURRENT_USER\SOFTWARE\Autohotkey_Image_Util", "CurrentUtilHwnd")
 	global utilHwnd := Number(currentHwnd)
 	SendMessage(SEND_AHK_HWND, A_ScriptHwnd,,, utilHwnd)
 }
 
 runUtil() {
-	Run(UTIL_COMPILED_PAYH " " A_ScriptHwnd)
+	Run(UTIL_COMPILED_PAYH)
 }
 
-setupUtilHwnd(wParam, lParam, message, hwnd) {
-	global utilHwnd := wParam
-	
-	msg("HWND 세팅 완료")
+showSuccessfulRunMessage(wParam, lParam, message, hwnd) {
+	msg("유틸 실행 및 연결 완료")
 }
 
 inactiveClick(wParam, lParam, message, hwnd) {
@@ -79,66 +86,8 @@ errorCallback(wParam, lParam, message, hwnd) {
 	runUtilWithSetup()
 }
 
-!F2:: {
-	SendMessage(SEND_RUN_IMAGE_SEARCH_TOOL,,,, utilHwnd)
-}
-
-; !F3:: {
-; 	PostMessage(0x4444,,,, utilHwnd)
-; }
-
-; !F4:: {
-; 	MsgBox(utilHwnd)
-; }
-
 !F12:: {
 	SendMessage(SEND_APPLICATION_CLOSE,,,, utilHwnd)
-}
-
-
-searchImageFromWindow(wParam, lParam, message, hwnd) {
-	msg("흠")
-	; utilObject.SearchImageFromArea(&x, &y, hwnd, NEEDLE_IMAGE_PAYH, 140, 1000, 200, 1040, 99)
-	msg(wParam ", " lParam)
-	; msg(x ", " y)
-}
-
-
-; F1:: {
-; 	hwnd := WinGetID("Vivaldi")
-; 	utilObject.SearchImageFromArea(&x, &y, hwnd, NEEDLE_IMAGE_PAYH, 140, 1000, 200, 1040, 99)
-; 	msg(x ", " y)
-; }
-
-; F2:: {
-; 	utilObject.SaveScreenToClipboard(WinGetID("A"))
-; }
-
-; F3:: {
-	; MyGui := Gui(, "Example Window")
-	; MyGui.Add("Text",, "Click anywhere in this window.")
-	; MyGui.Add("Edit", "w200")
-	; MyGui.Show
-	
-	; msg("흠")
-; }
-
-; setupUtilObject() {
-; 	if (FileExist(UTILS_DLL_COMPILED_PAYH ".dll")) {
-; 		FileMove(UTILS_DLL_COMPILED_PAYH ".dll", UTILS_DLL_COPY_PAYH ".dll", true)
-; 		FileMove(UTILS_DLL_COMPILED_PAYH ".dll.config", UTILS_DLL_COPY_PAYH ".dll.config", true)
-; 		FileMove(UTILS_DLL_COMPILED_PAYH ".pdb", UTILS_DLL_COPY_PAYH ".pdb", true)
-; 	}
-
-; 	if (!utilObject) {
-; 		lib := CLR_LoadLibrary(UTILS_DLL_COPY_PAYH ".dll")
-; 		; lib := CLR_LoadLibrary(UTILS_DLL_COMPILED_PAYH ".dll")
-; 		global utilObject := CLR_CreateObject(lib, "Autohotkey_Utils.utils.image.ImageUtils")
-; 	}
-; }
-
-F11:: {
-	WinKill("PC 일별 예약 검사")
 }
 
 /*
