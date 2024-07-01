@@ -27,7 +27,6 @@ RECIEVE_CLICK_REQUEST := 0x3102
 RECIEVE_SHOW_MESSAGE_REQUEST := 0x6900
 
 SEND_AHK_HWND := 0x4000
-SEND_APPLICATION_CLOSE := 0x4099
 
 OnMessage(RECIEVE_SUCCESSFUL_RUN_MESSAGE_FROM_UTIL, showSuccessfulRunMessage)
 OnMessage(RECIEVE_ERROR_NOTIFICATION_TO_AHK, errorCallback)
@@ -65,6 +64,7 @@ showSuccessfulRunMessage(wParam, lParam, message, hwnd) {
 }
 
 inactiveClick(wParam, lParam, message, hwnd) {
+	msg(hwnd)
 	ControlClick(formatImageUtilLocationProtocol(lParam), wParam,,,, "NA")
 }
 
@@ -84,10 +84,6 @@ errorCallback(wParam, lParam, message, hwnd) {
 
 !F1:: {
 	runUtilWithSetup()
-}
-
-!F12:: {
-	SendMessage(SEND_APPLICATION_CLOSE,,,, utilHwnd)
 }
 
 /*
