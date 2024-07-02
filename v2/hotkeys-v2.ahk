@@ -72,7 +72,7 @@ showSuccessfulRunMessage(*) {
 
 inactiveClick(wParam, lParam, *) {
 	try {
-		ControlClick(formatImageUtilLocationProtocol(lParam), wParam,,,, "NA")
+		ControlClick(formatImageUtilLocationProtocol(lParam), wParam)
 	} catch (TargetError) {
 		; 실패 시 대상 핸들을 가진 프로필들을 종료하도록 메세지 전송
 		setupUtilHwnd()
