@@ -17,41 +17,48 @@ F11:: {
 ++++++++++++++++++++++++++++++++++++++++
 */
 RegWrite(A_ScriptHwnd, "REG_SZ", "HKEY_CURRENT_USER\SOFTWARE\Autohotkey_Image_Util", "CurrentAhkHwnd")
+setupUtilHwnd()
+
+setupUtilHwnd() {
+	global utilHwnd := getUtilHwnd()
+}
+
+getUtilHwnd() {
+	return Number(RegRead("HKEY_CURRENT_USER\SOFTWARE\Autohotkey_Image_Util", "CurrentUtilHwnd"))
+}
 
 UTIL_COMPILED_FILE_NAME := "AHK-Image-Util"
 UTIL_COMPILED_PAYH := "./utils/net9.0-windows/" UTIL_COMPILED_FILE_NAME ".exe"
 
-RECIEVE_SUCCESSFUL_RUN_MESSAGE_FROM_UTIL := 0x3000
-RECIEVE_ERROR_NOTIFICATION_TO_AHK := 0x3001
+RECIEVE_SUCCESSFUL_RUN_MESSAGE := 0x3000
+RECIEVE_ERROR_NOTIFICATION := 0x3001
 RECIEVE_CLICK_REQUEST := 0x3102
 RECIEVE_SHOW_MESSAGE_REQUEST := 0x6900
 
 SEND_AHK_HWND := 0x4000
+SEND_NOT_FOUND_TARGET_HWND := 0x4001
 
-OnMessage(RECIEVE_SUCCESSFUL_RUN_MESSAGE_FROM_UTIL, showSuccessfulRunMessage)
-OnMessage(RECIEVE_ERROR_NOTIFICATION_TO_AHK, errorCallback)
+OnMessage(RECIEVE_SUCCESSFUL_RUN_MESSAGE, showSuccessfulRunMessage)
+OnMessage(RECIEVE_ERROR_NOTIFICATION, errorCallback)
 OnMessage(RECIEVE_CLICK_REQUEST, inactiveClick)
 OnMessage(RECIEVE_SHOW_MESSAGE_REQUEST, showEndMessageBox)
 
-showEndMessageBox(wParam, lParam, message, hwnd) {
+showEndMessageBox(wParam, *) {
 	MsgBox("이미지 유틸 작업 종료`n" WinGetTitle(wParam))
 }
 
 runUtilWithSetup() {
 	try {
+		setupUtilHwnd()
 		sendAhkHwnd()
-	} catch Error as e {
-		if (InStr(e.Message, "Target window not found.")) {
-			runUtil()
-		} else {
-			MsgBox("Unknown Error occured, " e.Message)
-		}
+	} catch (TargetError) {
+		runUtil()
+	} catch (Error as e) {
+		MsgBox("Unknown Error occured, " e.Message)
 	}
 }
 
 sendAhkHwnd() {
-	currentHwnd := RegRead("HKEY_CURRENT_USER\SOFTWARE\Autohotkey_Image_Util", "CurrentUtilHwnd")
-	global utilHwnd := Number(currentHwnd)
 	SendMessage(SEND_AHK_HWND, A_ScriptHwnd,,, utilHwnd)
 }
 
@@ -59,13 +66,18 @@ runUtil() {
 	Run(UTIL_COMPILED_PAYH)
 }
 
-showSuccessfulRunMessage(wParam, lParam, message, hwnd) {
+showSuccessfulRunMessage(*) {
 	msg("유틸 실행 및 연결 완료")
 }
 
-inactiveClick(wParam, lParam, message, hwnd) {
-	msg(hwnd)
-	ControlClick(formatImageUtilLocationProtocol(lParam), wParam,,,, "NA")
+inactiveClick(wParam, lParam, *) {
+	try {
+		ControlClick(formatImageUtilLocationProtocol(lParam), wParam,,,, "NA")
+	} catch (TargetError) {
+		; 실패 시 대상 핸들을 가진 프로필들을 종료하도록 메세지 전송
+		setupUtilHwnd()
+		SendMessage(SEND_NOT_FOUND_TARGET_HWND, wParam,,, utilHwnd)
+	}
 }
 
 formatImageUtilLocationProtocol(lengthWithxy) {
@@ -78,7 +90,7 @@ formatImageUtilLocationProtocol(lengthWithxy) {
 	return xy
 }
 
-errorCallback(wParam, lParam, message, hwnd) {
+errorCallback(wParam, *) {
 	msg("Util 처리 중 에러 발생`n전송한 WM : " Format("0x{:X}", wParam))
 }
 
