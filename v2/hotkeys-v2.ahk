@@ -32,16 +32,22 @@ UTIL_COMPILED_PAYH := "./utils/net9.0-windows/" UTIL_COMPILED_FILE_NAME ".exe"
 
 RECIEVE_SUCCESSFUL_RUN_MESSAGE := 0x3000
 RECIEVE_ERROR_NOTIFICATION := 0x3001
-RECIEVE_CLICK_REQUEST := 0x3102
+RECIEVE_CONTROL_REQUEST := 0x3102
+RECIEVE_MANUAL_CLICK_REQUEST := 0x3103
 RECIEVE_SHOW_MESSAGE_REQUEST := 0x6900
 
 SEND_AHK_HWND := 0x4000
 SEND_NOT_FOUND_TARGET_HWND := 0x4001
+SEND_ERROR_IN_RUNNING := 0x4002
 
 OnMessage(RECIEVE_SUCCESSFUL_RUN_MESSAGE, showSuccessfulRunMessage)
 OnMessage(RECIEVE_ERROR_NOTIFICATION, errorCallback)
-OnMessage(RECIEVE_CLICK_REQUEST, inactiveClick)
+OnMessage(RECIEVE_CONTROL_REQUEST, inactiveClick)
+OnMessage(RECIEVE_MANUAL_CLICK_REQUEST, manualClick)
 OnMessage(RECIEVE_SHOW_MESSAGE_REQUEST, showEndMessageBox)
+
+CoordMode("Mouse", "Screen")
+SetDefaultMouseSpeed(0)
 
 showEndMessageBox(wParam, *) {
 	MsgBox("이미지 유틸 작업 종료`n" WinGetTitle(wParam))
@@ -72,7 +78,7 @@ showSuccessfulRunMessage(*) {
 
 inactiveClick(wParam, lParam, *) {
 	try {
-		ControlClick(formatImageUtilLocationProtocol(lParam), wParam)
+		ControlClick(formatImageUtilLocationProtocolToString(lParam), wParam)
 	} catch (TargetError) {
 		; 실패 시 대상 핸들을 가진 프로필들을 종료하도록 메세지 전송
 		setupUtilHwnd()
@@ -80,7 +86,18 @@ inactiveClick(wParam, lParam, *) {
 	}
 }
 
-formatImageUtilLocationProtocol(lengthWithxy) {
+manualClick(wParam, lParam, *) {
+	try {
+		location := formatImageUtilLocationProtocolToArray(lParam)
+		MouseClick(, location[1], location[2])
+	} catch (Error) {
+		; 실패 시 대상 핸들을 가진 프로필들을 종료하도록 메세지 전송
+		setupUtilHwnd()
+		SendMessage(SEND_ERROR_IN_RUNNING, wParam,,, utilHwnd)
+	}
+}
+
+formatImageUtilLocationProtocolToString(lengthWithxy) {
 	length := Number(SubStr(lengthWithxy, 1, 1))
 	xEndLength := 2 + length
 
@@ -88,6 +105,18 @@ formatImageUtilLocationProtocol(lengthWithxy) {
 	xy := x " y" SubStr(lengthWithxy, xEndLength, StrLen(lengthWithxy) - length - 1)
 
 	return xy
+}
+
+formatImageUtilLocationProtocolToArray(lengthWithxy) {
+	length := Number(SubStr(lengthWithxy, 1, 1))
+	xEndLength := 2 + length
+
+	x := Number(SubStr(lengthWithxy, 2, length))
+	y := Number(SubStr(lengthWithxy, xEndLength, StrLen(lengthWithxy) - length - 1))
+
+	msg(x ", " y)
+
+	return [x, y]
 }
 
 errorCallback(wParam, *) {
