@@ -114,8 +114,6 @@ formatImageUtilLocationProtocolToArray(lengthWithxy) {
 	x := Number(SubStr(lengthWithxy, 2, length))
 	y := Number(SubStr(lengthWithxy, xEndLength, StrLen(lengthWithxy) - length - 1))
 
-	msg(x ", " y)
-
 	return [x, y]
 }
 
