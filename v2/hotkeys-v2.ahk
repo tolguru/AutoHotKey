@@ -286,10 +286,6 @@ Pause:: {
 	Reload
 }
 
-VK19 & Delete:: {
-	KillApps("Autohotkey_Utils_Background_App") ;# 백그라운드 유틸 강제 종료
-}
-
 #F9::runPopup(naverKoDicPopup) ;# 네이버 국어사전 열기
 #F10::runPopup(naverEnDicPopup) ;# 네이버 영어사전 열기
 #F11::runPopup(googleTranslatePopup) ;# 구글 번역 열기
