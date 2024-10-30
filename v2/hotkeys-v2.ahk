@@ -423,7 +423,8 @@ class SpotifyAuthError extends Error {
 
 class Spotify {
 	static SPOTIFY_API_HOST := "https://api.spotify.com/v1"
-	static CONTROL_BASE_URL := this.SPOTIFY_API_HOST "/me/player/"
+	static CONTROL_ME_BASE_URL := this.SPOTIFY_API_HOST "/me"
+	static CONTROL_PLAYER_BASE_URL := this.CONTROL_ME_BASE_URL "/player/"
 	static CONTROL_PLAYLIST_BASE_URL := this.SPOTIFY_API_HOST "/playlists/"
 	static CONTROL_NEXT := "next"
 	static CONTROL_PREVIOUS := "previous"
@@ -435,6 +436,7 @@ class Spotify {
 	static CONTROL_CURRENTLY_PLAYING_TRACK := "currently-playing"
 	static CONTROL_PLAYLIST := "/tracks"
 
+	; 특정 플레이리스트에 추가하기 위한 ID지만 현재 사용하지 않음
 	static PLAYLIST_ID := "0thPzS6Bb5bsjJnTIuqqsm"
 	
 	static PLAYLIST_CONTROL_TYPE_ADD := "add"
@@ -475,28 +477,28 @@ class Spotify {
 	}
 
 	static addToPlaylist() {
-		this.controlPlaylist(this.AddToPlaylistRequestDTO, "POST")
+		this.controlPlaylist("PUT")
 		msg("플레이리스트에 등록")
 	}
 
 	static removeFromPlaylist() {
-		this.controlPlaylist(this.RemoveFromPlaylistRequestDTO, "DELETE")
+		this.controlPlaylist("DELETE")
 		msg("플레이리스트에서 삭제")
 	}
 
-	static controlPlaylist(requestDtoClass, method) {
+	static controlPlaylist(method) {
 		try {
 			response := this.control(this.CONTROL_CURRENTLY_PLAYING_TRACK, "GET")
 			trackUri := this.parseCurrentPlayingTrackResponseBody(response.ResponseText)
-			requestBody := JSON.stringify(requestDtoClass(trackUri))
+			requestBody := JSON.stringify(this.YourMusicPlaylistControlRequestDTO(trackUri))
 
-			this.control(this.CONTROL_PLAYLIST, method, this.CONTROL_PLAYLIST_BASE_URL this.PLAYLIST_ID, requestBody)
+			this.control(this.CONTROL_PLAYLIST, method, this.CONTROL_ME_BASE_URL, requestBody)
 		} catch Any as e {
 			MsgBox("Playlist 컨트롤 실패, message : " e)
 		}
 	}
 
-	static control(controlType, method := "POST", baseUrl := this.CONTROL_BASE_URL, requestBody := "") {
+	static control(controlType, method := "POST", baseUrl := this.CONTROL_PLAYER_BASE_URL, requestBody := "") {
 		try {
 			return this.requestControlAPI(controlType, method, baseUrl, requestBody)
 		} catch SpotifyAuthError as e {
@@ -515,7 +517,7 @@ class Spotify {
 		try {
 			playingInfo := JSON.parse(responseBody)
 
-			return playingInfo["item"]["uri"]
+			return playingInfo["item"]["id"]
 		} catch UnsetItemError {
 			throw("성공 응답에서 트랙 URI를 찾지 못했음")
 		}
@@ -531,7 +533,7 @@ class Spotify {
 	
 		if (response.Status = 400 || response.Status = 401) {
 			throw SpotifyAuthError(response.ResponseText)
-		} else if (response.Status != 200 && response.Status != 204) {
+		} else if (response.Status != 200 && response.Status != 201 && response.Status != 204) {
 			throw("컨트롤 실패, Status : " response.Status ", Status Text : " response.StatusText ", Body : " response.ResponseText)
 		} else {
 			return response
@@ -594,6 +596,12 @@ class Spotify {
 		httpObj.WaitForResponse
 
 		return httpObj
+	}
+
+	class YourMusicPlaylistControlRequestDTO {
+		__New(trackUri) {
+			this.ids := Array(trackUri)
+		}
 	}
 
 	class AddToPlaylistRequestDTO {
