@@ -250,8 +250,6 @@ alarm() {
 #`::runEXE("notepad++") ;# 노트패드 실행
 #1::runEXE("obsidian") ;# 옵시디언 실행
 #2::activateTitle("- Vivaldi") ;# 비발디 열기
-; #2::runWaitEXE("slack", slackSendToMe) ;# 슬랙 내 채널 열기
-; #2::Run("slack://channel?team=T047TLC218Q&id=D0476MC9TPE") ;# 슬랙 내 채널 열기
 
 #Left::maxSizeMove() ;# 현재 포커싱된 창 왼쪽 모니터의 전체 화면으로 전환
 #Right::maxSizeMove(false) ;# 현재 포커싱된 창 오른쪽 모니터의 전체 화면으로 전환
@@ -269,11 +267,7 @@ alarm() {
 	msg(SoundGetMute() ? "Mute On" : "Mute Off")
 }
 
-; #XButton2::SendInput("^#{Left}") ;# 왼쪽 가상 데스크탑
-; #XButton1::SendInput("^#{Right}") ;# 오른쪽 가상 데스크탑
-
 !+F12::Suspend
-^\::SetCapsLockState !GetKeyState("CapsLock", "T") ;# CapsLock 토글
 *ScrollLock::blockAllInput() ; 관리자 권한으로 실행 필요
 
 ^XButton2::SendInput("^{Home}") ;# 스크롤 맨 위로
