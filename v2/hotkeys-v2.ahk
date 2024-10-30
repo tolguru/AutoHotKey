@@ -943,7 +943,8 @@ blockAllInput(time := 0.1) {
 
 VK19 & Right::Spotify.next() ;# 스포티파이 다음곡
 VK19 & Left::Spotify.previous() ;# 스포티파이 이전곡
-VK19 & Down::setMultiHotkey(, () => Spotify.repeatTrack(), () => Spotify.repeatOff()) ;# 스포티파이 한 곡 반복/취소
+; VK19 & Down::setMultiHotkey(, () => Spotify.repeatTrack(), () => Spotify.repeatOff()) ;# 스포티파이 한 곡 반복/취소
+VK19 & Down::Spotify.removeFromPlaylist() Spotify.next() ;# 스포티파이 플리에서 곡 제거 후 다음곡 재생
 VK19 & Up::setMultiHotkey(, () => Spotify.addToPlaylist(), () => Spotify.removeFromPlaylist()) ;# 스포티파이 플레이리스트 저장/삭제
 
 /*
