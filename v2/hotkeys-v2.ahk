@@ -1048,10 +1048,6 @@ intelliJGuideGui := createGuideGui("IntelliJ.txt")
 
 !`::SendInput("!0") ;# Window Workspaces로 변경
 
-:*:/af::
-{
-	SendText("after:2024-01-01")
-}
 /* 
 기본 단축키들 도움말 출력용
 ::;#
@@ -1271,6 +1267,13 @@ runClipboardQuery(query, quote := true, endWord := ";") {
 
 	Sleep(100)
 	A_Clipboard := beforeData
+}
+
+#HotIf WinActive("Google")
+
+:*:/af::
+{
+	SendText("after:2025-01-01")
 }
 
 ; # @
