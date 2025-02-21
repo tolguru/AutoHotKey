@@ -9,30 +9,6 @@
 */
 
 /*
-++++++++++++++++++++++++++++++++++++++++
-++ Window Message 설정
-++++++++++++++++++++++++++++++++++++++++
-*/
-UTIL_COMPILED_FILE_NAME := "AHK-Image-Util"
-UTIL_COMPILED_PAYH := "./utils/net9.0-windows/" UTIL_COMPILED_FILE_NAME ".exe"
-
-runUtilWithSetup() {
-	try {
-		runUtil()
-	} catch (Error as e) {
-		MsgBox("Unknown Error occured, " e.Message)
-	}
-}
-
-runUtil() {
-	Run(UTIL_COMPILED_PAYH)
-}
-
-!F1:: {
-	runUtilWithSetup()
-}
-
-/*
 ########################################
 ## 전역변수 선언
 ########################################
