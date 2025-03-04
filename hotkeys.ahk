@@ -17,7 +17,7 @@
 configMap := Map()
 
 ; Popup Classes
-googleTranslatePopup := Popup("https://translate.google.co.kr/?sl=en&tl=ko&text=", "Google 번역")
+; googleTranslatePopup := Popup("https://translate.google.co.kr/?sl=en&tl=ko&text=", "Google 번역")
 naverKoDicPopup := Popup("https://ko.dict.naver.com/", "국어사전")
 naverEnDicPopup := Popup("https://en.dict.naver.com/", "영어사전")
 naverEnDicSearchPopup := Popup.copy(naverEnDicPopup, naverEnDicPopup.url "#/search?query=")
@@ -248,7 +248,7 @@ alarm() {
 
 ^XButton2::SendInput("^{Home}") ;# 스크롤 맨 위로
 ^XButton1::SendInput("^{End}") ;# 스크롤 맨 아래로
-+XButton1::runPopupBlockedInput(googleTranslatePopup,, "{Blind}{Shift Up}") ;# 구글 번역 팝업
+; +XButton1::runPopupBlockedInput(googleTranslatePopup,, "{Blind}{Shift Up}") ;# 구글 번역 팝업
 +XButton2::runPopupBlockedInput(naverEnDicSearchPopup, true, "{Blind}{Shift Up}") ;# 네이버 영어사전 팝업
 
 Pause:: {
@@ -258,8 +258,8 @@ Pause:: {
 
 #F9::runPopup(naverKoDicPopup) ;# 네이버 국어사전 열기
 #F10::runPopup(naverEnDicPopup) ;# 네이버 영어사전 열기
-#F11::runPopup(googleTranslatePopup) ;# 구글 번역 열기
-^#F11::runPopupBlockedInput(googleTranslatePopup,, "{Blind}{LWin Up}{LCtrl Up}") ;# 구글 번역 팝업
+; #F11::runPopup(googleTranslatePopup) ;# 구글 번역 열기
+; ^#F11::runPopupBlockedInput(googleTranslatePopup,, "{Blind}{LWin Up}{LCtrl Up}") ;# 구글 번역 팝업
 ^#F10::runPopupBlockedInput(naverEnDicSearchPopup, true, "{Blind}{LWin Up}{LCtrl Up}") ;# 네이버 영어사전 팝업
 
 VK19 & F1::global spotifyActivateFlag := !spotifyActivateFlag msg(!spotifyActivateFlag ? "온" : "오프") ;# 스포티파이 단축키 온/오프 플래그 토글
