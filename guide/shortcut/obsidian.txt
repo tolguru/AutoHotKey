@@ -1,0 +1,12 @@
+---                                                                                                                          
+@ Keyshots
+
+Alt + Shift + C    callout 입력
+Ctrl + [ ]    앞/뒤에서 같은 레벨 헤더 찾아 이동
+Ctrl + Alt + H    정규식 통해서 Replace
+Ctrl + Alt + S    정규식 통해서 Search(multi cursor)
+Ctrl + Alt + I    Keyshots case sensitivity 스위치
+Ctrl + Shift + U    Toggle case
+Alt + L    To lowercase
+Alt + U    To uppercase
+Alt + C    To titlecase

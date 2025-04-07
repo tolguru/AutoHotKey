@@ -922,17 +922,19 @@ VK19 & Up::setMultiHotkey(, () => Spotify.addToPlaylist(), () => Spotify.removeF
 ## @Obsidian
 ########################################
 */
-#HotIf WinActive("ahk_exe Obsidian.exe")
-#/::MsgBox(getGuideMap().Get("Obsidian"))
+obsidianGuideGui := createGuideGui("obsidian.txt")
 
-+Enter::SendInput("{End}`n") ;# 다음 줄로 이동
+#HotIf WinActive("ahk_exe Obsidian.exe")
+#/::obsidianGuideGui.Show()
+
+;+Enter::SendInput("{End}`n") ;# 다음 줄로 이동
 ; ^Enter::SendInput("{Home}`n{Up}") ;# 윗 줄 추가
 
 ;# 콜아웃
-:*:/cat::> [{!}TIP] TIP`n> `
-:*:/caq::> [{!}QUESTION] QUESTION`n> `
-:*:/cae::> [{!}EXAMPLE] EXAMPLE`n> `
-:*:/caw::> [{!}WARNING] WARNING`n> `
+;:*:/cat::> [{!}TIP] TIP`n> `
+;:*:/caq::> [{!}QUESTION] QUESTION`n> `
+;:*:/cae::> [{!}EXAMPLE] EXAMPLE`n> `
+;:*:/caw::> [{!}WARNING] WARNING`n> `
 
 ; 체크박스
 :*:/-::- [ ] `
@@ -982,10 +984,10 @@ s or g:: ;# 선 or 채우기 색 선택(팔레트 창 켜져있을 때)
 ## @IntelliJ
 ########################################
 */
-intelliJGuideGui := createGuideGui("IntelliJ.txt")
+jetbrainsGuideGui := createGuideGui("jetbrains.txt")
 
-#HotIf WinActive("ahk_exe idea64.exe")
-#/::intelliJGuideGui.Show()
+#HotIf WinActive("ahk_exe idea64.exe") or WinActive("ahk_exe rider64.exe") or WinActive("ahk_exe datagrip64.exe") or WinActive("ahk_exe pycharm64.exe")
+#/::jetbrainsGuideGui.Show()
 
 ; ^.::SendInput("/**`n") ;# 주석 달기(IntelliJ 설정에 따라 Doc 자동 생성됨)
 
