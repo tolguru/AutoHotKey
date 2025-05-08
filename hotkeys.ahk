@@ -612,6 +612,36 @@ Alt + W:: ;# 탭 더미 해제
 
 /*
 ########################################
+## @Perplexity
+########################################
+*/
+perplexityGuideGui := createGuideGui("perplexity.txt")
+
+#HotIf WinActive("Perplexity")
+#/::perplexityGuideGui.Show()
+
+:*:/yy::
+{
+	SendText("/after:" FormatTime(A_Now, "yyyy") "-01-01")
+}
+
+:*:/mm::
+{
+	SendText("/after:" FormatTime(A_Now, "yyyy-MM") "-01")
+}
+
+:*:/dd::
+{
+	SendText("/after:" FormatTime(A_Now, "yyyy-MM-dd"))
+}
+
+:*:/ft::
+{
+	SendText("/filetype:")
+}
+
+/*
+########################################
 ## @ETC
 ########################################
 */
