@@ -622,22 +622,22 @@ perplexityGuideGui := createGuideGui("perplexity.txt")
 
 :*:/yy::
 {
-	SendText("/after:" FormatTime(A_Now, "yyyy") "-01-01")
+	SendText("after:" FormatTime(A_Now, "yyyy") "-01-01")
 }
 
 :*:/mm::
 {
-	SendText("/after:" FormatTime(A_Now, "yyyy-MM") "-01")
+	SendText("after:" FormatTime(A_Now, "yyyy-MM") "-01")
 }
 
 :*:/dd::
 {
-	SendText("/after:" FormatTime(A_Now, "yyyy-MM-dd"))
+	SendText("after:" FormatTime(DateAdd(A_Now, -1, "Days"), "yyyy-MM-dd"))
 }
 
 :*:/ft::
 {
-	SendText("/filetype:")
+	SendText("filetype:")
 }
 
 /*
