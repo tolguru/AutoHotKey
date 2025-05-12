@@ -116,6 +116,7 @@ guideLoad() {
 *XButton2::SendInput("{XButton2}") Sleep(200) ; 마우스 사이드 버튼 중복 입력 방지
 *XButton1::SendInput("{XButton1}") Sleep(200) ; 마우스 사이드 버튼 중복 입력 방지
 
+F1::runEXE("perplexity") ;# Perplexity 실행
 #`::runEXE("notepad++") ;# 노트패드 실행
 #1::runEXE("obsidian") ;# 옵시디언 실행
 #2::activateTitle("- Vivaldi") ;# 비발디 열기
