@@ -115,6 +115,8 @@ Ctrl + Alt + F7    사용되는 곳 보기
 ---                                                                                                                                          
 @ Copilot
 
+Ctrl + Shift + G    인라인 챗
+Ctrl + Shift + C    사이드 챗
 Alt + \    자동 완성
 Alt + ]    자동 완성 다음 추천
 Alt + [    자동 완성 이전 추천

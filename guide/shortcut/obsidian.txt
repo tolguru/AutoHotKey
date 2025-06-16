@@ -1,6 +1,11 @@
 ---                                                                                                                          
 @ Keyshots
 
+Alt + Q    목차
+Alt + W    속성
+Alt + A    숫자 리스트 ON/OFF
+Alt + S    리스트 ON/OFF
+
 Alt + Shift + C    callout 입력
 Ctrl + [ ]    앞/뒤에서 같은 레벨 헤더 찾아 이동
 Ctrl + Alt + H    정규식 통해서 Replace
