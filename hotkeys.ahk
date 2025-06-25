@@ -646,6 +646,9 @@ Enter::clickEnter()
 	SendText("filetype:")
 }
 
+/*
+Perplexity 윈도우 애플리케이션 사용 시 Enter 입력이 처리되지 않는 경우가 많아 보조 용도로 구현
+*/
 clickEnter() {
 	perplexityWindowId := WinGetID()
 
