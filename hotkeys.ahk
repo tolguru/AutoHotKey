@@ -18,7 +18,6 @@ configMap := Map()
 
 ; Popup Classes
 googleTranslatePopup := Popup("https://translate.google.co.kr/?sl=en&tl=ko&text=", "Google 번역")
-; perplexityPopup := Popup("https://www.perplexity.ai", "Perplexity")
 naverKoDicPopup := Popup("https://ko.dict.naver.com/", "국어사전")
 naverEnDicPopup := Popup("https://en.dict.naver.com/", "영어사전")
 naverEnDicSearchPopup := Popup.copy(naverEnDicPopup, naverEnDicPopup.url "#/search?query=")
@@ -152,7 +151,6 @@ Pause:: {
 +Pause::Suspend
 #SuspendExempt False
 
-; F1::runPopup(perplexityPopup) ;# 퍼플렉시티 열기
 #F9::runPopup(naverKoDicPopup) ;# 네이버 국어사전 열기
 #F10::runPopup(naverEnDicPopup) ;# 네이버 영어사전 열기
 #F11::runPopup(googleTranslatePopup) ;# 구글 번역 열기
@@ -626,7 +624,7 @@ perplexityGuideGui := createGuideGui("perplexity.txt")
 
 #HotIf WinActive("Perplexity")
 #/::perplexityGuideGui.Show()
-; ^n::runPopup(perplexityPopup,,, true)
+Enter::clickEnter()
 
 :*:/yy::
 {
@@ -646,6 +644,19 @@ perplexityGuideGui := createGuideGui("perplexity.txt")
 :*:/ft::
 {
 	SendText("filetype:")
+}
+
+clickEnter() {
+	perplexityWindowId := WinGetID()
+
+	WinGetPos(,, &w, &h, perplexityWindowId)
+
+	if (ImageSearch(&enterX, &enterY, 0, 0, w, h, A_ScriptDir "\resources\perplexity_search_image1.png") ||
+		ImageSearch(&enterX, &enterY, 0, 0, w, h, A_ScriptDir "\resources\perplexity_search_image2.png")) {
+		ControlClick("X" enterX " Y" enterY)
+	} else {
+		msg("Perplexity의 입력 위치를 찾지 못했음")
+	}
 }
 
 /*
