@@ -622,9 +622,14 @@ Alt + W:: ;# 탭 더미 해제
 */
 perplexityGuideGui := createGuideGui("perplexity.txt")
 
-#HotIf WinActive("Perplexity")
+#HotIf WinActive("ahk_exe Perplexity.exe")
 #/::perplexityGuideGui.Show()
 Enter::clickEnter()
+!d:: {
+	SendInput("Ctrl Down")
+	ControlClick("X37 Y34")	
+	SendInput("Ctrl Up")
+}
 
 :*:/yy::
 {
