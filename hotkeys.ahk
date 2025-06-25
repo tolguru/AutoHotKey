@@ -18,6 +18,7 @@ configMap := Map()
 
 ; Popup Classes
 googleTranslatePopup := Popup("https://translate.google.co.kr/?sl=en&tl=ko&text=", "Google 번역")
+; perplexityPopup := Popup("https://www.perplexity.ai", "Perplexity")
 naverKoDicPopup := Popup("https://ko.dict.naver.com/", "국어사전")
 naverEnDicPopup := Popup("https://en.dict.naver.com/", "영어사전")
 naverEnDicSearchPopup := Popup.copy(naverEnDicPopup, naverEnDicPopup.url "#/search?query=")
@@ -151,6 +152,7 @@ Pause:: {
 +Pause::Suspend
 #SuspendExempt False
 
+; F1::runPopup(perplexityPopup) ;# 퍼플렉시티 열기
 #F9::runPopup(naverKoDicPopup) ;# 네이버 국어사전 열기
 #F10::runPopup(naverEnDicPopup) ;# 네이버 영어사전 열기
 #F11::runPopup(googleTranslatePopup) ;# 구글 번역 열기
@@ -402,7 +404,7 @@ Config에서 UUID 조회 후 Active 가능
 #param boolean dataFlag : 클립보드 데이터 사용 여부 (default = false)
 #param boolean enterFlag : 엔터 입력 여부 (default = false)
 */
-runPopup(popupObject, dataFlag := false, enterFlag := false) {
+runPopup(popupObject, dataFlag := false, enterFlag := false, duplicatable := false) {
 	if (dataFlag) {
 		A_Clipboard := ""
 
@@ -413,7 +415,7 @@ runPopup(popupObject, dataFlag := false, enterFlag := false) {
 	if (!dataFlag || ClipWait(1)) {
 		findParam := popupObject.needle
 
-		if (WinExist(findParam)) {
+		if (!duplicatable && WinExist(findParam)) {
 			WinActivate
 			if (WinWaitActive(findParam,, 2)) {
 				if (dataFlag) {
@@ -624,6 +626,7 @@ perplexityGuideGui := createGuideGui("perplexity.txt")
 
 #HotIf WinActive("Perplexity")
 #/::perplexityGuideGui.Show()
+; ^n::runPopup(perplexityPopup,,, true)
 
 :*:/yy::
 {
