@@ -142,6 +142,8 @@ F1::runEXE("perplexity") ;# Perplexity 실행
 +XButton1::runPopupBlockedInput(googleTranslatePopup,, "{Blind}{Shift Up}") ;# 구글 번역 팝업
 +XButton2::runPopupBlockedInput(naverEnDicSearchPopup, true, "{Blind}{Shift Up}") ;# 네이버 영어사전 팝업
 
+ScrollLock:: ;# ATEN KM 스위칭 시 키 입력되지 않도록 변경
+
 Pause:: {
 	ToolTip("Reload")
 	Reload
