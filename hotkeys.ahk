@@ -34,6 +34,16 @@ GMAIL      := EnvGet("aaGmail")
 NAVER_MAIL := EnvGet("aaNmail")
 PHONE_NUM  := EnvGet("aaPhone")
 
+; PC 목록
+companyPC := "PAY-331"
+laptop  := "DESKTOP-2SVBCIT"
+homePC := "DESKTOP-4AJLHVU"
+
+; PC별 변동값 설정용
+laptopList       := [laptop]
+desktopList      := [companyPC, homePC]
+ratio25List      := [laptop]
+
 /*
 ++++++++++++++++++++++++++++++++++++++++
 ++ 기본 기능 설정
@@ -623,6 +633,19 @@ Alt + W:: ;# 탭 더미 해제
 ########################################
 */
 perplexityGuideGui := createGuideGui("perplexity.txt")
+searchImagePath1 := "\resources\perplexity_search_image_desktop1.png"
+searchImagePath2 := "\resources\perplexity_search_image_desktop2.png"
+laptopImagePath1 := "\resources\perplexity_search_image_laptop2.png"
+laptopImagePath2 := "\resources\perplexity_search_image_laptop1.png"
+
+setImagePath()
+
+setImagePath() {
+	if (findValue(ratio25List, A_ComputerName)) {
+		searchImagePath1 := laptopImagePath1
+		searchImagePath2 := laptopImagePath2
+	}
+}
 
 #HotIf WinActive("ahk_exe Perplexity.exe")
 #/::perplexityGuideGui.Show()
@@ -661,8 +684,8 @@ clickEnter() {
 
 	WinGetPos(,, &w, &h, perplexityWindowId)
 
-	if (ImageSearch(&enterX, &enterY, 0, 0, w, h, A_ScriptDir "\resources\perplexity_search_image1.png") ||
-		ImageSearch(&enterX, &enterY, 0, 0, w, h, A_ScriptDir "\resources\perplexity_search_image2.png")) {
+	if (ImageSearch(&enterX, &enterY, 0, 0, w, h, A_ScriptDir searchImagePath1) ||
+		ImageSearch(&enterX, &enterY, 0, 0, w, h, A_ScriptDir searchImagePath2)) {
 		ControlClick("X" enterX " Y" enterY)
 	} else {
 		msg("Perplexity의 입력 위치를 찾지 못했음")
