@@ -635,17 +635,17 @@ Alt + W:: ;# 탭 더미 해제
 perplexityGuideGui := createGuideGui("perplexity.txt")
 searchImagePath1 := "\resources\perplexity_search_image_desktop1.png"
 searchImagePath2 := "\resources\perplexity_search_image_desktop2.png"
-laptopImagePath1 := "\resources\perplexity_search_image_laptop1.png"
-laptopImagePath2 := "\resources\perplexity_search_image_laptop2.png"
+laptopImagePath1 := "\resources\perplexity_search_image_laptop3.png"
+laptopImagePath2 := "\resources\perplexity_search_image_laptop4.png"
 
-; setImagePath()
+setImagePath()
 
-; setImagePath() {
-; 	if (findValue(ratio25List, A_ComputerName)) {
-; 		global searchImagePath1 := laptopImagePath1
-; 		global searchImagePath2 := laptopImagePath2
-; 	}
-; }
+setImagePath() {
+	if (findValue(laptopList, A_ComputerName)) {
+		global searchImagePath1 := laptopImagePath1
+		global searchImagePath2 := laptopImagePath2
+	}
+}
 
 #HotIf WinActive("ahk_exe Perplexity.exe")
 #/::perplexityGuideGui.Show()
