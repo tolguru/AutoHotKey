@@ -638,14 +638,14 @@ searchImagePath2 := "\resources\perplexity_search_image_desktop2.png"
 laptopImagePath1 := "\resources\perplexity_search_image_laptop1.png"
 laptopImagePath2 := "\resources\perplexity_search_image_laptop2.png"
 
-setImagePath()
+; setImagePath()
 
-setImagePath() {
-	if (findValue(ratio25List, A_ComputerName)) {
-		global searchImagePath1 := laptopImagePath1
-		global searchImagePath2 := laptopImagePath2
-	}
-}
+; setImagePath() {
+; 	if (findValue(ratio25List, A_ComputerName)) {
+; 		global searchImagePath1 := laptopImagePath1
+; 		global searchImagePath2 := laptopImagePath2
+; 	}
+; }
 
 #HotIf WinActive("ahk_exe Perplexity.exe")
 #/::perplexityGuideGui.Show()
@@ -683,7 +683,7 @@ clickEnter() {
 	perplexityWindowId := WinGetID()
 
 	WinGetPos(,, &w, &h, perplexityWindowId)
-
+	
 	if (ImageSearch(&enterX, &enterY, 0, 0, w, h, A_ScriptDir searchImagePath1) ||
 		ImageSearch(&enterX, &enterY, 0, 0, w, h, A_ScriptDir searchImagePath2)) {
 		ControlClick("X" enterX " Y" enterY)
