@@ -633,28 +633,9 @@ Alt + W:: ;# 탭 더미 해제
 ########################################
 */
 perplexityGuideGui := createGuideGui("perplexity.txt")
-searchImagePath1 := "\resources\perplexity_search_image_desktop1.png"
-searchImagePath2 := "\resources\perplexity_search_image_desktop2.png"
-laptopImagePath1 := "\resources\perplexity_search_image_laptop3.png"
-laptopImagePath2 := "\resources\perplexity_search_image_laptop4.png"
-
-setImagePath()
-
-setImagePath() {
-	if (findValue(laptopList, A_ComputerName)) {
-		global searchImagePath1 := laptopImagePath1
-		global searchImagePath2 := laptopImagePath2
-	}
-}
 
 #HotIf WinActive("ahk_exe Perplexity.exe")
 #/::perplexityGuideGui.Show()
-Enter::clickEnter()
-!d:: {
-	SendInput("Ctrl Down")
-	ControlClick("X37 Y34")	
-	SendInput("Ctrl Up")
-}
 
 :*:/yy::
 {
@@ -674,22 +655,6 @@ Enter::clickEnter()
 :*:/ft::
 {
 	SendText("filetype:")
-}
-
-/*
-Perplexity 윈도우 애플리케이션 사용 시 Enter 입력이 처리되지 않는 경우가 많아 보조 용도로 구현
-*/
-clickEnter() {
-	perplexityWindowId := WinGetID()
-
-	WinGetPos(,, &w, &h, perplexityWindowId)
-	
-	if (ImageSearch(&enterX, &enterY, 0, 0, w, h, A_ScriptDir searchImagePath1) ||
-		ImageSearch(&enterX, &enterY, 0, 0, w, h, A_ScriptDir searchImagePath2)) {
-		ControlClick("X" enterX " Y" enterY)
-	} else {
-		msg("Perplexity의 입력 위치를 찾지 못했음")
-	}
 }
 
 /*
