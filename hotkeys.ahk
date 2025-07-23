@@ -574,7 +574,7 @@ obsidianGuideGui := createGuideGui("obsidian.txt")
 */
 jetbrainsGuideGui := createGuideGui("jetbrains.txt")
 
-#HotIf WinActive("ahk_exe idea64.exe") or WinActive("ahk_exe rider64.exe") or WinActive("ahk_exe datagrip64.exe") or WinActive("ahk_exe pycharm64.exe")
+#HotIf WinActive("ahk_exe idea64.exe") or WinActive("ahk_exe rider64.exe") or WinActive("ahk_exe datagrip64.exe") or WinActive("ahk_exe pycharm64.exe") or WinActive("ahk_exe webstorm64.exe")
 #/::jetbrainsGuideGui.Show()
 
 /*
