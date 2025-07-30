@@ -127,12 +127,12 @@ guideLoad() {
 *XButton1::SendInput("{XButton1}") Sleep(200) ; 마우스 사이드 버튼 중복 입력 방지
 
 F1::runEXE("perplexity") ;# Perplexity 실행
-#`::runEXE("notepad++") ;# 노트패드 실행
+#`::runEXE("sublime_text") ;# Sublime 실행
 #1::runEXE("obsidian") ;# 옵시디언 실행
 #2::activateTitle("- Vivaldi") ;# 비발디 열기
 
-#XButton2::maxSizeMove() ;# 현재 포커싱된 창 왼쪽 모니터의 전체 화면으로 전환
-#XButton1::maxSizeMove(false) ;# 현재 포커싱된 창 오른쪽 모니터의 전체 화면으로 전환
+#XButton2::SendInput("#+{Left}") ;# 창 이동
+#XButton1::SendInput("#+{Right}") ;# 창 이동
 #WheelUp::SoundSetVolume("+5") msg(Ceil(SoundGetVolume())) ;# 볼륨 업
 #WheelDown::SoundSetVolume("-5") msg(Ceil(SoundGetVolume())) ;# 볼륨 다운
 #MButton:: { ;# 사운드 토글
@@ -251,29 +251,6 @@ httpSetHeaders(httpObj, headers := []) {
 	Loop headers.Length {
 		httpObj.SetRequestHeader(headers[A_Index][A_Index], headers[A_Index][A_Index + 1])
 	}
-}
-
-/*
-왼쪽/오른쪽 화면으로 창 이동 후 전체화면
-#param boolean isLeft : 왼쪽 화면으로 이동할지 여부
-*/
-maxSizeMove(isLeft := true) {
-	WinRestore("A")
-
-	MonitorGet(1, &a)
-	MonitorGet(2, &b)
-	
-	max := a
-	min := b
-
-	if (a < b) {
-		max := b
-		min := a
-	}
-
-	WinMove(isLeft ? min : max + 100, 100,,, "A")
-
-	WinMaximize("A")
 }
 
 /*
