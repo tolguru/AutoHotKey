@@ -1,4 +1,6 @@
-﻿/*
+﻿#Requires AutoHotkey v2.0+
+
+/*
 전역변수 선언
 */
 global isStop := false
