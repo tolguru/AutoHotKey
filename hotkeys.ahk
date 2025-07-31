@@ -145,6 +145,9 @@ F1::runEXE("perplexity") ;# Perplexity 실행
 	msg(SoundGetMute() ? "Mute On" : "Mute Off")
 }
 
+!WheelUp::SendInput("{WheelUp 10}") ;# 휠 빠르게 넘기기
+!WheelDown::SendInput("{WheelDown 10}") ;# 휠 빠르게 넘기기
+
 ^XButton2::SendInput("^{Home}") ;# 스크롤 맨 위로
 ^XButton1::SendInput("^{End}") ;# 스크롤 맨 아래로
 +XButton1::runPopupBlockedInput(googleTranslatePopup,, "{Blind}{Shift Up}") ;# 구글 번역 팝업
