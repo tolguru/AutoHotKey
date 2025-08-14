@@ -133,9 +133,9 @@ F1::runEXE("perplexity") ;# Perplexity 실행
 
 #XButton2::SendInput("#+{Left}") ;# 창 이동
 #XButton1::SendInput("#+{Right}") ;# 창 이동
-#WheelUp::SoundSetVolume("+5") msg(Ceil(SoundGetVolume())) ;# 볼륨 업
-#WheelDown::SoundSetVolume("-5") msg(Ceil(SoundGetVolume())) ;# 볼륨 다운
-#MButton:: { ;# 사운드 토글
+^#WheelUp::SoundSetVolume("+5") msg(Ceil(SoundGetVolume())) ;# 볼륨 업
+^#WheelDown::SoundSetVolume("-5") msg(Ceil(SoundGetVolume())) ;# 볼륨 다운
+^#MButton:: { ;# 사운드 토글
 	SoundSetMute(-1)
 	
 	if (WinExist("Whale")) {
@@ -145,8 +145,8 @@ F1::runEXE("perplexity") ;# Perplexity 실행
 	msg(SoundGetMute() ? "Mute On" : "Mute Off")
 }
 
-!WheelUp::SendInput("{WheelUp 10}") ;# 휠 빠르게 넘기기
-!WheelDown::SendInput("{WheelDown 10}") ;# 휠 빠르게 넘기기
+#WheelUp::SendInput("{WheelUp 10}") ;# 휠 빠르게 넘기기
+#WheelDown::SendInput("{WheelDown 10}") ;# 휠 빠르게 넘기기
 
 ^XButton2::SendInput("^{Home}") ;# 스크롤 맨 위로
 ^XButton1::SendInput("^{End}") ;# 스크롤 맨 아래로
