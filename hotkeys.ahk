@@ -50,6 +50,7 @@ ratio25List      := [laptop]
 ++++++++++++++++++++++++++++++++++++++++
 */
 SetControlDelay -1
+A_MaxHotkeysPerInterval := 200 ; A_MaxHotkeysPerInterval에 설정된 ms동안 실행될 수 있는 최대 핫키 수 / Default 70 (휠 기능 때문에 설정해둠)
 
 config()
 
