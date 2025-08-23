@@ -548,11 +548,6 @@ obsidianGuideGui := createGuideGui("obsidian.txt")
 #HotIf WinActive("ahk_exe Obsidian.exe")
 #/::obsidianGuideGui.Show()
 
-; 체크박스
-:*:/-::- [ ] `
-:*:/?::- [?] `
-:*:/>::- [>] `
-
 /*
 ########################################
 ## @IntelliJ
