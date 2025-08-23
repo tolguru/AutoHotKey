@@ -146,13 +146,13 @@ F1::runEXE("perplexity") ;# Perplexity 실행
 	msg(SoundGetMute() ? "Mute On" : "Mute Off")
 }
 
-F18 & WheelUp::{ ;# 휠 빠르게 넘기기
+F17 & WheelUp::{ ;# 휠 빠르게 넘기기
 	SendInput("{WheelUp 10}")
- }
+}
 
-F18 & WheelDown::{ ;# 휠 빠르게 넘기기
+F17 & WheelDown::{ ;# 휠 빠르게 넘기기
 	SendInput("{WheelDown 10}")
- }
+}
 
 ^XButton2::SendInput("^{Home}") ;# 스크롤 맨 위로
 ^XButton1::SendInput("^{End}") ;# 스크롤 맨 아래로
